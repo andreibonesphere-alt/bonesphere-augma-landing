@@ -1,0 +1,98 @@
+@import url('https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,600;0,6..72,700;1,6..72,400;1,6..72,700&family=Inter:wght@300;400;500;600;700&family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #004a5d;
+  --color-primary-container: #00637c;
+  --color-on-primary: #ffffff;
+  --color-secondary: #35656f;
+  --color-secondary-container: #b7e8f3;
+  --color-on-secondary-container: #3a6973;
+  --color-secondary-fixed-dim: #9eceda;
+  --color-on-secondary-fixed: #001f25;
+  --color-surface: #fcf9f8;
+  --color-surface-container-lowest: #ffffff;
+  --color-surface-container-low: #f6f3f2;
+  --color-surface-container: #f0eded;
+  --color-on-surface: #1c1b1b;
+  --color-on-surface-variant: #3f484c;
+  --color-outline-variant: #bfc8cd;
+  --color-clinical-blue: #00637c;
+  --color-clinical-dark: #004a5d;
+  --color-clinical-light: #8fbfca;
+  --color-inverse-primary: #89d0ed;
+
+  --font-headline: 'Newsreader', serif;
+  --font-body: 'Inter', sans-serif;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+  max-width: 100%;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: #fcf9f8;
+  color: #1c1b1b;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+  max-width: 100%;
+  position: relative;
+}
+
+#root {
+  width: 100%;
+  max-width: 100%;
+  text-align: left;
+}
+
+.font-headline {
+  font-family: 'Newsreader', serif;
+}
+
+.material-symbols-outlined {
+  font-family: 'Material Symbols Outlined';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-block;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+  font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+}
+
+::selection {
+  background: #00637c;
+  color: white;
+}
+
+::-webkit-scrollbar {
+  width: 5px;
+}
+::-webkit-scrollbar-track {
+  background: #f6f3f2;
+}
+::-webkit-scrollbar-thumb {
+  background: #9eceda;
+  border-radius: 3px;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  outline: none;
+  box-shadow: none;
+}
