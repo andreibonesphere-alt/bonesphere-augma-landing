@@ -55,6 +55,22 @@ body {
   text-align: left;
 }
 
+/* GPU-accelerate animated elements */
+.framer-motion-animate {
+  will-change: transform, opacity;
+}
+
+/* Defer rendering of off-screen sections */
+section:not(:first-of-type) {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 600px;
+}
+
+/* Smooth image rendering */
+img {
+  image-rendering: auto;
+}
+
 .font-headline {
   font-family: 'Newsreader', serif;
 }
