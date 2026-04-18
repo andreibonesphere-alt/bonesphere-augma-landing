@@ -111,8 +111,16 @@ function FadeIn({ children, delay = 0, className = '', style = {} }) {
 function Nav() {
   const [scrolled, setScrolled] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
+  const [isNavMobile, setIsNavMobile] = useState(() => window.innerWidth < 1024)
   const isMobile = useIsMobile()
   const rafRef = useRef(null)
+
+  useEffect(() => {
+    const mq = window.matchMedia('(max-width: 1023px)')
+    const handler = (e) => { setIsNavMobile(e.matches); if (!e.matches) setMenuOpen(false) }
+    mq.addEventListener('change', handler)
+    return () => mq.removeEventListener('change', handler)
+  }, [])
 
   useEffect(() => {
     const onScroll = () => {
@@ -138,6 +146,8 @@ function Nav() {
   const active = scrolled || menuOpen
   const blurVal = isMobile ? 'none' : 'blur(12px)'
 
+  // isNavMobile = viewport < 1024px (matches CSS .hamburger breakpoint)
+
   return (
     <>
       <nav
@@ -161,44 +171,48 @@ function Nav() {
           </a>
 
           {/* Desktop links */}
-          <div className="desktop-nav" style={{ display: 'flex', alignItems: 'center', gap: 40 }}>
-            {navLinks.map(([label, href]) => (
-              <a
-                key={label}
-                href={href}
-                style={{ fontSize: 14, fontWeight: 500, color: '#3f484c', textDecoration: 'none', transition: 'color 0.2s' }}
-                onMouseEnter={e => e.target.style.color = '#004a5d'}
-                onMouseLeave={e => e.target.style.color = '#3f484c'}
-              >
-                {label}
-              </a>
-            ))}
-          </div>
+          {!isNavMobile && (
+            <div style={{ display: 'flex', alignItems: 'center', gap: 40 }}>
+              {navLinks.map(([label, href]) => (
+                <a
+                  key={label}
+                  href={href}
+                  style={{ fontSize: 14, fontWeight: 500, color: '#3f484c', textDecoration: 'none', transition: 'color 0.2s' }}
+                  onMouseEnter={e => e.target.style.color = '#004a5d'}
+                  onMouseLeave={e => e.target.style.color = '#3f484c'}
+                >
+                  {label}
+                </a>
+              ))}
+            </div>
+          )}
 
           {/* Desktop CTA */}
-          <motion.a
-            href="#form-section"
-            whileHover={{ y: -2 }}
-            whileTap={{ scale: 0.97 }}
-            className="desktop-cta"
-            style={{
-              alignItems: 'center',
-              background: '#004a5d',
-              color: 'white',
-              padding: '12px 28px',
-              fontSize: 14,
-              fontWeight: 600,
-              borderRadius: 2,
-              textDecoration: 'none',
-              transition: 'background 0.3s',
-            }}
-          >
-            Aplică acum
-          </motion.a>
+          {!isNavMobile && (
+            <motion.a
+              href="#form-section"
+              whileHover={{ y: -2 }}
+              whileTap={{ scale: 0.97 }}
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                background: '#004a5d',
+                color: 'white',
+                padding: '12px 28px',
+                fontSize: 14,
+                fontWeight: 600,
+                borderRadius: 2,
+                textDecoration: 'none',
+                transition: 'background 0.3s',
+              }}
+            >
+              Aplică acum
+            </motion.a>
+          )}
 
           {/* Hamburger */}
+          {isNavMobile && (
           <button
-            className="hamburger"
             onClick={() => setMenuOpen(o => !o)}
             style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 8, display: 'flex', flexDirection: 'column', gap: 5 }}
             aria-label="Meniu"
@@ -216,10 +230,12 @@ function Nav() {
               style={{ display: 'block', width: 24, height: 2, background: '#004a5d', borderRadius: 2, transformOrigin: 'center' }}
             />
           </button>
+          )}
         </div>
       </nav>
 
-      {/* Mobile menu — CSS transition, no Framer Motion */}
+      {/* Mobile menu — only rendered when hamburger is visible */}
+      {isNavMobile && (
       <div
         style={{
           position: 'fixed',
@@ -228,7 +244,7 @@ function Nav() {
           right: 0,
           zIndex: 49,
           background: 'rgba(252,249,248,0.98)',
-          padding: '24px 20px 32px',
+          padding: menuOpen ? '24px 20px 32px' : '0 20px',
           display: 'flex',
           flexDirection: 'column',
           gap: 4,
@@ -236,7 +252,7 @@ function Nav() {
           transform: 'translateZ(0)',
           maxHeight: menuOpen ? '100vh' : '0',
           overflow: 'hidden',
-          transition: 'max-height 0.3s cubic-bezier(0.4,0,0.2,1), box-shadow 0.3s',
+          transition: 'max-height 0.3s cubic-bezier(0.4,0,0.2,1), box-shadow 0.3s, padding 0.3s',
           pointerEvents: menuOpen ? 'all' : 'none',
         }}
       >
@@ -258,6 +274,7 @@ function Nav() {
           Aplică acum
         </a>
       </div>
+      )}
     </>
   )
 }
