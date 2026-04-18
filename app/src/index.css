@@ -55,9 +55,10 @@ body {
   text-align: left;
 }
 
-/* GPU-accelerate animated elements */
-.framer-motion-animate {
-  will-change: transform, opacity;
+/* GPU-accelerate nav for instant repaints */
+nav {
+  will-change: background, box-shadow;
+  transform: translateZ(0);
 }
 
 /* Defer rendering of off-screen sections */
@@ -69,6 +70,24 @@ section:not(:first-of-type) {
 /* Smooth image rendering */
 img {
   image-rendering: auto;
+}
+
+/* Mobile: smooth native scroll, disable expensive effects */
+@media (max-width: 767px) {
+  html {
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* No blur on mobile — kills GPU */
+  nav, [style*="backdropFilter"] {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+
+  /* Lighter touch on scroll-triggered animations */
+  * {
+    touch-action: pan-y;
+  }
 }
 
 .font-headline {

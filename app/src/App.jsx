@@ -1,5 +1,17 @@
 import { useEffect, useRef, useState } from 'react'
 import { motion, useScroll, useTransform, useInView, AnimatePresence } from 'framer-motion'
+
+/* ─── Mobile detection hook ─── */
+function useIsMobile() {
+  const [isMobile, setIsMobile] = useState(() => window.innerWidth < 768)
+  useEffect(() => {
+    const mq = window.matchMedia('(max-width: 767px)')
+    const handler = (e) => setIsMobile(e.matches)
+    mq.addEventListener('change', handler)
+    return () => mq.removeEventListener('change', handler)
+  }, [])
+  return isMobile
+}
 import preOpImg from './assets/pre-op.png'
 import postOpImg from './assets/post-op.png'
 import histology12Img from './assets/histology-12-weeks.png'
@@ -62,13 +74,14 @@ import zygomaIcon from './assets/solutions/zygomaAugma_icon_.svg'
 /* ─── Reusable animation helpers ─── */
 function FadeUp({ children, delay = 0, className = '' }) {
   const ref = useRef(null)
-  const inView = useInView(ref, { once: true, margin: '-80px' })
+  const isMobile = useIsMobile()
+  const inView = useInView(ref, { once: true, margin: '-60px' })
   return (
     <motion.div
       ref={ref}
-      initial={{ opacity: 0, y: 40 }}
+      initial={{ opacity: 0, y: isMobile ? 0 : 40 }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1], delay }}
+      transition={{ duration: isMobile ? 0.35 : 0.8, ease: [0.22, 1, 0.36, 1], delay: isMobile ? delay * 0.5 : delay }}
       className={className}
     >
       {children}
@@ -78,13 +91,14 @@ function FadeUp({ children, delay = 0, className = '' }) {
 
 function FadeIn({ children, delay = 0, className = '', style = {} }) {
   const ref = useRef(null)
-  const inView = useInView(ref, { once: true, margin: '-60px' })
+  const isMobile = useIsMobile()
+  const inView = useInView(ref, { once: true, margin: '-40px' })
   return (
     <motion.div
       ref={ref}
       initial={{ opacity: 0 }}
       animate={inView ? { opacity: 1 } : {}}
-      transition={{ duration: 1, ease: 'easeOut', delay }}
+      transition={{ duration: isMobile ? 0.3 : 1, ease: 'easeOut', delay: isMobile ? delay * 0.5 : delay }}
       className={className}
       style={style}
     >
@@ -97,35 +111,47 @@ function FadeIn({ children, delay = 0, className = '', style = {} }) {
 function Nav() {
   const [scrolled, setScrolled] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
+  const isMobile = useIsMobile()
+  const rafRef = useRef(null)
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 40)
-    window.addEventListener('scroll', onScroll)
-    return () => window.removeEventListener('scroll', onScroll)
+    const onScroll = () => {
+      if (rafRef.current) return
+      rafRef.current = requestAnimationFrame(() => {
+        setScrolled(window.scrollY > 40)
+        rafRef.current = null
+      })
+    }
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => {
+      window.removeEventListener('scroll', onScroll)
+      if (rafRef.current) cancelAnimationFrame(rafRef.current)
+    }
   }, [])
 
-  // close menu on scroll
   useEffect(() => {
-    if (menuOpen) setMenuOpen(false)
+    if (scrolled && menuOpen) setMenuOpen(false)
   }, [scrolled])
 
   const navLinks = [['Știință', '#'], ['Beneficii', '#benefits'], ['Dovezi', '#proof'], ['Testimoniale', '#testimonials']]
 
+  const active = scrolled || menuOpen
+  const blurVal = isMobile ? 'none' : 'blur(12px)'
+
   return (
     <>
-      <motion.nav
-        initial={{ y: -80, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+      <nav
         style={{
           position: 'fixed',
           top: 0,
           width: '100%',
           zIndex: 50,
-          transition: 'all 0.5s',
-          background: scrolled || menuOpen ? 'rgba(252,249,248,0.95)' : 'transparent',
-          backdropFilter: scrolled || menuOpen ? 'blur(20px)' : 'none',
-          boxShadow: scrolled ? '0 8px 24px rgba(0,74,93,0.07)' : 'none',
+          transform: 'translateZ(0)',
+          transition: 'background 0.3s, box-shadow 0.3s',
+          background: active ? 'rgba(252,249,248,0.97)' : 'transparent',
+          backdropFilter: active ? blurVal : 'none',
+          WebkitBackdropFilter: active ? blurVal : 'none',
+          boxShadow: scrolled ? '0 4px 20px rgba(0,74,93,0.08)' : 'none',
         }}
       >
         <div className="nav-inner">
@@ -191,57 +217,54 @@ function Nav() {
             />
           </button>
         </div>
-      </motion.nav>
+      </nav>
 
-      {/* Mobile menu overlay */}
-      <AnimatePresence>
-        {menuOpen && (
-          <motion.div
-            initial={{ opacity: 0, y: -16 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -16 }}
-            transition={{ duration: 0.25 }}
-            style={{
-              position: 'fixed',
-              top: 58,
-              left: 0,
-              right: 0,
-              zIndex: 49,
-              background: 'rgba(252,249,248,0.97)',
-              backdropFilter: 'blur(20px)',
-              padding: '24px 20px 32px',
-              display: 'flex',
-              flexDirection: 'column',
-              gap: 4,
-              boxShadow: '0 16px 40px rgba(0,74,93,0.1)',
-            }}
+      {/* Mobile menu — CSS transition, no Framer Motion */}
+      <div
+        style={{
+          position: 'fixed',
+          top: 58,
+          left: 0,
+          right: 0,
+          zIndex: 49,
+          background: 'rgba(252,249,248,0.98)',
+          padding: '24px 20px 32px',
+          display: 'flex',
+          flexDirection: 'column',
+          gap: 4,
+          boxShadow: menuOpen ? '0 16px 40px rgba(0,74,93,0.1)' : 'none',
+          transform: 'translateZ(0)',
+          maxHeight: menuOpen ? '100vh' : '0',
+          overflow: 'hidden',
+          transition: 'max-height 0.3s cubic-bezier(0.4,0,0.2,1), box-shadow 0.3s',
+          pointerEvents: menuOpen ? 'all' : 'none',
+        }}
+      >
+        {navLinks.map(([label, href]) => (
+          <a
+            key={label}
+            href={href}
+            onClick={() => setMenuOpen(false)}
+            style={{ fontSize: 18, fontWeight: 500, color: '#3f484c', textDecoration: 'none', padding: '14px 0', borderBottom: '1px solid rgba(191,200,205,0.2)' }}
           >
-            {navLinks.map(([label, href]) => (
-              <a
-                key={label}
-                href={href}
-                onClick={() => setMenuOpen(false)}
-                style={{ fontSize: 18, fontWeight: 500, color: '#3f484c', textDecoration: 'none', padding: '14px 0', borderBottom: '1px solid rgba(191,200,205,0.2)' }}
-              >
-                {label}
-              </a>
-            ))}
-            <a
-              href="#form-section"
-              onClick={() => setMenuOpen(false)}
-              style={{ marginTop: 16, display: 'block', background: '#004a5d', color: 'white', padding: '16px 24px', fontSize: 15, fontWeight: 600, borderRadius: 2, textDecoration: 'none', textAlign: 'center' }}
-            >
-              Aplică acum
-            </a>
-          </motion.div>
-        )}
-      </AnimatePresence>
+            {label}
+          </a>
+        ))}
+        <a
+          href="#form-section"
+          onClick={() => setMenuOpen(false)}
+          style={{ marginTop: 16, display: 'block', background: '#004a5d', color: 'white', padding: '16px 24px', fontSize: 15, fontWeight: 600, borderRadius: 2, textDecoration: 'none', textAlign: 'center' }}
+        >
+          Aplică acum
+        </a>
+      </div>
     </>
   )
 }
 
 /* ─── Chemistry Hero Background ─── */
 function ChemistryHeroBg() {
+  const isMobile = useIsMobile()
   return (
     <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(160deg, #010c12 0%, #031a26 55%, #010e18 100%)', overflow: 'hidden' }}>
 
@@ -333,8 +356,8 @@ function ChemistryHeroBg() {
               x="55" y="330" width="870" height="170" rx="12"
               fill="none" stroke="rgba(0,190,230,0.7)" strokeWidth="1.5"
               filter="url(#hbg-mainglow)"
-              animate={{ opacity: [0.6, 1, 0.6] }}
-              transition={{ duration: 3.5, repeat: Infinity, ease: 'easeInOut' }}
+              animate={isMobile ? { opacity: 0.8 } : { opacity: [0.6, 1, 0.6] }}
+              transition={isMobile ? {} : { duration: 3.5, repeat: Infinity, ease: 'easeInOut' }}
             />
             <text x="490" y="388" textAnchor="middle" fill="rgba(130,230,252,1)" fontSize="31" fontFamily="Newsreader, serif" fontWeight="700" letterSpacing="-0.01em">Sulfat de Calciu Bifazic</text>
             <text x="490" y="422" textAnchor="middle" fill="rgba(255,255,255,0.58)" fontSize="13" fontFamily="Inter, sans-serif" letterSpacing="0.02em">Modelabil și timp scurt de priză</text>
@@ -349,30 +372,30 @@ function ChemistryHeroBg() {
 /* ─── Hero ─── */
 function Hero() {
   const ref = useRef(null)
+  const isMobile = useIsMobile()
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end start'] })
-  const bgY = useTransform(scrollYProgress, [0, 1], [0, 100])
-  const textOpacity = useTransform(scrollYProgress, [0, 0.6], [1, 0])
+  const bgYDesktop = useTransform(scrollYProgress, [0, 1], [0, 100])
+  const textOpacityDesktop = useTransform(scrollYProgress, [0, 0.6], [1, 0])
 
   return (
     <section ref={ref} style={{ position: 'relative', minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'flex-start', overflow: 'hidden' }}>
-      {/* Chemistry diagram background */}
-      <motion.div style={{ y: bgY, position: 'absolute', inset: 0 }}>
+      {/* Chemistry diagram background — no parallax on mobile */}
+      <motion.div style={{ y: isMobile ? 0 : bgYDesktop, position: 'absolute', inset: 0 }}>
         <ChemistryHeroBg />
       </motion.div>
 
-      {/* Overlay — opac stânga pentru text, transparent dreapta pentru diagramă */}
+      {/* Overlay */}
       <div className="hero-overlay" style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to right, rgba(0,10,20,0.95) 0%, rgba(0,10,20,0.92) 34%, rgba(0,10,20,0.35) 52%, rgba(0,10,20,0.02) 100%)' }} />
-      {/* Bottom fade */}
       <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to bottom, transparent 82%, rgba(0,8,16,0.7) 100%)', pointerEvents: 'none' }} />
 
-      {/* Content */}
-      <motion.div style={{ opacity: textOpacity, position: 'relative', width: '100%', zIndex: 1 }}>
+      {/* Content — no opacity scroll transform on mobile */}
+      <motion.div style={{ opacity: isMobile ? 1 : textOpacityDesktop, position: 'relative', width: '100%', zIndex: 1 }}>
         <div className="hero-left-col" style={{ maxWidth: 1280, margin: '0 auto', padding: '160px 40px 100px 5vw', display: 'grid', gridTemplateColumns: '44% 1fr', gap: 40, alignItems: 'center' }}>
 
           {/* Left: tot textul */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: 28 }}>
 
-            <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, delay: 0.2 }}>
+            <motion.div initial={{ opacity: 0, y: isMobile ? 0 : -20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: isMobile ? 0.3 : 0.7, delay: isMobile ? 0.05 : 0.2 }}>
               <span style={{ display: 'inline-flex', alignItems: 'center', gap: 8, fontSize: 11, fontWeight: 700, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'rgba(143,211,226,0.9)' }}>
                 <span style={{ width: 32, height: 1, background: 'rgba(143,211,226,0.7)', display: 'inline-block' }} />
                 Augma Biomaterials
@@ -380,9 +403,9 @@ function Hero() {
             </motion.div>
 
             <motion.h1
-              initial={{ opacity: 0, y: 50 }}
+              initial={{ opacity: 0, y: isMobile ? 0 : 50 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.9, delay: 0.35, ease: [0.22, 1, 0.36, 1] }}
+              transition={{ duration: isMobile ? 0.35 : 0.9, delay: isMobile ? 0.1 : 0.35, ease: [0.22, 1, 0.36, 1] }}
               className="hero-title"
               style={{ fontFamily: 'Newsreader, serif', fontSize: 'clamp(48px, 4.5vw, 68px)', fontWeight: 700, color: '#ffffff', lineHeight: 1.05, letterSpacing: '-0.02em', margin: 0 }}
             >
@@ -390,9 +413,9 @@ function Hero() {
             </motion.h1>
 
             <motion.p
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0, y: isMobile ? 0 : 30 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.55 }}
+              transition={{ duration: isMobile ? 0.3 : 0.8, delay: isMobile ? 0.15 : 0.55 }}
               style={{ fontSize: 16, color: 'rgba(255,255,255,0.72)', lineHeight: 1.75, margin: 0 }}
             >
               Bond Apatite este construit pe tehnologia{' '}
@@ -402,7 +425,7 @@ function Hero() {
               {' '}pentru Inovație în 2019.
             </motion.p>
 
-            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, delay: 0.8 }} style={{ display: 'flex', flexDirection: 'column', gap: 12, maxWidth: 420 }}>
+            <motion.div initial={{ opacity: 0, y: isMobile ? 0 : 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: isMobile ? 0.3 : 0.7, delay: isMobile ? 0.2 : 0.8 }} style={{ display: 'flex', flexDirection: 'column', gap: 12, maxWidth: 420 }}>
               <motion.a
                 href="#form-section"
                 whileHover={{ y: -3, boxShadow: '0 20px 40px rgba(0,0,0,0.4)' }}
