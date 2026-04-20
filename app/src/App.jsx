@@ -1,6 +1,11 @@
 import { useEffect, useRef, useState } from 'react'
 import { motion, useScroll, useTransform, useInView, AnimatePresence } from 'framer-motion'
 
+const scrollToForm = (e) => {
+  if (e) e.preventDefault()
+  document.getElementById('form-section')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+}
+
 /* ─── Mobile detection hook ─── */
 function useIsMobile() {
   const [isMobile, setIsMobile] = useState(() => window.innerWidth < 768)
@@ -141,7 +146,7 @@ function Nav() {
     if (scrolled && menuOpen) setMenuOpen(false)
   }, [scrolled])
 
-  const navLinks = [['Știință', '#'], ['Beneficii', '#benefits'], ['Dovezi', '#proof'], ['Testimoniale', '#testimonials']]
+  const navLinks = [['Știință', '#form-section'], ['Beneficii', '#benefits'], ['Dovezi', '#proof'], ['Testimoniale', '#testimonials']]
 
   const active = scrolled || menuOpen
   const blurVal = isMobile ? 'none' : 'blur(12px)'
@@ -191,6 +196,7 @@ function Nav() {
           {!isNavMobile && (
             <motion.a
               href="#form-section"
+              onClick={scrollToForm}
               whileHover={{ y: -2 }}
               whileTap={{ scale: 0.97 }}
               style={{
@@ -268,7 +274,7 @@ function Nav() {
         ))}
         <a
           href="#form-section"
-          onClick={() => setMenuOpen(false)}
+          onClick={(e) => { setMenuOpen(false); scrollToForm(e) }}
           style={{ marginTop: 16, display: 'block', background: '#004a5d', color: 'white', padding: '16px 24px', fontSize: 15, fontWeight: 600, borderRadius: 2, textDecoration: 'none', textAlign: 'center' }}
         >
           Aplică acum
@@ -445,11 +451,12 @@ function Hero() {
             <motion.div initial={{ opacity: 0, y: isMobile ? 0 : 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: isMobile ? 0.3 : 0.7, delay: isMobile ? 0.2 : 0.8 }} style={{ display: 'flex', flexDirection: 'column', gap: 12, maxWidth: 420 }}>
               <motion.a
                 href="#form-section"
+                onClick={scrollToForm}
                 whileHover={{ y: -3, boxShadow: '0 20px 40px rgba(0,0,0,0.4)' }}
                 whileTap={{ scale: 0.97 }}
                 style={{ display: 'block', width: '100%', background: '#ffffff', color: '#004a5d', padding: '18px 32px', fontSize: 15, fontWeight: 700, borderRadius: 2, boxShadow: '0 8px 32px rgba(0,0,0,0.3)', textDecoration: 'none', textAlign: 'center' }}
               >
-                Vreau să văd dacă acest protocol se potrivește
+                Vreau să văd dacă acest program mi se potrivește
               </motion.a>
               <p style={{ fontSize: 12, color: 'rgba(255,255,255,0.4)', fontWeight: 500, margin: 0 }}>
                 Completezi formularul, iar noi revenim pentru a evalua dacă are sens pentru cazurile tale.
@@ -572,6 +579,7 @@ function ChemistrySection() {
 
 /* ─── Product Explanation ─── */
 function ProductExplanation() {
+  const isMobile = useIsMobile()
   const checks = [
     'mai puțină dependență de membrane și fixare externă',
     'mai puțină manipulare manuală',
@@ -595,7 +603,8 @@ function ProductExplanation() {
               <div style={{ display: 'flex', flexDirection: 'column', gap: 16, fontSize: 15, color: '#3f484c', lineHeight: 1.75, marginTop: 28 }}>
                 <p>Bond Apatite este un ciment de grefare osoasă bazat pe combinația dintre <span style={{ color: '#004a5d', fontWeight: 500 }}>Sulfat de Calciu Bifazic</span> și <span style={{ color: '#004a5d', fontWeight: 500 }}>Hidroxiapatită cu distribuție controlată a particulelor</span>.</p>
                 <p>Sulfatul de Calciu Bifazic face priza rapid, se comportă ca barieră biologică, se resoarbe complet și este înlocuit progresiv de osul pacientului.</p>
-                <p>Hidroxiapatita menține volumul pe termen mai lung. Împreună, elimină dependența de membrană externă, pini și manipulare extinsă, variabilele care fac augmentarea clasică greu de controlat și greu de reprodus.</p>
+                <p>Hidroxiapatita menține volumul pe termen mai lung.</p>
+                <p>Împreună, elimină dependența de membrană externă, pini și manipulare extinsă — variabilele care fac augmentarea clasică greu de controlat și greu de reprodus.</p>
                 <p>Nu este doar un material de grefare care umple un spațiu. Este un material gândit să schimbe felul în care lucrezi:</p>
               </div>
               <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: 12, marginTop: 24 }}>
@@ -646,11 +655,11 @@ function ProductExplanation() {
                 style={{ position: 'absolute', width: 650, height: 650, borderRadius: '50%', border: '1px dashed rgba(0,99,124,0.12)', pointerEvents: 'none' }}
               />
 
-              {/* Floating spec chips */}
+              {/* Floating spec chips — hidden on mobile */}
               <motion.div
                 animate={{ y: [0, -6, 0] }}
                 transition={{ duration: 3.8, repeat: Infinity, ease: 'easeInOut' }}
-                style={{ position: 'absolute', top: '4%', left: '-2%', background: 'white', borderRadius: 12, padding: '10px 16px', boxShadow: '0 8px 24px rgba(0,74,93,0.12)', textAlign: 'center', minWidth: 80 }}
+                style={{ position: 'absolute', top: '4%', left: '-2%', background: 'white', borderRadius: 12, padding: '10px 16px', boxShadow: '0 8px 24px rgba(0,74,93,0.12)', textAlign: 'center', minWidth: 80, display: isMobile ? 'none' : 'block' }}
               >
                 <div style={{ fontFamily: 'Newsreader, serif', fontSize: 20, fontWeight: 700, color: '#004a5d', lineHeight: 1 }}>3 min</div>
                 <div style={{ fontSize: 10, color: 'rgba(63,72,76,0.55)', textTransform: 'uppercase', letterSpacing: '0.12em', marginTop: 3, fontWeight: 700 }}>Priză</div>
@@ -659,7 +668,7 @@ function ProductExplanation() {
               <motion.div
                 animate={{ y: [0, -7, 0] }}
                 transition={{ duration: 4.2, repeat: Infinity, ease: 'easeInOut', delay: 0.5 }}
-                style={{ position: 'absolute', top: '4%', right: '-2%', background: 'white', borderRadius: 12, padding: '10px 16px', boxShadow: '0 8px 24px rgba(0,74,93,0.12)', textAlign: 'center', minWidth: 80 }}
+                style={{ position: 'absolute', top: '4%', right: '-2%', background: 'white', borderRadius: 12, padding: '10px 16px', boxShadow: '0 8px 24px rgba(0,74,93,0.12)', textAlign: 'center', minWidth: 80, display: isMobile ? 'none' : 'block' }}
               >
                 <div style={{ fontFamily: 'Newsreader, serif', fontSize: 20, fontWeight: 700, color: '#004a5d', lineHeight: 1 }}>1cc</div>
                 <div style={{ fontSize: 10, color: 'rgba(63,72,76,0.55)', textTransform: 'uppercase', letterSpacing: '0.12em', marginTop: 3, fontWeight: 700 }}>Volum</div>
@@ -668,7 +677,7 @@ function ProductExplanation() {
               <motion.div
                 animate={{ y: [0, -5, 0] }}
                 transition={{ duration: 3.5, repeat: Infinity, ease: 'easeInOut', delay: 1 }}
-                style={{ position: 'absolute', bottom: '4%', left: '-2%', background: 'white', borderRadius: 12, padding: '10px 16px', boxShadow: '0 8px 24px rgba(0,74,93,0.12)', textAlign: 'center', minWidth: 80 }}
+                style={{ position: 'absolute', bottom: '4%', left: '-2%', background: 'white', borderRadius: 12, padding: '10px 16px', boxShadow: '0 8px 24px rgba(0,74,93,0.12)', textAlign: 'center', minWidth: 80, display: isMobile ? 'none' : 'block' }}
               >
                 <div style={{ fontSize: 10, color: 'rgba(63,72,76,0.55)', textTransform: 'uppercase', letterSpacing: '0.12em', fontWeight: 700, lineHeight: 1.4 }}>Auto-<br/>mixantă</div>
                 <div style={{ fontSize: 10, color: '#00637c', fontWeight: 700, marginTop: 4, letterSpacing: '0.05em' }}>în interior</div>
@@ -677,7 +686,7 @@ function ProductExplanation() {
               <motion.div
                 animate={{ y: [0, -5, 0] }}
                 transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut', delay: 1.5 }}
-                style={{ position: 'absolute', bottom: '4%', right: '-2%', background: '#004a5d', borderRadius: 12, padding: '10px 16px', boxShadow: '0 8px 24px rgba(0,74,93,0.22)', textAlign: 'center', minWidth: 80 }}
+                style={{ position: 'absolute', bottom: '4%', right: '-2%', background: '#004a5d', borderRadius: 12, padding: '10px 16px', boxShadow: '0 8px 24px rgba(0,74,93,0.22)', textAlign: 'center', minWidth: 80, display: isMobile ? 'none' : 'block' }}
               >
                 <div style={{ fontSize: 10, color: 'rgba(143,211,226,0.9)', textTransform: 'uppercase', letterSpacing: '0.12em', fontWeight: 700, lineHeight: 1.4 }}>Bacterio-<br/>static</div>
               </motion.div>
@@ -728,7 +737,7 @@ function Benefits() {
         <FadeUp>
           <div style={{ textAlign: 'center', marginBottom: 64 }}>
             <span style={{ fontSize: 11, fontWeight: 700, color: '#00637c', textTransform: 'uppercase', letterSpacing: '0.2em', display: 'block', marginBottom: 16 }}>Avantaje clinice</span>
-            <h2 style={{ fontFamily: 'Newsreader, serif', fontSize: 'clamp(32px, 5vw, 64px)', fontWeight: 700, color: '#004a5d', lineHeight: 1.05, margin: '0 0 24px' }}>
+            <h2 style={{ fontFamily: 'Newsreader, serif', fontSize: 'clamp(32px, 5vw, 64px)', fontWeight: 700, color: '#004a5d', lineHeight: 1.15, margin: '0 0 24px' }}>
               De ce Bond Apatite<br />schimbă augmentarea osoasă
             </h2>
             <p style={{ fontSize: 17, color: '#3f484c', maxWidth: 640, margin: '0 auto', lineHeight: 1.7 }}>
@@ -748,9 +757,9 @@ function Benefits() {
               whileHover={{ y: -5, borderColor: '#004a5d' }}
               style={{ padding: '24px 20px', borderLeft: '2px solid rgba(191,200,205,0.25)', cursor: 'default', transition: 'all 0.3s' }}
             >
-              <div style={{ fontFamily: 'Newsreader, serif', fontSize: 52, fontWeight: 700, color: 'rgba(0,74,93,0.08)', marginBottom: 16, lineHeight: 1 }}>{b.n}</div>
-              <h4 style={{ fontWeight: 600, color: '#004a5d', fontSize: 13, marginBottom: 8, lineHeight: 1.4 }}>{b.title}</h4>
-              <p style={{ fontSize: 12, color: 'rgba(63,72,76,0.7)', lineHeight: 1.65 }}>{b.body}</p>
+              <div className="benefit-number" style={{ fontFamily: 'Newsreader, serif', fontSize: 52, fontWeight: 700, color: 'rgba(0,74,93,0.08)', marginBottom: 16, lineHeight: 1 }}>{b.n}</div>
+              <h4 style={{ fontWeight: 600, color: '#004a5d', fontSize: 14, marginBottom: 8, lineHeight: 1.4 }}>{b.title}</h4>
+              <p style={{ fontSize: 14, color: 'rgba(63,72,76,0.8)', lineHeight: 1.65 }}>{b.body}</p>
             </motion.div>
           ))}
         </div>
@@ -784,17 +793,18 @@ function SolutionsCarousel() {
   const next = () => goTo(active + 1)
 
   const arrowStyle = {
-    background: 'rgba(255,255,255,0.07)',
-    border: '1px solid rgba(255,255,255,0.12)',
+    background: 'rgba(255,255,255,0.22)',
+    border: '1.5px solid rgba(255,255,255,0.55)',
     color: 'white',
-    width: 44, height: 44,
+    width: 48, height: 48,
     borderRadius: '50%',
-    fontSize: 22,
+    fontSize: 26,
     cursor: 'pointer',
     display: 'flex', alignItems: 'center', justifyContent: 'center',
     flexShrink: 0,
     lineHeight: 1,
     padding: 0,
+    boxShadow: '0 2px 12px rgba(0,0,0,0.25)',
   }
 
   return (
@@ -893,9 +903,9 @@ function SolutionsCarousel() {
                       <div style={{ textAlign: 'center' }}>
                         <h3 style={{ fontFamily: 'Newsreader, serif', fontSize: 22, fontWeight: 700, color: '#004a5d', margin: '0 0 10px', lineHeight: 1.2 }}>{sol.title}</h3>
                         {isCenter && (
-                          <span style={{ fontSize: 10, color: '#248BA2', letterSpacing: '0.14em', fontWeight: 700, textTransform: 'uppercase' }}>
-                            Vezi protocolul →
-                          </span>
+                          <button onClick={e => { e.stopPropagation(); setFlipped(true); }} style={{ fontSize: 10, color: '#248BA2', letterSpacing: '0.14em', fontWeight: 700, textTransform: 'uppercase', textDecoration: 'none', background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}>
+                            VEZI DETALII →
+                          </button>
                         )}
                       </div>
                     </div>
@@ -915,7 +925,7 @@ function SolutionsCarousel() {
                     }}>
                       <div style={{ width: 36, height: 2, background: '#8FBFCA', borderRadius: 1, flexShrink: 0 }} />
                       <h3 style={{ fontFamily: 'Newsreader, serif', fontSize: 20, fontWeight: 700, color: 'white', margin: 0, lineHeight: 1.2, flexShrink: 0 }}>{sol.title}</h3>
-                      <p style={{ fontSize: 13, color: 'rgba(255,255,255,0.82)', lineHeight: 1.75, margin: 0, flex: 1, overflowY: 'auto' }}>{sol.description}</p>
+                      <p style={{ fontSize: 14, color: 'rgba(255,255,255,0.88)', lineHeight: 1.75, margin: 0, flex: 1, overflowY: 'auto' }}>{sol.description}</p>
                       <button
                         onClick={(e) => { e.stopPropagation(); setFlipped(false) }}
                         style={{
@@ -1411,7 +1421,7 @@ function Proof() {
           >
             <div style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
               <h3 style={{ fontFamily: 'Newsreader, serif', fontSize: 36, fontWeight: 700, color: '#004a5d', margin: 0 }}>Histologie</h3>
-              <p style={{ color: '#3f484c', lineHeight: 1.7, margin: 0 }}>Materialul de grefare se resoarbe progresiv, induce osteogeneză locală și permite formarea de os vital propriu al pacientului. La 12 săptămâni, aproximativ 90% din volum este deja os nou. La 8 luni, regenerare completă, fără material rezidual encapsulat.</p>
+              <p style={{ color: '#3f484c', lineHeight: 1.7, margin: 0 }}>Materialul de grefare se resoarbe progresiv, induce osteogeneză locală și permite formarea de os vital propriu al pacientului.<br /><br />La 12 săptămâni, aproximativ 90% din volum este deja os nou. La 8 luni, regenerare completă, fără material rezidual encapsulat.</p>
               <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
                 {[['12 săptămâni', 90, '~90% os vital'], ['8 luni', 100, 'Regenerare completă']].map(([label, pct, note]) => (
                   <div key={label}>
@@ -1600,19 +1610,20 @@ function Offer() {
 
                 {/* Produse fizice */}
                 <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-                  <p style={{ fontSize: 10, fontWeight: 700, letterSpacing: '0.18em', textTransform: 'uppercase', color: 'rgba(137,208,237,0.55)', margin: 0 }}>Ce primești fizic</p>
+                  <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.15em', textTransform: 'uppercase', color: 'rgba(137,208,237,0.8)', margin: 0 }}>Ce primești fizic</p>
                   {physical.map((item, i) => <CheckItem key={item} label={item} delay={i * 0.07} />)}
                 </div>
 
                 {/* Suport clinic */}
                 <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-                  <p style={{ fontSize: 10, fontWeight: 700, letterSpacing: '0.18em', textTransform: 'uppercase', color: 'rgba(137,208,237,0.55)', margin: 0 }}>Suport clinic inclus</p>
+                  <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.15em', textTransform: 'uppercase', color: 'rgba(137,208,237,0.8)', margin: 0 }}>Suport clinic inclus</p>
                   {support.map((item, i) => <CheckItem key={item} label={item} delay={0.14 + i * 0.07} />)}
                 </div>
 
                 {/* CTA */}
                 <motion.a
                   href="#form-section"
+                  onClick={scrollToForm}
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                   style={{ display: 'inline-flex', alignItems: 'center', gap: 10, background: 'white', color: '#004a5d', padding: '14px 28px', borderRadius: 999, fontSize: 14, fontWeight: 700, textDecoration: 'none', width: 'fit-content', boxShadow: '0 8px 24px rgba(0,0,0,0.2)' }}
@@ -1689,12 +1700,30 @@ function Offer() {
 }
 
 /* ─── Lead Form ─── */
+const TG_TOKEN = '8312004137:AAHrvV4oOQE_-D4C-SkP9rNiDE5zC4fi2QM'
+const TG_CHAT  = '8642371131'
+
 function LeadForm() {
   const [focused, setFocused] = useState(null)
   const [submitted, setSubmitted] = useState(false)
 
   const handleSubmit = (e) => {
     e.preventDefault()
+    const fd = new FormData(e.target)
+    const name  = fd.get('name')
+    const email = fd.get('email')
+    const phone = fd.get('phone')
+    const aug   = fd.get('aug') || '—'
+    const cases = fd.get('cases') || '—'
+
+    const text = `🦷 *Lead nou — Bonesphere*\n\n👤 *Nume:* ${name}\n📧 *Email:* ${email}\n📞 *Telefon:* ${phone}\n\n🔧 *Augmentări actuale:*\n${aug}\n\n📋 *Cazuri de tratat:*\n${cases}`
+
+    fetch(`https://api.telegram.org/bot${TG_TOKEN}/sendMessage`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ chat_id: TG_CHAT, text, parse_mode: 'Markdown' }),
+    }).catch(() => {})
+
     setSubmitted(true)
   }
 
@@ -1711,11 +1740,11 @@ function LeadForm() {
   })
 
   const labelStyle = {
-    fontSize: 10,
+    fontSize: 11,
     fontWeight: 700,
     textTransform: 'uppercase',
-    letterSpacing: '0.15em',
-    color: 'rgba(0,74,93,0.6)',
+    letterSpacing: '0.12em',
+    color: 'rgba(0,74,93,0.75)',
     display: 'block',
     marginBottom: 4,
   }
@@ -1751,23 +1780,24 @@ function LeadForm() {
               <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: 28 }}>
                 <div>
                   <label style={labelStyle}>Nume complet <span style={{ color: '#004a5d' }}>*</span></label>
-                  <input required type="text" placeholder="Ex: Dr. Andrei Popescu" onFocus={() => setFocused('name')} onBlur={() => setFocused(null)} style={inputStyle('name')} />
+                  <input required name="name" type="text" placeholder="Ex: Dr. Andrei Popescu" onFocus={() => setFocused('name')} onBlur={() => setFocused(null)} style={inputStyle('name')} />
                 </div>
                 <div>
                   <label style={labelStyle}>Email <span style={{ color: '#004a5d' }}>*</span></label>
-                  <input required type="email" placeholder="doctor@clinica.ro" onFocus={() => setFocused('email')} onBlur={() => setFocused(null)} style={inputStyle('email')} />
+                  <input required name="email" type="email" placeholder="doctor@clinica.ro" onFocus={() => setFocused('email')} onBlur={() => setFocused(null)} style={inputStyle('email')} />
                 </div>
                 <div>
                   <label style={labelStyle}>Telefon <span style={{ color: '#004a5d' }}>*</span></label>
-                  <input required type="tel" placeholder="07xx xxx xxx" onFocus={() => setFocused('phone')} onBlur={() => setFocused(null)} style={inputStyle('phone')} />
+                  <input required name="phone" type="tel" placeholder="07xx xxx xxx" onFocus={() => setFocused('phone')} onBlur={() => setFocused(null)} style={inputStyle('phone')} />
                 </div>
                 <div>
                   <label style={labelStyle}>Ce tip de augmentări faci deja?</label>
-                  <input type="text" placeholder="Ex: Sinus lift, GBR clasic, alveolă post-extracție" onFocus={() => setFocused('aug')} onBlur={() => setFocused(null)} style={inputStyle('aug')} />
+                  <input name="aug" type="text" placeholder="Ex: Sinus lift, GBR clasic, alveolă post-extracție" onFocus={() => setFocused('aug')} onBlur={() => setFocused(null)} style={inputStyle('aug')} />
                 </div>
                 <div>
                   <label style={labelStyle}>Ce cazuri ai vrea să tratezi mai predictibil?</label>
                   <textarea
+                    name="cases"
                     rows={3}
                     placeholder="Ex: Defecte orizontale mari, cazuri cu os cortical subțire, pacienți cu cicatrizare lentă..."
                     onFocus={() => setFocused('cases')}
@@ -1798,7 +1828,7 @@ function FinalCTA() {
     <section className="section-cta-pad" style={{ textAlign: 'center', background: '#fcf9f8', position: 'relative', overflow: 'hidden' }}>
       <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(ellipse at center, rgba(0,99,124,0.07) 0%, transparent 70%)', pointerEvents: 'none' }} />
       <FadeUp>
-        <h2 style={{ fontFamily: 'Newsreader, serif', fontSize: 'clamp(36px, 6vw, 80px)', fontWeight: 700, color: '#004a5d', lineHeight: 1.05, letterSpacing: '-0.02em', maxWidth: 900, margin: '0 auto 40px' }}>
+        <h2 style={{ fontFamily: 'Newsreader, serif', fontSize: 'clamp(28px, 6vw, 80px)', fontWeight: 700, color: '#004a5d', lineHeight: 1.15, letterSpacing: '-0.02em', maxWidth: 900, margin: '0 auto 40px' }}>
           Mai puține variabile.{' '}
           <em style={{ color: '#00637c', fontStyle: 'italic' }}>Mai mult control.</em>
           <br />
@@ -1806,12 +1836,13 @@ function FinalCTA() {
         </h2>
         <motion.a
           href="#form-section"
+          onClick={scrollToForm}
           whileHover={{ y: -4, boxShadow: '0 24px 48px rgba(0,74,93,0.3)' }}
           whileTap={{ scale: 0.97 }}
           style={{ display: 'inline-block', background: '#004a5d', color: 'white', padding: '20px 40px', borderRadius: 2, fontSize: 16, fontWeight: 600, boxShadow: '0 12px 32px rgba(0,74,93,0.2)', textDecoration: 'none', transition: 'all 0.3s' }}
           className="cta-btn"
         >
-          Vreau să văd dacă acest protocol se potrivește
+          Vreau să văd dacă acest program mi se potrivește
         </motion.a>
       </FadeUp>
     </section>
@@ -1824,7 +1855,7 @@ function Footer() {
     <footer style={{ background: '#f6f3f2', padding: '28px 20px', borderTop: '1px solid rgba(191,200,205,0.2)' }}>
       <div className="footer-inner" style={{ maxWidth: 1536, margin: '0 auto', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
         <img src="/logo-teal.png" alt="Bonesphere" style={{ height: 20, width: 'auto', display: 'block', opacity: 0.5 }} />
-        <p style={{ color: 'rgba(63,72,76,0.35)', fontSize: 11, letterSpacing: '0.05em', margin: 0 }}>
+        <p style={{ color: 'rgba(63,72,76,0.6)', fontSize: 11, letterSpacing: '0.05em', margin: 0 }}>
           © 2025 Bonesphere. Toate drepturile rezervate.
         </p>
       </div>
