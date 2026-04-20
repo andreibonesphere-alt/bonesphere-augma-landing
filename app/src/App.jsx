@@ -212,7 +212,7 @@ function Nav() {
                 transition: 'background 0.3s',
               }}
             >
-              Aplică acum
+              Programează un demo
             </motion.a>
           )}
 
@@ -277,7 +277,7 @@ function Nav() {
           onClick={(e) => { setMenuOpen(false); scrollToForm(e) }}
           style={{ marginTop: 16, display: 'block', background: '#004a5d', color: 'white', padding: '16px 24px', fontSize: 15, fontWeight: 600, borderRadius: 2, textDecoration: 'none', textAlign: 'center' }}
         >
-          Aplică acum
+          Programează un demo
         </a>
       </div>
       )}
@@ -456,7 +456,7 @@ function Hero() {
                 whileTap={{ scale: 0.97 }}
                 style={{ display: 'block', width: '100%', background: '#ffffff', color: '#004a5d', padding: '18px 32px', fontSize: 15, fontWeight: 700, borderRadius: 2, boxShadow: '0 8px 32px rgba(0,0,0,0.3)', textDecoration: 'none', textAlign: 'center' }}
               >
-                Vreau să văd dacă acest program mi se potrivește
+                Programează un demo gratuit
               </motion.a>
               <p style={{ fontSize: 12, color: 'rgba(255,255,255,0.4)', fontWeight: 500, margin: 0 }}>
                 Completezi formularul, iar noi revenim pentru a evalua dacă are sens pentru cazurile tale.
