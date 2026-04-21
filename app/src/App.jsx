@@ -770,14 +770,14 @@ function Benefits() {
 
 /* ─── Solutions Carousel ─── */
 const SOLUTIONS = [
-  { id: 'socket', title: 'Grefă alveolară', icon: socketIcon, description: 'Alveole intacte — fără elevare de lambou. Placă vestibulară lipsă — lambou minim tip plic, închidere sub tensiune fără incizii de eliberare periostală. Protocol simplificat în ambele variante.' },
-  { id: 'lateral', title: 'Augmentare laterală', icon: lateralIcon, description: 'Fără membrană, fără incizii de eliberare periostală. Lambou limitat la maxim 3 mm dincolo de joncțiunea mucogingivală, compactare directă, închidere sub tensiune. Grefă expusă este acoperită cu pansamentul intraoral Augma Shield™.' },
-  { id: 'sinus', title: 'Sinus lift', icon: sinusIcon, description: 'Tehnică intra-crestală minim invazivă, indiferent de înălțimea crestei. Creastă ≥ 4 mm — augmentare și implant în aceeași ședință. Creastă < 4 mm — augmentare în prima etapă.' },
-  { id: 'fullarch', title: 'Reconstrucție totală de arcadă', icon: fullArchIcon, description: 'Extracții, osteoplastie și implanturi în aceeași intervenție. Bond Apatite® umple spațiile inter-implantare, remodelează arcada și supraconstruiește volumul — un singur material pentru toate necesitățile de grefare.' },
-  { id: 'aesthetic', title: 'Zona estetică', icon: aestheticIcon, description: 'Reconstituie volumul post-extracție sau post-implant fără tracțiunea necesară în GBR clasic. Augma Shield™ acoperă grefa expusă minimum 2 săptămâni. Fără proteze mobile în vindecare.' },
-  { id: 'cyst', title: 'Enucleere de chist', icon: cystIcon, description: 'Chiuretaj complet, decontaminare, condensare Bond Apatite® incremental până la marginea corticală. Cavitatea chistică devine schela pentru regenerare osoasă ghidată.' },
-  { id: 'peri', title: 'Peri-implantită', icon: periIcon, description: 'Exclusiv defecte verticale, fără infecție activă. Lambou minim, aplicare directă, sutură. Fără tehnici complexe de regenerare peri-implantară.' },
-  { id: 'zygoma', title: 'Implant zigomatic', icon: zygomaIcon, description: 'Acoperă porțiunea extra-maxilară direct cu Bond Apatite® condensat — fără avansarea grăsimii bucale. Supraconstruiește volumul pentru a compensa reducerea sub tensiunea lamboului.' },
+  { id: 'socket', title: 'Grefă alveolară', icon: socketIcon, description: 'Fără lambou, fără membrană. Aplicare directă în alveolă, priză în 3 minute, sutură.' },
+  { id: 'lateral', title: 'Augmentare laterală', icon: lateralIcon, description: 'Fără membrană. Fără incizii de eliberare periostală. Protocol direct, o singură ședință.' },
+  { id: 'sinus', title: 'Sinus lift', icon: sinusIcon, description: 'Tehnică intra-crestală minim invazivă. Augmentare și implant în aceeași ședință când creasta ≥ 4 mm.' },
+  { id: 'fullarch', title: 'Reconstrucție totală de arcadă', icon: fullArchIcon, description: 'Un singur material pentru toate necesitățile de grefare. Extracții, osteoplastie și implanturi în aceeași intervenție.' },
+  { id: 'aesthetic', title: 'Zona estetică', icon: aestheticIcon, description: 'Volum reconstruit fără tracțiunea GBR clasic. Fără proteze mobile în vindecare.' },
+  { id: 'cyst', title: 'Enucleere de chist', icon: cystIcon, description: 'Cavitatea chistică devine schela pentru regenerare osoasă ghidată. Condensare directă, fără tehnici suplimentare.' },
+  { id: 'peri', title: 'Peri-implantită', icon: periIcon, description: 'Lambou minim, aplicare directă, sutură. Fără tehnici complexe de regenerare peri-implantară.' },
+  { id: 'zygoma', title: 'Implant zigomatic', icon: zygomaIcon, description: 'Acoperă porțiunea extra-maxilară direct, fără avansarea grăsimii bucale. Volum reconstruit într-o singură etapă.' },
 ]
 
 function SolutionsCarousel() {
@@ -1635,7 +1635,7 @@ function Offer() {
                 </motion.a>
 
                 <p style={{ fontSize: 13, color: 'rgba(255,255,255,0.45)', margin: 0, paddingTop: 4 }}>
-                  Demonstrația durează 20 de minute, la dumneavoastră la cabinet. Fără obligații comerciale.
+                  Acceptăm maxim 10 demonstrații pe săptămână.
                 </p>
               </div>
             </FadeUp>
