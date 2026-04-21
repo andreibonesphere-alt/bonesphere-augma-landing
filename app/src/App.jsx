@@ -1605,7 +1605,7 @@ function Offer() {
                   Primele tale 6 cazuri clinice de succes
                 </h2>
                 <p style={{ color: 'rgba(143,191,202,0.8)', fontSize: 16, lineHeight: 1.7, margin: 0 }}>
-                  Un cadru complet de implementare, nu o simplă listă de produse. Primești tot suportul necesar pentru a reuși în fiecare etapă.
+                  Dacă după demonstrație vrei să începi, nu primești doar un material — primești un cadru complet de implementare cu tot suportul necesar pentru a reuși în primele cazuri.
                 </p>
 
                 {/* Produse fizice */}
