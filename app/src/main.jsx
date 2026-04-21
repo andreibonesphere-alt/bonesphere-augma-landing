@@ -12,6 +12,7 @@ function Router() {
   if (page === '/confidentialitate') return <Confidentialitate />
   if (page === '/termeni-si-conditii') return <TermeniConditii />
   if (page === '/politica-cookies') return <PoliticaCookies />
+  if (page === '/demonstratie' || page === '/') return <App />
   return <App />
 }
 
