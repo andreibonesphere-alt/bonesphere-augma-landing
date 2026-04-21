@@ -61,7 +61,7 @@ function Section({ title, children }) {
 function PageFooter() {
   return (
     <footer style={{ borderTop: '1px solid rgba(0,0,0,0.08)', padding: '20px 24px', textAlign: 'center' }}>
-      <p style={{ fontSize: 12, color: 'rgba(63,72,76,0.5)', margin: 0 }}>© 2026 SC Bonesphere SRL · J40/506/2018 · CUI: RO38700141</p>
+      <p style={{ fontSize: 12, color: 'rgba(63,72,76,0.5)', margin: 0 }}>© 2025 SC Bonesphere SRL · J40/506/2018 · CUI: RO38700141</p>
     </footer>
   )
 }
