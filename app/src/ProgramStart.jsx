@@ -146,7 +146,7 @@ function Nav() {
     if (scrolled && menuOpen) setMenuOpen(false)
   }, [scrolled])
 
-  const navLinks = [['Știință', '#proof'], ['Beneficii', '#benefits'], ['Dovezi', '#proof'], ['Testimoniale', '#testimonials']]
+  const navLinks = [['Știință', '#form-section'], ['Beneficii', '#benefits'], ['Dovezi', '#proof'], ['Testimoniale', '#testimonials']]
 
   const active = scrolled || menuOpen
   const blurVal = isMobile ? 'none' : 'blur(12px)'
@@ -212,7 +212,7 @@ function Nav() {
                 transition: 'background 0.3s',
               }}
             >
-              Demonstrație
+              Aplică acum
             </motion.a>
           )}
 
@@ -277,7 +277,7 @@ function Nav() {
           onClick={(e) => { setMenuOpen(false); scrollToForm(e) }}
           style={{ marginTop: 16, display: 'block', background: '#004a5d', color: 'white', padding: '16px 24px', fontSize: 15, fontWeight: 600, borderRadius: 2, textDecoration: 'none', textAlign: 'center' }}
         >
-          Demonstrație
+          Aplică acum
         </a>
       </div>
       )}
@@ -456,10 +456,10 @@ function Hero() {
                 whileTap={{ scale: 0.97 }}
                 style={{ display: 'block', width: '100%', background: '#ffffff', color: '#004a5d', padding: '18px 32px', fontSize: 15, fontWeight: 700, borderRadius: 2, boxShadow: '0 8px 32px rgba(0,0,0,0.3)', textDecoration: 'none', textAlign: 'center' }}
               >
-                Cereți demonstrația clinică
+                Vreau să văd dacă acest protocol mi se potrivește
               </motion.a>
               <p style={{ fontSize: 12, color: 'rgba(255,255,255,0.4)', fontWeight: 500, margin: 0 }}>
-                20 de minute la dumneavoastră la cabinet.
+                Completezi formularul, iar noi revenim pentru a evalua dacă are sens pentru cazurile tale.
               </p>
             </motion.div>
 
@@ -593,9 +593,9 @@ function ProductExplanation() {
         <div className="two-col" style={{ alignItems: 'start' }}>
           <div className="product-text">
             <FadeUp>
-              <span style={{ fontSize: 11, fontWeight: 700, color: '#00637c', textTransform: 'uppercase', letterSpacing: '0.2em' }}>Tehnologia din spate</span>
+              <span style={{ fontSize: 11, fontWeight: 700, color: '#00637c', textTransform: 'uppercase', letterSpacing: '0.2em' }}>Ce este</span>
               <h2 style={{ fontFamily: 'Newsreader, serif', fontSize: 'clamp(32px, 4vw, 56px)', fontWeight: 700, color: '#004a5d', lineHeight: 1.1, marginTop: 12, marginBottom: 0 }}>
-                Ce este{' '}
+                Ce este, concret,{' '}
                 <em style={{ color: '#00637c', fontStyle: 'italic' }}>Bond Apatite</em>
               </h2>
             </FadeUp>
@@ -741,7 +741,7 @@ function Benefits() {
               De ce Bond Apatite<br />schimbă augmentarea osoasă
             </h2>
             <p style={{ fontSize: 17, color: '#3f484c', maxWidth: 640, margin: '0 auto', lineHeight: 1.7 }}>
-              Cele mai importante avantaje clinice care fac diferența dintre un protocol încărcat de variabile și unul simplu, predictibil, controlabil.
+              Ce citești mai jos nu sunt simple afirmații comerciale - sunt cele mai importante avantaje clinice care fac diferența dintre un protocol încărcat de variabile și unul simplu, predictibil, controlabil.
             </p>
           </div>
         </FadeUp>
@@ -1599,13 +1599,13 @@ function Offer() {
             <FadeUp>
               <div style={{ display: 'flex', flexDirection: 'column', gap: 28 }}>
                 <span style={{ display: 'inline-block', background: 'rgba(255,255,255,0.1)', padding: '6px 16px', borderRadius: 999, fontSize: 11, fontWeight: 700, letterSpacing: '0.2em', textTransform: 'uppercase', color: '#89d0ed', width: 'fit-content' }}>
-                  Pasul următor
+                  Program Implementare
                 </span>
                 <h2 style={{ fontFamily: 'Newsreader, serif', fontSize: 'clamp(36px, 4.5vw, 60px)', fontWeight: 700, lineHeight: 1.05, margin: 0 }}>
-                  Primele dumneavoastră 6 cazuri clinice de succes
+                  Primele tale 6 cazuri clinice de succes
                 </h2>
                 <p style={{ color: 'rgba(143,191,202,0.8)', fontSize: 16, lineHeight: 1.7, margin: 0 }}>
-                  Nu primești doar un material — primești un cadru complet de implementare cu tot suportul necesar pentru a reuși în primele cazuri.
+                  Programul este construit ca un cadru de implementare, nu ca o simplă listă de produse. Primești tot suportul necesar în fiecare etapă.
                 </p>
 
                 {/* Produse fizice */}
@@ -1628,15 +1628,27 @@ function Offer() {
                   whileTap={{ scale: 0.98 }}
                   style={{ display: 'inline-flex', alignItems: 'center', gap: 10, background: 'white', color: '#004a5d', padding: '14px 28px', borderRadius: 999, fontSize: 14, fontWeight: 700, textDecoration: 'none', width: 'fit-content', boxShadow: '0 8px 24px rgba(0,0,0,0.2)' }}
                 >
-                  Cereți demonstrația clinică
+                  Aplică pentru Program
                   <svg style={{ width: 16, height: 16 }} fill="none" viewBox="0 0 24 24">
                     <path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                   </svg>
                 </motion.a>
 
-                <p style={{ fontSize: 13, color: 'rgba(255,255,255,0.45)', margin: 0, paddingTop: 4 }}>
-                  Demonstrația durează 20 de minute, la dumneavoastră la cabinet. Fără obligații comerciale.
-                </p>
+                {/* Garanție + scarcity */}
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 12, paddingTop: 20, borderTop: '1px solid rgba(255,255,255,0.1)' }}>
+                  <div style={{ display: 'flex', alignItems: 'flex-start', gap: 12, fontSize: 13, color: 'rgba(255,255,255,0.75)' }}>
+                    <svg style={{ width: 18, height: 18, color: '#89d0ed', flexShrink: 0, marginTop: 1 }} fill="none" viewBox="0 0 24 24">
+                      <path d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" stroke="currentColor" strokeWidth="1.5"/>
+                    </svg>
+                    <span>Garanție: Lucrăm cu tine până finalizezi cu succes toate cele 6 cazuri.</span>
+                  </div>
+                  <div style={{ display: 'flex', alignItems: 'flex-start', gap: 12, fontSize: 13, color: '#89d0ed', fontWeight: 600 }}>
+                    <svg style={{ width: 18, height: 18, flexShrink: 0, marginTop: 1 }} fill="none" viewBox="0 0 24 24">
+                      <path d="M12 9v4m0 4h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z" stroke="currentColor" strokeWidth="1.5"/>
+                    </svg>
+                    <span>Limitat: Maximum 10–12 medici pe lună pentru suport real.</span>
+                  </div>
+                </div>
               </div>
             </FadeUp>
 
@@ -1695,14 +1707,16 @@ function LeadForm() {
   const handleSubmit = async (e) => {
     e.preventDefault()
     const fd = new FormData(e.target)
-    const name   = fd.get('name')
-    const phone  = fd.get('phone')
-    const clinic = fd.get('clinic') || '—'
+    const name  = fd.get('name')
+    const email = fd.get('email')
+    const phone = fd.get('phone')
+    const aug   = fd.get('aug') || '—'
+    const cases = fd.get('cases') || '—'
 
-    await fetch('/api/contact', {
+    await fetch('/api/apply', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ name, phone, clinic }),
+      body: JSON.stringify({ name, email, phone, aug, cases }),
     }).catch(() => {})
 
     setSubmitted(true)
@@ -1735,12 +1749,12 @@ function LeadForm() {
       <div style={{ maxWidth: 720, margin: '0 auto' }}>
         <FadeUp>
           <div style={{ textAlign: 'center', marginBottom: 56 }}>
-            <span style={{ fontSize: 11, fontWeight: 700, color: '#00637c', textTransform: 'uppercase', letterSpacing: '0.2em', display: 'block', marginBottom: 16 }}>LA CABINETUL DUMNEAVOASTRĂ · 20 DE MINUTE</span>
+            <span style={{ fontSize: 11, fontWeight: 700, color: '#00637c', textTransform: 'uppercase', letterSpacing: '0.2em', display: 'block', marginBottom: 16 }}>Formular de aplicare</span>
             <h2 style={{ fontFamily: 'Newsreader, serif', fontSize: 'clamp(28px, 4vw, 52px)', fontWeight: 700, color: '#004a5d', lineHeight: 1.1, marginBottom: 16 }}>
-              Demonstrație gratuită la cabinetul dumneavoastră.
+              Dacă vrei să vedem dacă Bond Apatite are sens pentru cazurile tale
             </h2>
-            <p style={{ color: '#3f484c', maxWidth: 480, margin: '0 auto', lineHeight: 1.7 }}>
-              Vin cu materialul, o seringă de test și cazuri clinice documentate. 20 de minute hands-on — fără obligații comerciale, după care lucrați cu Bond Apatite în cunoștință deplină de cauză.
+            <p style={{ color: '#3f484c', maxWidth: 440, margin: '0 auto', lineHeight: 1.7 }}>
+              Completarea formularului nu înseamnă comandă. Este primul pas — după care analizăm împreună dacă protocolul se potrivește cu ce faci tu în cabinet.
             </p>
           </div>
         </FadeUp>
@@ -1755,7 +1769,7 @@ function LeadForm() {
                   </svg>
                 </div>
                 <h3 style={{ fontFamily: 'Newsreader, serif', fontSize: 28, fontWeight: 700, color: '#004a5d' }}>Mulțumim!</h3>
-                <p style={{ color: '#3f484c', lineHeight: 1.7 }}>Vă scriem sau sunăm în maxim 24h pentru a stabili o oră convenabilă. Demonstrația durează ~20 de minute, la cabinetul dumneavoastră.</p>
+                <p style={{ color: '#3f484c', lineHeight: 1.7 }}>Vom reveni cu o analiză personalizată pentru cazurile tale în cel mai scurt timp.</p>
               </motion.div>
             ) : (
               <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: 28 }}>
@@ -1764,19 +1778,27 @@ function LeadForm() {
                   <input required name="name" type="text" placeholder="Ex: Dr. Andrei Popescu" onFocus={() => setFocused('name')} onBlur={() => setFocused(null)} style={inputStyle('name')} />
                 </div>
                 <div>
+                  <label style={labelStyle}>Email <span style={{ color: '#004a5d' }}>*</span></label>
+                  <input required name="email" type="email" placeholder="doctor@clinica.ro" onFocus={() => setFocused('email')} onBlur={() => setFocused(null)} style={inputStyle('email')} />
+                </div>
+                <div>
                   <label style={labelStyle}>Telefon <span style={{ color: '#004a5d' }}>*</span></label>
                   <input required name="phone" type="tel" placeholder="07xx xxx xxx" onFocus={() => setFocused('phone')} onBlur={() => setFocused(null)} style={inputStyle('phone')} />
                 </div>
                 <div>
-                  <label style={labelStyle}>Clinică / Oraș <span style={{ color: '#004a5d' }}>*</span></label>
-                  <input required name="clinic" type="text" placeholder="Ex: Clinica Dent, Cluj-Napoca" onFocus={() => setFocused('clinic')} onBlur={() => setFocused(null)} style={inputStyle('clinic')} />
+                  <label style={labelStyle}>Ce tip de augmentări faci deja?</label>
+                  <input name="aug" type="text" placeholder="Ex: Sinus lift, GBR clasic, alveolă post-extracție" onFocus={() => setFocused('aug')} onBlur={() => setFocused(null)} style={inputStyle('aug')} />
                 </div>
-                <div style={{ display: 'flex', alignItems: 'flex-start', gap: 10 }}>
-                  <input required type="checkbox" id="gdpr" name="gdpr" style={{ marginTop: 3, flexShrink: 0, accentColor: '#004a5d', width: 16, height: 16, cursor: 'pointer' }} />
-                  <label htmlFor="gdpr" style={{ fontSize: 12, color: '#3f484c', lineHeight: 1.6, cursor: 'pointer' }}>
-                    Sunt de acord cu prelucrarea datelor personale conform{' '}
-                    <a href="/confidentialitate" target="_blank" style={{ color: '#004a5d', textDecoration: 'underline' }}>Politicii de Confidențialitate</a>.
-                  </label>
+                <div>
+                  <label style={labelStyle}>Ce cazuri ai vrea să tratezi mai predictibil?</label>
+                  <textarea
+                    name="cases"
+                    rows={3}
+                    placeholder="Ex: Defecte orizontale mari, cazuri cu os cortical subțire, pacienți cu cicatrizare lentă..."
+                    onFocus={() => setFocused('cases')}
+                    onBlur={() => setFocused(null)}
+                    style={{ ...inputStyle('cases'), resize: 'none', lineHeight: 1.6, paddingTop: 10 }}
+                  />
                 </div>
                 <motion.button
                   type="submit"
@@ -1784,7 +1806,7 @@ function LeadForm() {
                   whileTap={{ scale: 0.98 }}
                   style={{ background: '#004a5d', color: 'white', padding: '18px 0', borderRadius: 2, fontWeight: 600, fontSize: 16, border: 'none', cursor: 'pointer', transition: 'all 0.3s', fontFamily: 'Inter, sans-serif', width: '100%' }}
                 >
-                  Cereți demonstrația clinică
+                  Trimite detaliile pentru analiză
                 </motion.button>
               </form>
             )}
@@ -1802,8 +1824,10 @@ function FinalCTA() {
       <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(ellipse at center, rgba(0,99,124,0.07) 0%, transparent 70%)', pointerEvents: 'none' }} />
       <FadeUp>
         <h2 style={{ fontFamily: 'Newsreader, serif', fontSize: 'clamp(28px, 6vw, 80px)', fontWeight: 700, color: '#004a5d', lineHeight: 1.15, letterSpacing: '-0.02em', maxWidth: 900, margin: '0 auto 40px' }}>
-          Un protocol nou.{' '}
-          <em style={{ color: '#00637c', fontStyle: 'italic' }}>Vedeți-l în acțiune.</em>
+          Mai puține variabile.{' '}
+          <em style={{ color: '#00637c', fontStyle: 'italic' }}>Mai mult control.</em>
+          <br />
+          Mai multă încredere în primele cazuri.
         </h2>
         <motion.a
           href="#form-section"
@@ -1813,7 +1837,7 @@ function FinalCTA() {
           style={{ display: 'inline-block', background: '#004a5d', color: 'white', padding: '20px 40px', borderRadius: 2, fontSize: 16, fontWeight: 600, boxShadow: '0 12px 32px rgba(0,74,93,0.2)', textDecoration: 'none', transition: 'all 0.3s' }}
           className="cta-btn"
         >
-          Cereți demonstrația clinică
+          Vreau să văd dacă acest protocol mi se potrivește
         </motion.a>
       </FadeUp>
     </section>
@@ -1826,8 +1850,6 @@ function Footer() {
   return (
     <footer style={{ background: '#004a5d', color: 'white', padding: '56px 24px 32px' }}>
       <div style={{ maxWidth: 1280, margin: '0 auto', display: 'flex', flexDirection: 'column', gap: 40 }}>
-
-        {/* Top: logo + date firmă */}
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: 48, justifyContent: 'space-between' }}>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
             <img src="/logo-white.png" alt="Bonesphere" style={{ height: 24, width: 'auto', display: 'block' }} />
@@ -1838,8 +1860,6 @@ function Footer() {
               <p style={{ margin: 0 }}>office@bonesphere.ro · 0737 178 774</p>
             </div>
           </div>
-
-          {/* Linkuri legale */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
             <p style={{ margin: 0, fontSize: 11, fontWeight: 700, letterSpacing: '0.15em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.35)' }}>Legal</p>
             <a href="/termeni-si-conditii" style={linkStyle}>Termeni și Condiții</a>
@@ -1847,8 +1867,6 @@ function Footer() {
             <a href="/politica-cookies" style={linkStyle}>Politică Cookies</a>
           </div>
         </div>
-
-        {/* ANPC buttons */}
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: 16 }}>
           <a href="https://ec.europa.eu/consumers/odr/main/index.cfm?event=main.home2.show&lng=RO" target="_blank" rel="noreferrer"
             style={{ display: 'inline-flex', flexDirection: 'column', alignItems: 'center', gap: 8, background: 'white', color: '#004a5d', borderRadius: 12, padding: '12px 20px', textDecoration: 'none', minWidth: 180 }}>
@@ -1864,8 +1882,6 @@ function Footer() {
             </div>
           </a>
         </div>
-
-        {/* Bottom */}
         <div style={{ borderTop: '1px solid rgba(255,255,255,0.1)', paddingTop: 24, display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between', gap: 12 }}>
           <p style={{ margin: 0, fontSize: 12, color: 'rgba(255,255,255,0.3)' }}>© 2026 SC Bonesphere SRL. Toate drepturile rezervate.</p>
           <a href="https://www.bonesphere.ro" target="_blank" rel="noreferrer" style={{ fontSize: 12, color: 'rgba(255,255,255,0.35)', textDecoration: 'none' }}>
@@ -1874,6 +1890,39 @@ function Footer() {
         </div>
       </div>
     </footer>
+  )
+}
+
+/* ─── Cookie Banner ─── */
+function CookieBanner() {
+  const [visible, setVisible] = useState(() => !localStorage.getItem('cookie_consent'))
+  const accept = () => { localStorage.setItem('cookie_consent', 'accepted'); setVisible(false) }
+  if (!visible) return null
+  return (
+    <motion.div
+      initial={{ y: 100, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      exit={{ y: 100, opacity: 0 }}
+      transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+      style={{ position: 'fixed', bottom: 0, left: 0, right: 0, zIndex: 9999, background: '#004a5d', color: 'white', padding: '20px 24px', boxShadow: '0 -8px 32px rgba(0,0,0,0.2)' }}
+    >
+      <div style={{ maxWidth: 1280, margin: '0 auto', display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between', gap: 16 }}>
+        <p style={{ margin: 0, fontSize: 13, color: 'rgba(255,255,255,0.85)', lineHeight: 1.6, maxWidth: 700 }}>
+          Folosim cookie-uri pentru a analiza traficul și a îmbunătăți experiența pe site.{' '}
+          <a href="/politica-cookies" style={{ color: '#89d0ed', textDecoration: 'underline' }}>Politică Cookies</a>
+        </p>
+        <div style={{ display: 'flex', gap: 12, flexShrink: 0 }}>
+          <button onClick={() => { localStorage.setItem('cookie_consent', 'rejected'); setVisible(false) }}
+            style={{ background: 'transparent', border: '1px solid rgba(255,255,255,0.3)', color: 'rgba(255,255,255,0.7)', padding: '10px 20px', borderRadius: 2, fontSize: 13, cursor: 'pointer', fontFamily: 'Inter, sans-serif' }}>
+            Refuz
+          </button>
+          <button onClick={accept}
+            style={{ background: 'white', color: '#004a5d', padding: '10px 24px', borderRadius: 2, fontSize: 13, fontWeight: 700, cursor: 'pointer', border: 'none', fontFamily: 'Inter, sans-serif' }}>
+            Accept
+          </button>
+        </div>
+      </div>
+    </motion.div>
   )
 }
 
@@ -2031,50 +2080,7 @@ style.textContent = `
 document.head.appendChild(style)
 
 /* ─── App root ─── */
-/* ─── Cookie Banner ─── */
-function CookieBanner() {
-  const [visible, setVisible] = useState(() => !localStorage.getItem('cookie_consent'))
-
-  const accept = () => {
-    localStorage.setItem('cookie_consent', 'accepted')
-    setVisible(false)
-  }
-
-  if (!visible) return null
-
-  return (
-    <motion.div
-      initial={{ y: 100, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
-      exit={{ y: 100, opacity: 0 }}
-      transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-      style={{ position: 'fixed', bottom: 0, left: 0, right: 0, zIndex: 9999, background: '#004a5d', color: 'white', padding: '20px 24px', boxShadow: '0 -8px 32px rgba(0,0,0,0.2)' }}
-    >
-      <div style={{ maxWidth: 1280, margin: '0 auto', display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between', gap: 16 }}>
-        <p style={{ margin: 0, fontSize: 13, color: 'rgba(255,255,255,0.85)', lineHeight: 1.6, maxWidth: 700 }}>
-          Folosim cookie-uri pentru a analiza traficul și a îmbunătăți experiența pe site. Prin continuarea navigării, ești de acord cu utilizarea acestora. {' '}
-          <a href="/politica-cookies" style={{ color: '#89d0ed', textDecoration: 'underline' }}>Politică Cookies</a>
-        </p>
-        <div style={{ display: 'flex', gap: 12, flexShrink: 0 }}>
-          <button
-            onClick={() => { localStorage.setItem('cookie_consent', 'rejected'); setVisible(false) }}
-            style={{ background: 'transparent', border: '1px solid rgba(255,255,255,0.3)', color: 'rgba(255,255,255,0.7)', padding: '10px 20px', borderRadius: 2, fontSize: 13, cursor: 'pointer', fontFamily: 'Inter, sans-serif' }}
-          >
-            Refuz
-          </button>
-          <button
-            onClick={accept}
-            style={{ background: 'white', color: '#004a5d', padding: '10px 24px', borderRadius: 2, fontSize: 13, fontWeight: 700, cursor: 'pointer', border: 'none', fontFamily: 'Inter, sans-serif' }}
-          >
-            Accept
-          </button>
-        </div>
-      </div>
-    </motion.div>
-  )
-}
-
-export default function App() {
+export default function ProgramStart() {
   return (
     <>
       <Nav />
