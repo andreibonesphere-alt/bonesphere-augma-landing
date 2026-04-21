@@ -1868,8 +1868,11 @@ function Footer() {
         </div>
 
         {/* Bottom */}
-        <div style={{ borderTop: '1px solid rgba(255,255,255,0.1)', paddingTop: 24 }}>
+        <div style={{ borderTop: '1px solid rgba(255,255,255,0.1)', paddingTop: 24, display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between', gap: 12 }}>
           <p style={{ margin: 0, fontSize: 12, color: 'rgba(255,255,255,0.3)' }}>© 2026 SC Bonesphere SRL. Toate drepturile rezervate.</p>
+          <a href="https://www.bonesphere.ro" target="_blank" rel="noreferrer" style={{ fontSize: 12, color: 'rgba(255,255,255,0.35)', textDecoration: 'none' }}>
+            www.bonesphere.ro
+          </a>
         </div>
       </div>
     </footer>
