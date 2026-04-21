@@ -456,10 +456,10 @@ function Hero() {
                 whileTap={{ scale: 0.97 }}
                 style={{ display: 'block', width: '100%', background: '#ffffff', color: '#004a5d', padding: '18px 32px', fontSize: 15, fontWeight: 700, borderRadius: 2, boxShadow: '0 8px 32px rgba(0,0,0,0.3)', textDecoration: 'none', textAlign: 'center' }}
               >
-                Vreau să văd dacă acest program mi se potrivește
+                Programează un demo gratuit
               </motion.a>
               <p style={{ fontSize: 12, color: 'rgba(255,255,255,0.4)', fontWeight: 500, margin: 0 }}>
-                Completezi formularul, iar noi revenim pentru a evalua dacă are sens pentru cazurile tale.
+                20 de minute. Fără angajament.
               </p>
             </motion.div>
 
@@ -1599,13 +1599,13 @@ function Offer() {
             <FadeUp>
               <div style={{ display: 'flex', flexDirection: 'column', gap: 28 }}>
                 <span style={{ display: 'inline-block', background: 'rgba(255,255,255,0.1)', padding: '6px 16px', borderRadius: 999, fontSize: 11, fontWeight: 700, letterSpacing: '0.2em', textTransform: 'uppercase', color: '#89d0ed', width: 'fit-content' }}>
-                  Ce urmează după demo
+                  Ce primești
                 </span>
                 <h2 style={{ fontFamily: 'Newsreader, serif', fontSize: 'clamp(36px, 4.5vw, 60px)', fontWeight: 700, lineHeight: 1.05, margin: 0 }}>
                   Primele tale 6 cazuri clinice de succes
                 </h2>
                 <p style={{ color: 'rgba(143,191,202,0.8)', fontSize: 16, lineHeight: 1.7, margin: 0 }}>
-                  Dacă după demo decide că are sens, îți punem la dispoziție tot ce îți trebuie pentru a implementa cu succes primele cazuri — produse, suport clinic și ghidaj pas cu pas.
+                  Un cadru complet de implementare, nu o simplă listă de produse. Primești tot suportul necesar pentru a reuși în fiecare etapă.
                 </p>
 
                 {/* Produse fizice */}
@@ -1830,7 +1830,7 @@ function FinalCTA() {
           style={{ display: 'inline-block', background: '#004a5d', color: 'white', padding: '20px 40px', borderRadius: 2, fontSize: 16, fontWeight: 600, boxShadow: '0 12px 32px rgba(0,74,93,0.2)', textDecoration: 'none', transition: 'all 0.3s' }}
           className="cta-btn"
         >
-          Vreau să văd dacă acest program mi se potrivește
+          Programează un demo gratuit
         </motion.a>
       </FadeUp>
     </section>
