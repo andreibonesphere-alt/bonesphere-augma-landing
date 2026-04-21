@@ -1829,13 +1829,52 @@ function FinalCTA() {
 
 /* ─── Footer ─── */
 function Footer() {
+  const linkStyle = { color: 'rgba(255,255,255,0.55)', fontSize: 13, textDecoration: 'none', transition: 'color 0.2s' }
   return (
-    <footer style={{ background: '#f6f3f2', padding: '28px 20px', borderTop: '1px solid rgba(191,200,205,0.2)' }}>
-      <div className="footer-inner" style={{ maxWidth: 1536, margin: '0 auto', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-        <img src="/logo-teal.png" alt="Bonesphere" style={{ height: 20, width: 'auto', display: 'block', opacity: 0.5 }} />
-        <div style={{ display: 'flex', alignItems: 'center', gap: 20 }}>
-          <a href="/confidentialitate" style={{ color: 'rgba(63,72,76,0.5)', fontSize: 11, letterSpacing: '0.05em', textDecoration: 'none' }}>Politică de confidențialitate</a>
-          <p style={{ color: 'rgba(63,72,76,0.6)', fontSize: 11, letterSpacing: '0.05em', margin: 0 }}>© 2025 Bonesphere. Toate drepturile rezervate.</p>
+    <footer style={{ background: '#004a5d', color: 'white', padding: '56px 24px 32px' }}>
+      <div style={{ maxWidth: 1280, margin: '0 auto', display: 'flex', flexDirection: 'column', gap: 40 }}>
+
+        {/* Top: logo + date firmă */}
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 48, justifyContent: 'space-between' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+            <img src="/logo-white.png" alt="Bonesphere" style={{ height: 24, width: 'auto', display: 'block' }} />
+            <div style={{ fontSize: 13, color: 'rgba(255,255,255,0.6)', lineHeight: 1.9 }}>
+              <p style={{ margin: 0 }}>BONESPHERE S.R.L.</p>
+              <p style={{ margin: 0 }}>Bd. Iuliu Maniu 6L, Campus 6.1, București, 061103</p>
+              <p style={{ margin: 0 }}>Reg. Com: J40/506/2018 · CUI: RO38700141</p>
+              <p style={{ margin: 0 }}>office@bonesphere.ro · 0737 178 774</p>
+            </div>
+          </div>
+
+          {/* Linkuri legale */}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+            <p style={{ margin: 0, fontSize: 11, fontWeight: 700, letterSpacing: '0.15em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.35)' }}>Legal</p>
+            <a href="/termeni-si-conditii" style={linkStyle}>Termeni și Condiții</a>
+            <a href="/confidentialitate" style={linkStyle}>Politică de Confidențialitate</a>
+            <a href="/politica-cookies" style={linkStyle}>Politică Cookies</a>
+          </div>
+        </div>
+
+        {/* ANPC buttons */}
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 16 }}>
+          <a href="https://ec.europa.eu/consumers/odr/main/index.cfm?event=main.home2.show&lng=RO" target="_blank" rel="noreferrer"
+            style={{ display: 'inline-flex', flexDirection: 'column', alignItems: 'center', gap: 8, background: 'white', color: '#004a5d', borderRadius: 12, padding: '12px 20px', textDecoration: 'none', minWidth: 180 }}>
+            <span style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', textAlign: 'center', lineHeight: 1.4 }}>Soluționarea Online<br />a Litigiilor</span>
+            <span style={{ fontSize: 11, fontWeight: 700, color: '#004a5d', border: '1px solid #004a5d', borderRadius: 999, padding: '2px 12px' }}>DETALII</span>
+          </a>
+          <a href="https://anpc.ro/ce-este-sal/" target="_blank" rel="noreferrer"
+            style={{ display: 'inline-flex', alignItems: 'center', gap: 12, background: 'white', color: '#004a5d', borderRadius: 12, padding: '12px 20px', textDecoration: 'none', minWidth: 180 }}>
+            <img src="https://anpc.ro/wp-content/uploads/2021/06/logo-ANPC-SAL.png" alt="ANPC" style={{ height: 36 }} onError={e => e.target.style.display='none'} />
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
+              <span style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', lineHeight: 1.4 }}>Soluționarea Alternativă<br />a Litigiilor</span>
+              <span style={{ fontSize: 11, fontWeight: 700, color: '#004a5d', border: '1px solid #004a5d', borderRadius: 999, padding: '2px 12px', width: 'fit-content' }}>DETALII</span>
+            </div>
+          </a>
+        </div>
+
+        {/* Bottom */}
+        <div style={{ borderTop: '1px solid rgba(255,255,255,0.1)', paddingTop: 24 }}>
+          <p style={{ margin: 0, fontSize: 12, color: 'rgba(255,255,255,0.3)' }}>© 2025 SC Bonesphere SRL. Toate drepturile rezervate.</p>
         </div>
       </div>
     </footer>
