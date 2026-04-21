@@ -1599,13 +1599,13 @@ function Offer() {
             <FadeUp>
               <div style={{ display: 'flex', flexDirection: 'column', gap: 28 }}>
                 <span style={{ display: 'inline-block', background: 'rgba(255,255,255,0.1)', padding: '6px 16px', borderRadius: 999, fontSize: 11, fontWeight: 700, letterSpacing: '0.2em', textTransform: 'uppercase', color: '#89d0ed', width: 'fit-content' }}>
-                  Program Implementare
+                  Ce urmează după demo
                 </span>
                 <h2 style={{ fontFamily: 'Newsreader, serif', fontSize: 'clamp(36px, 4.5vw, 60px)', fontWeight: 700, lineHeight: 1.05, margin: 0 }}>
                   Primele tale 6 cazuri clinice de succes
                 </h2>
                 <p style={{ color: 'rgba(143,191,202,0.8)', fontSize: 16, lineHeight: 1.7, margin: 0 }}>
-                  Programul este construit ca un cadru de implementare, nu ca o simplă listă de produse. Primești tot suportul necesar în fiecare etapă.
+                  Dacă după demo decide că are sens, îți punem la dispoziție tot ce îți trebuie pentru a implementa cu succes primele cazuri — produse, suport clinic și ghidaj pas cu pas.
                 </p>
 
                 {/* Produse fizice */}
@@ -1628,27 +1628,15 @@ function Offer() {
                   whileTap={{ scale: 0.98 }}
                   style={{ display: 'inline-flex', alignItems: 'center', gap: 10, background: 'white', color: '#004a5d', padding: '14px 28px', borderRadius: 999, fontSize: 14, fontWeight: 700, textDecoration: 'none', width: 'fit-content', boxShadow: '0 8px 24px rgba(0,0,0,0.2)' }}
                 >
-                  Aplică pentru Program
+                  Programează un demo
                   <svg style={{ width: 16, height: 16 }} fill="none" viewBox="0 0 24 24">
                     <path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                   </svg>
                 </motion.a>
 
-                {/* Garanție + scarcity */}
-                <div style={{ display: 'flex', flexDirection: 'column', gap: 12, paddingTop: 20, borderTop: '1px solid rgba(255,255,255,0.1)' }}>
-                  <div style={{ display: 'flex', alignItems: 'flex-start', gap: 12, fontSize: 13, color: 'rgba(255,255,255,0.75)' }}>
-                    <svg style={{ width: 18, height: 18, color: '#89d0ed', flexShrink: 0, marginTop: 1 }} fill="none" viewBox="0 0 24 24">
-                      <path d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" stroke="currentColor" strokeWidth="1.5"/>
-                    </svg>
-                    <span>Garanție: Lucrăm cu tine până finalizezi cu succes toate cele 6 cazuri.</span>
-                  </div>
-                  <div style={{ display: 'flex', alignItems: 'flex-start', gap: 12, fontSize: 13, color: '#89d0ed', fontWeight: 600 }}>
-                    <svg style={{ width: 18, height: 18, flexShrink: 0, marginTop: 1 }} fill="none" viewBox="0 0 24 24">
-                      <path d="M12 9v4m0 4h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z" stroke="currentColor" strokeWidth="1.5"/>
-                    </svg>
-                    <span>Limitat: Maximum 10–12 medici pe lună pentru suport real.</span>
-                  </div>
-                </div>
+                <p style={{ fontSize: 13, color: 'rgba(255,255,255,0.45)', margin: 0, paddingTop: 4 }}>
+                  Fără angajament. Demo-ul durează 20 de minute.
+                </p>
               </div>
             </FadeUp>
 
