@@ -1776,6 +1776,13 @@ function LeadForm() {
                   <label style={labelStyle}>Clinică / Oraș <span style={{ color: '#004a5d' }}>*</span></label>
                   <input required name="clinic" type="text" placeholder="Ex: Clinica Dent, Cluj-Napoca" onFocus={() => setFocused('clinic')} onBlur={() => setFocused(null)} style={inputStyle('clinic')} />
                 </div>
+                <div style={{ display: 'flex', alignItems: 'flex-start', gap: 10 }}>
+                  <input required type="checkbox" id="gdpr" name="gdpr" style={{ marginTop: 3, flexShrink: 0, accentColor: '#004a5d', width: 16, height: 16, cursor: 'pointer' }} />
+                  <label htmlFor="gdpr" style={{ fontSize: 12, color: '#3f484c', lineHeight: 1.6, cursor: 'pointer' }}>
+                    Sunt de acord cu prelucrarea datelor personale conform{' '}
+                    <a href="/confidentialitate" target="_blank" style={{ color: '#004a5d', textDecoration: 'underline' }}>Politicii de Confidențialitate</a>.
+                  </label>
+                </div>
                 <motion.button
                   type="submit"
                   whileHover={{ y: -2, boxShadow: '0 20px 40px rgba(0,74,93,0.25)' }}
@@ -1826,9 +1833,10 @@ function Footer() {
     <footer style={{ background: '#f6f3f2', padding: '28px 20px', borderTop: '1px solid rgba(191,200,205,0.2)' }}>
       <div className="footer-inner" style={{ maxWidth: 1536, margin: '0 auto', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
         <img src="/logo-teal.png" alt="Bonesphere" style={{ height: 20, width: 'auto', display: 'block', opacity: 0.5 }} />
-        <p style={{ color: 'rgba(63,72,76,0.6)', fontSize: 11, letterSpacing: '0.05em', margin: 0 }}>
-          © 2025 Bonesphere. Toate drepturile rezervate.
-        </p>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 20 }}>
+          <a href="/confidentialitate" style={{ color: 'rgba(63,72,76,0.5)', fontSize: 11, letterSpacing: '0.05em', textDecoration: 'none' }}>Politică de confidențialitate</a>
+          <p style={{ color: 'rgba(63,72,76,0.6)', fontSize: 11, letterSpacing: '0.05em', margin: 0 }}>© 2025 Bonesphere. Toate drepturile rezervate.</p>
+        </div>
       </div>
     </footer>
   )
