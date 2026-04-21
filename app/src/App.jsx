@@ -1874,7 +1874,7 @@ function Footer() {
 
         {/* Bottom */}
         <div style={{ borderTop: '1px solid rgba(255,255,255,0.1)', paddingTop: 24 }}>
-          <p style={{ margin: 0, fontSize: 12, color: 'rgba(255,255,255,0.3)' }}>© 2025 SC Bonesphere SRL. Toate drepturile rezervate.</p>
+          <p style={{ margin: 0, fontSize: 12, color: 'rgba(255,255,255,0.3)' }}>© 2026 SC Bonesphere SRL. Toate drepturile rezervate.</p>
         </div>
       </div>
     </footer>
