@@ -456,7 +456,7 @@ function Hero() {
                 whileTap={{ scale: 0.97 }}
                 style={{ display: 'block', width: '100%', background: '#ffffff', color: '#004a5d', padding: '18px 32px', fontSize: 15, fontWeight: 700, borderRadius: 2, boxShadow: '0 8px 32px rgba(0,0,0,0.3)', textDecoration: 'none', textAlign: 'center' }}
               >
-                Programează un demo gratuit
+                Programează o demonstrație gratuită
               </motion.a>
               <p style={{ fontSize: 12, color: 'rgba(255,255,255,0.4)', fontWeight: 500, margin: 0 }}>
                 20 de minute. Fără angajament.
@@ -1628,14 +1628,14 @@ function Offer() {
                   whileTap={{ scale: 0.98 }}
                   style={{ display: 'inline-flex', alignItems: 'center', gap: 10, background: 'white', color: '#004a5d', padding: '14px 28px', borderRadius: 999, fontSize: 14, fontWeight: 700, textDecoration: 'none', width: 'fit-content', boxShadow: '0 8px 24px rgba(0,0,0,0.2)' }}
                 >
-                  Programează un demo
+                  Programează o demonstrație
                   <svg style={{ width: 16, height: 16 }} fill="none" viewBox="0 0 24 24">
                     <path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                   </svg>
                 </motion.a>
 
                 <p style={{ fontSize: 13, color: 'rgba(255,255,255,0.45)', margin: 0, paddingTop: 4 }}>
-                  Fără angajament. Demo-ul durează 20 de minute.
+                  Fără angajament. Demonstrația durează 20 de minute.
                 </p>
               </div>
             </FadeUp>
@@ -1742,12 +1742,12 @@ function LeadForm() {
       <div style={{ maxWidth: 720, margin: '0 auto' }}>
         <FadeUp>
           <div style={{ textAlign: 'center', marginBottom: 56 }}>
-            <span style={{ fontSize: 11, fontWeight: 700, color: '#00637c', textTransform: 'uppercase', letterSpacing: '0.2em', display: 'block', marginBottom: 16 }}>Formular de aplicare</span>
+            <span style={{ fontSize: 11, fontWeight: 700, color: '#00637c', textTransform: 'uppercase', letterSpacing: '0.2em', display: 'block', marginBottom: 16 }}>Demonstrație gratuită</span>
             <h2 style={{ fontFamily: 'Newsreader, serif', fontSize: 'clamp(28px, 4vw, 52px)', fontWeight: 700, color: '#004a5d', lineHeight: 1.1, marginBottom: 16 }}>
-              Dacă vrei să vedem dacă Bond Apatite are sens pentru cazurile tale
+              Rezervă 20 de minute cu echipa Augma
             </h2>
             <p style={{ color: '#3f484c', maxWidth: 440, margin: '0 auto', lineHeight: 1.7 }}>
-              Completarea formularului nu înseamnă comandă. Este primul pas — după care analizăm împreună dacă protocolul se potrivește cu ce faci tu în cabinet.
+              Completezi datele de mai jos, te sunăm în maxim 24h să stabilim data și ora. Fără angajament.
             </p>
           </div>
         </FadeUp>
@@ -1762,7 +1762,7 @@ function LeadForm() {
                   </svg>
                 </div>
                 <h3 style={{ fontFamily: 'Newsreader, serif', fontSize: 28, fontWeight: 700, color: '#004a5d' }}>Mulțumim!</h3>
-                <p style={{ color: '#3f484c', lineHeight: 1.7 }}>Vom reveni cu o analiză personalizată pentru cazurile tale în cel mai scurt timp.</p>
+                <p style={{ color: '#3f484c', lineHeight: 1.7 }}>Te contactăm în maxim 24h pentru a stabili data și ora demonstrației.</p>
               </motion.div>
             ) : (
               <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: 28 }}>
@@ -1779,19 +1779,8 @@ function LeadForm() {
                   <input required name="phone" type="tel" placeholder="07xx xxx xxx" onFocus={() => setFocused('phone')} onBlur={() => setFocused(null)} style={inputStyle('phone')} />
                 </div>
                 <div>
-                  <label style={labelStyle}>Ce tip de augmentări faci deja?</label>
-                  <input name="aug" type="text" placeholder="Ex: Sinus lift, GBR clasic, alveolă post-extracție" onFocus={() => setFocused('aug')} onBlur={() => setFocused(null)} style={inputStyle('aug')} />
-                </div>
-                <div>
-                  <label style={labelStyle}>Ce cazuri ai vrea să tratezi mai predictibil?</label>
-                  <textarea
-                    name="cases"
-                    rows={3}
-                    placeholder="Ex: Defecte orizontale mari, cazuri cu os cortical subțire, pacienți cu cicatrizare lentă..."
-                    onFocus={() => setFocused('cases')}
-                    onBlur={() => setFocused(null)}
-                    style={{ ...inputStyle('cases'), resize: 'none', lineHeight: 1.6, paddingTop: 10 }}
-                  />
+                  <label style={labelStyle}>Specializare / tip de cazuri</label>
+                  <input name="aug" type="text" placeholder="Ex: implantologie, chirurgie orală, parodontologie" onFocus={() => setFocused('aug')} onBlur={() => setFocused(null)} style={inputStyle('aug')} />
                 </div>
                 <motion.button
                   type="submit"
@@ -1799,7 +1788,7 @@ function LeadForm() {
                   whileTap={{ scale: 0.98 }}
                   style={{ background: '#004a5d', color: 'white', padding: '18px 0', borderRadius: 2, fontWeight: 600, fontSize: 16, border: 'none', cursor: 'pointer', transition: 'all 0.3s', fontFamily: 'Inter, sans-serif', width: '100%' }}
                 >
-                  Trimite detaliile pentru analiză
+                  Rezervă demonstrația gratuită
                 </motion.button>
               </form>
             )}
@@ -1830,7 +1819,7 @@ function FinalCTA() {
           style={{ display: 'inline-block', background: '#004a5d', color: 'white', padding: '20px 40px', borderRadius: 2, fontSize: 16, fontWeight: 600, boxShadow: '0 12px 32px rgba(0,74,93,0.2)', textDecoration: 'none', transition: 'all 0.3s' }}
           className="cta-btn"
         >
-          Programează un demo gratuit
+          Programează o demonstrație gratuită
         </motion.a>
       </FadeUp>
     </section>
