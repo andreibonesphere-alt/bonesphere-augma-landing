@@ -1740,7 +1740,7 @@ function LeadForm() {
               Demonstrație gratuită la cabinetul dumneavoastră.
             </h2>
             <p style={{ color: '#3f484c', maxWidth: 480, margin: '0 auto', lineHeight: 1.7 }}>
-              Vin cu materialul, o seringă de test și cazuri clinice documentate. 20 de minute hands-on — fără obligații comerciale, după care lucrați cu Bond Apatite în cunoștință deplină de cauză.
+              Un specialist Bonesphere vine la cabinetul dumneavoastră pregătit pentru o sesiune hands-on de 20 de minute — fără obligații comerciale, după care lucrați cu Bond Apatite în cunoștință deplină de cauză.
             </p>
           </div>
         </FadeUp>
