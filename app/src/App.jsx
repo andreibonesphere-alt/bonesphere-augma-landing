@@ -212,7 +212,7 @@ function Nav() {
                 transition: 'background 0.3s',
               }}
             >
-              Aplică acum
+              Demonstrație gratuită
             </motion.a>
           )}
 
@@ -277,7 +277,7 @@ function Nav() {
           onClick={(e) => { setMenuOpen(false); scrollToForm(e) }}
           style={{ marginTop: 16, display: 'block', background: '#004a5d', color: 'white', padding: '16px 24px', fontSize: 15, fontWeight: 600, borderRadius: 2, textDecoration: 'none', textAlign: 'center' }}
         >
-          Aplică acum
+          Demonstrație gratuită
         </a>
       </div>
       )}
