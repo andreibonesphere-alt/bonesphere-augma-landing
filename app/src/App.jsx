@@ -1688,26 +1688,21 @@ function Offer() {
 }
 
 /* ─── Lead Form ─── */
-const TG_TOKEN = '8312004137:AAHrvV4oOQE_-D4C-SkP9rNiDE5zC4fi2QM'
-const TG_CHAT  = '8642371131'
-
 function LeadForm() {
   const [focused, setFocused] = useState(null)
   const [submitted, setSubmitted] = useState(false)
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
     const fd = new FormData(e.target)
     const name   = fd.get('name')
     const phone  = fd.get('phone')
     const clinic = fd.get('clinic') || '—'
 
-    const text = `🦷 *Demonstrație nouă — Bonesphere*\n\n👤 *Nume:* ${name}\n📞 *Telefon:* ${phone}\n🏥 *Clinică / Oraș:* ${clinic}`
-
-    fetch(`https://api.telegram.org/bot${TG_TOKEN}/sendMessage`, {
+    await fetch('/api/contact', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ chat_id: TG_CHAT, text, parse_mode: 'Markdown' }),
+      body: JSON.stringify({ name, phone, clinic }),
     }).catch(() => {})
 
     setSubmitted(true)
@@ -2035,6 +2030,49 @@ style.textContent = `
 document.head.appendChild(style)
 
 /* ─── App root ─── */
+/* ─── Cookie Banner ─── */
+function CookieBanner() {
+  const [visible, setVisible] = useState(() => !localStorage.getItem('cookie_consent'))
+
+  const accept = () => {
+    localStorage.setItem('cookie_consent', 'accepted')
+    setVisible(false)
+  }
+
+  if (!visible) return null
+
+  return (
+    <motion.div
+      initial={{ y: 100, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      exit={{ y: 100, opacity: 0 }}
+      transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+      style={{ position: 'fixed', bottom: 0, left: 0, right: 0, zIndex: 9999, background: '#004a5d', color: 'white', padding: '20px 24px', boxShadow: '0 -8px 32px rgba(0,0,0,0.2)' }}
+    >
+      <div style={{ maxWidth: 1280, margin: '0 auto', display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between', gap: 16 }}>
+        <p style={{ margin: 0, fontSize: 13, color: 'rgba(255,255,255,0.85)', lineHeight: 1.6, maxWidth: 700 }}>
+          Folosim cookie-uri pentru a analiza traficul și a îmbunătăți experiența pe site. Prin continuarea navigării, ești de acord cu utilizarea acestora. {' '}
+          <a href="/politica-cookies" style={{ color: '#89d0ed', textDecoration: 'underline' }}>Politică Cookies</a>
+        </p>
+        <div style={{ display: 'flex', gap: 12, flexShrink: 0 }}>
+          <button
+            onClick={() => { localStorage.setItem('cookie_consent', 'rejected'); setVisible(false) }}
+            style={{ background: 'transparent', border: '1px solid rgba(255,255,255,0.3)', color: 'rgba(255,255,255,0.7)', padding: '10px 20px', borderRadius: 2, fontSize: 13, cursor: 'pointer', fontFamily: 'Inter, sans-serif' }}
+          >
+            Refuz
+          </button>
+          <button
+            onClick={accept}
+            style={{ background: 'white', color: '#004a5d', padding: '10px 24px', borderRadius: 2, fontSize: 13, fontWeight: 700, cursor: 'pointer', border: 'none', fontFamily: 'Inter, sans-serif' }}
+          >
+            Accept
+          </button>
+        </div>
+      </div>
+    </motion.div>
+  )
+}
+
 export default function App() {
   return (
     <>
@@ -2053,6 +2091,7 @@ export default function App() {
         <FinalCTA />
       </main>
       <Footer />
+      <CookieBanner />
     </>
   )
 }

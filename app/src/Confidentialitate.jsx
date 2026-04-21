@@ -38,7 +38,11 @@ export default function Confidentialitate() {
         </Section>
 
         <Section title="4. Cui transmitem datele">
-          Datele nu sunt vândute sau transferate către terți în scop publicitar. Utilizăm furnizori de servicii (hosting, email, CRM) care prelucrează datele strict în baza unor acorduri contractuale conforme GDPR (Art. 28).
+          Datele nu sunt vândute sau transferate către terți în scop publicitar. Utilizăm următorii furnizori de servicii care prelucrează datele strict în baza unor acorduri contractuale conforme GDPR (Art. 28):
+          <ul>
+            <li><strong>Vercel Inc.</strong> — hosting și infrastructură (SUA, cu clauze contractuale standard UE)</li>
+            <li><strong>Telegram Messenger Inc.</strong> — notificări interne privind cererile de demonstrație primite prin formular. Datele transmise (nume, telefon, clinică/oraș) sunt folosite exclusiv în acest scop și nu sunt partajate cu terți.</li>
+          </ul>
         </Section>
 
         <Section title="5. Cât timp păstrăm datele">
