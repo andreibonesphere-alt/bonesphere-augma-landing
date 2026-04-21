@@ -1698,13 +1698,11 @@ function LeadForm() {
   const handleSubmit = (e) => {
     e.preventDefault()
     const fd = new FormData(e.target)
-    const name  = fd.get('name')
-    const email = fd.get('email')
-    const phone = fd.get('phone')
-    const aug   = fd.get('aug') || '—'
-    const cases = fd.get('cases') || '—'
+    const name   = fd.get('name')
+    const phone  = fd.get('phone')
+    const clinic = fd.get('clinic') || '—'
 
-    const text = `🦷 *Lead nou — Bonesphere*\n\n👤 *Nume:* ${name}\n📧 *Email:* ${email}\n📞 *Telefon:* ${phone}\n\n🔧 *Augmentări actuale:*\n${aug}\n\n📋 *Cazuri de tratat:*\n${cases}`
+    const text = `🦷 *Demonstrație nouă — Bonesphere*\n\n👤 *Nume:* ${name}\n📞 *Telefon:* ${phone}\n🏥 *Clinică / Oraș:* ${clinic}`
 
     fetch(`https://api.telegram.org/bot${TG_TOKEN}/sendMessage`, {
       method: 'POST',
@@ -1742,12 +1740,12 @@ function LeadForm() {
       <div style={{ maxWidth: 720, margin: '0 auto' }}>
         <FadeUp>
           <div style={{ textAlign: 'center', marginBottom: 56 }}>
-            <span style={{ fontSize: 11, fontWeight: 700, color: '#00637c', textTransform: 'uppercase', letterSpacing: '0.2em', display: 'block', marginBottom: 16 }}>Demonstrație gratuită</span>
+            <span style={{ fontSize: 11, fontWeight: 700, color: '#00637c', textTransform: 'uppercase', letterSpacing: '0.2em', display: 'block', marginBottom: 16 }}>20 MINUTE · LA CABINETUL DVS. · FĂRĂ OBLIGAȚII</span>
             <h2 style={{ fontFamily: 'Newsreader, serif', fontSize: 'clamp(28px, 4vw, 52px)', fontWeight: 700, color: '#004a5d', lineHeight: 1.1, marginBottom: 16 }}>
-              Rezervă 20 de minute cu echipa Augma
+              Vedeți Bond Apatite în acțiune. La dvs. la cabinet.
             </h2>
-            <p style={{ color: '#3f484c', maxWidth: 440, margin: '0 auto', lineHeight: 1.7 }}>
-              Completezi datele de mai jos, te sunăm în maxim 24h să stabilim data și ora. Fără angajament.
+            <p style={{ color: '#3f484c', maxWidth: 480, margin: '0 auto', lineHeight: 1.7 }}>
+              Vin la cabinetul dvs. cu kit-ul de prezentare. Vedeți materialul în acțiune, hands-on cu seringa de test. Fără obligații.
             </p>
           </div>
         </FadeUp>
@@ -1771,16 +1769,12 @@ function LeadForm() {
                   <input required name="name" type="text" placeholder="Ex: Dr. Andrei Popescu" onFocus={() => setFocused('name')} onBlur={() => setFocused(null)} style={inputStyle('name')} />
                 </div>
                 <div>
-                  <label style={labelStyle}>Email <span style={{ color: '#004a5d' }}>*</span></label>
-                  <input required name="email" type="email" placeholder="doctor@clinica.ro" onFocus={() => setFocused('email')} onBlur={() => setFocused(null)} style={inputStyle('email')} />
-                </div>
-                <div>
                   <label style={labelStyle}>Telefon <span style={{ color: '#004a5d' }}>*</span></label>
                   <input required name="phone" type="tel" placeholder="07xx xxx xxx" onFocus={() => setFocused('phone')} onBlur={() => setFocused(null)} style={inputStyle('phone')} />
                 </div>
                 <div>
-                  <label style={labelStyle}>Specializare / tip de cazuri</label>
-                  <input name="aug" type="text" placeholder="Ex: implantologie, chirurgie orală, parodontologie" onFocus={() => setFocused('aug')} onBlur={() => setFocused(null)} style={inputStyle('aug')} />
+                  <label style={labelStyle}>Clinică / Oraș <span style={{ color: '#004a5d' }}>*</span></label>
+                  <input required name="clinic" type="text" placeholder="Ex: Clinica Dent, Cluj-Napoca" onFocus={() => setFocused('clinic')} onBlur={() => setFocused(null)} style={inputStyle('clinic')} />
                 </div>
                 <motion.button
                   type="submit"
@@ -1788,7 +1782,7 @@ function LeadForm() {
                   whileTap={{ scale: 0.98 }}
                   style={{ background: '#004a5d', color: 'white', padding: '18px 0', borderRadius: 2, fontWeight: 600, fontSize: 16, border: 'none', cursor: 'pointer', transition: 'all 0.3s', fontFamily: 'Inter, sans-serif', width: '100%' }}
                 >
-                  Rezervă demonstrația gratuită
+                  Programează demonstrația
                 </motion.button>
               </form>
             )}
