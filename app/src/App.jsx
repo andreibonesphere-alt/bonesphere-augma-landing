@@ -1185,14 +1185,32 @@ const clinicalCasesData = [
 function ClinicalCases() {
   const [active, setActive] = useState(null)
   const [activePhoto, setActivePhoto] = useState(0)
+  const scrollBodyRef = useRef(null)
 
   useEffect(() => {
     if (active !== null) {
-      document.body.style.overflow = 'hidden'
+      const scrollY = window.scrollY
+      document.body.style.position = 'fixed'
+      document.body.style.top = `-${scrollY}px`
+      document.body.style.width = '100%'
+      document.body.dataset.scrollY = scrollY
+      if (scrollBodyRef.current) scrollBodyRef.current.scrollTop = 0
     } else {
-      document.body.style.overflow = ''
+      const scrollY = parseInt(document.body.dataset.scrollY || '0', 10)
+      document.body.style.position = ''
+      document.body.style.top = ''
+      document.body.style.width = ''
+      delete document.body.dataset.scrollY
+      window.scrollTo(0, scrollY)
     }
-    return () => { document.body.style.overflow = '' }
+    return () => {
+      const scrollY = parseInt(document.body.dataset.scrollY || '0', 10)
+      document.body.style.position = ''
+      document.body.style.top = ''
+      document.body.style.width = ''
+      delete document.body.dataset.scrollY
+      window.scrollTo(0, scrollY)
+    }
   }, [active])
 
   const openCase = (c) => { setActive(c); setActivePhoto(0) }
@@ -1265,10 +1283,11 @@ function ClinicalCases() {
             transition={{ duration: 0.25 }}
             onClick={closeCase}
             style={{
-              position: 'fixed', inset: 0, zIndex: 300,
+              position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, zIndex: 9000,
+              height: '100dvh',
               background: 'rgba(0,12,18,0.8)', backdropFilter: 'blur(10px)',
               display: 'flex', alignItems: 'center', justifyContent: 'center',
-              padding: '16px',
+              padding: '72px 16px 16px',
             }}
           >
             <motion.div
@@ -1280,7 +1299,7 @@ function ClinicalCases() {
               style={{
                 background: '#fff', borderRadius: 24,
                 width: '100%', maxWidth: 960,
-                maxHeight: '92vh', overflow: 'hidden',
+                maxHeight: 'calc(100vh - 88px)', overflow: 'hidden',
                 display: 'flex', flexDirection: 'column',
               }}
             >
@@ -1305,7 +1324,7 @@ function ClinicalCases() {
               </div>
 
               {/* Scrollable body */}
-              <div style={{ overflowY: 'auto', flex: 1 }}>
+              <div ref={scrollBodyRef} style={{ overflowY: 'auto', flex: 1 }}>
                 {/* Photo viewer */}
                 <div style={{ background: '#0b1d24', position: 'relative' }}>
                   {/* Main photo */}
@@ -1740,7 +1759,7 @@ function LeadForm() {
               Demonstrație gratuită la cabinetul dumneavoastră.
             </h2>
             <p style={{ color: '#3f484c', maxWidth: 480, margin: '0 auto', lineHeight: 1.7 }}>
-              Un specialist Bonesphere vine la cabinetul dumneavoastră pregătit pentru o sesiune hands-on de 20 de minute — fără obligații comerciale, după care lucrați cu Bond Apatite în cunoștință deplină de cauză.
+              Un specialist Bonesphere vine la cabinetul dumneavoastră pregătit pentru o sesiune <em>hands-on</em> de 20 de minute.
             </p>
           </div>
         </FadeUp>
