@@ -1287,7 +1287,7 @@ function ClinicalCases() {
               style={{
                 background: '#fff', borderRadius: 24,
                 width: '100%', maxWidth: 960,
-                maxHeight: 'calc(100vh - 88px)', overflow: 'hidden',
+                maxHeight: 'calc(100dvh - 88px)', overflow: 'hidden',
                 display: 'flex', flexDirection: 'column',
               }}
             >
