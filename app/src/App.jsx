@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+import { createPortal } from 'react-dom'
 import { motion, useScroll, useTransform, useInView, AnimatePresence } from 'framer-motion'
 
 const scrollToForm = (e) => {
@@ -793,18 +794,22 @@ function SolutionsCarousel() {
   const next = () => goTo(active + 1)
 
   const arrowStyle = {
-    background: 'rgba(255,255,255,0.22)',
-    border: '1.5px solid rgba(255,255,255,0.55)',
-    color: 'white',
-    width: 48, height: 48,
+    position: 'absolute',
+    top: '50%',
+    transform: 'translateY(-50%)',
+    background: '#ffffff',
+    border: 'none',
+    color: '#004a5d',
+    width: 44, height: 44,
     borderRadius: '50%',
-    fontSize: 26,
+    fontSize: 24,
     cursor: 'pointer',
     display: 'flex', alignItems: 'center', justifyContent: 'center',
-    flexShrink: 0,
+    zIndex: 10,
     lineHeight: 1,
     padding: 0,
-    boxShadow: '0 2px 12px rgba(0,0,0,0.25)',
+    boxShadow: '0 4px 16px rgba(0,0,0,0.45)',
+    fontWeight: 700,
   }
 
   return (
@@ -823,8 +828,8 @@ function SolutionsCarousel() {
         </FadeUp>
 
         {/* Carousel row */}
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 16 }}>
-          <button onClick={prev} style={arrowStyle}>‹</button>
+        <div style={{ position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+          <button onClick={prev} style={{ ...arrowStyle, left: 12 }}>‹</button>
 
           {/* 3D track */}
           <div style={{
@@ -951,7 +956,7 @@ function SolutionsCarousel() {
             })}
           </div>
 
-          <button onClick={next} style={arrowStyle}>›</button>
+          <button onClick={next} style={{ ...arrowStyle, right: 12 }}>›</button>
         </div>
 
         {/* Dot navigation */}
@@ -1186,6 +1191,7 @@ function ClinicalCases() {
   const [active, setActive] = useState(null)
   const [activePhoto, setActivePhoto] = useState(0)
   const scrollBodyRef = useRef(null)
+  const isMobile = useIsMobile()
 
   useEffect(() => {
     if (active !== null) {
@@ -1262,7 +1268,8 @@ function ClinicalCases() {
         </div>
       </div>
 
-      {/* Modal lightbox */}
+      {/* Modal lightbox — rendered via portal to escape content-visibility containment on sections */}
+      {createPortal(
       <AnimatePresence>
         {active && (
           <motion.div
@@ -1271,11 +1278,13 @@ function ClinicalCases() {
             exit={{ opacity: 0 }}
             transition={{ duration: 0.25 }}
             onClick={closeCase}
+            data-modal-overlay
             style={{
               position: 'fixed', inset: 0, zIndex: 9000,
               background: 'rgba(0,12,18,0.8)', backdropFilter: 'blur(10px)',
-              display: 'flex', alignItems: 'center', justifyContent: 'center',
-              padding: '72px 16px 16px',
+              display: 'flex', alignItems: isMobile ? 'flex-start' : 'center', justifyContent: 'center',
+              padding: isMobile ? '0' : '72px 16px 16px',
+              touchAction: 'none',
             }}
           >
             <motion.div
@@ -1285,9 +1294,12 @@ function ClinicalCases() {
               transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
               onClick={e => e.stopPropagation()}
               style={{
-                background: '#fff', borderRadius: 24,
+                background: '#fff',
+                borderRadius: isMobile ? 0 : 24,
                 width: '100%', maxWidth: 960,
-                maxHeight: 'calc(100dvh - 88px)', overflow: 'hidden',
+                maxHeight: isMobile ? '100dvh' : 'calc(100dvh - 88px)',
+                height: isMobile ? '100dvh' : 'auto',
+                overflow: 'hidden',
                 display: 'flex', flexDirection: 'column',
               }}
             >
@@ -1396,6 +1408,7 @@ function ClinicalCases() {
           </motion.div>
         )}
       </AnimatePresence>
+      , document.body)}
     </>
   )
 }
@@ -1809,8 +1822,8 @@ function FinalCTA() {
       <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(ellipse at center, rgba(0,99,124,0.07) 0%, transparent 70%)', pointerEvents: 'none' }} />
       <FadeUp>
         <h2 style={{ fontFamily: 'Newsreader, serif', fontSize: 'clamp(28px, 6vw, 80px)', fontWeight: 700, color: '#004a5d', lineHeight: 1.15, letterSpacing: '-0.02em', maxWidth: 900, margin: '0 auto 40px' }}>
-          Un protocol nou.{' '}
-          <em style={{ color: '#00637c', fontStyle: 'italic' }}>Vedeți-l în acțiune.</em>
+          Mai puține variabile. Mai mult control.{' '}
+          <em style={{ color: '#00637c', fontStyle: 'italic' }}>Mai multă încredere în primele cazuri.</em>
         </h2>
         <motion.a
           href="#form-section"

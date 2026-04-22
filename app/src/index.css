@@ -88,6 +88,11 @@ img {
   * {
     touch-action: pan-y;
   }
+
+  /* Allow modal overlay to capture all touch events */
+  [data-modal-overlay] * {
+    touch-action: auto;
+  }
 }
 
 .font-headline {
