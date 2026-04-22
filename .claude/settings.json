@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(gh api *)",
+      "Bash(curl -s \"https://augma-bond-apatite.vercel.app\")",
+      "Bash(git show *)",
+      "Read(//tmp/**)"
+    ]
+  }
+}
