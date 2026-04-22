@@ -147,7 +147,7 @@ function Nav() {
     if (scrolled && menuOpen) setMenuOpen(false)
   }, [scrolled])
 
-  const navLinks = [['Știință', '#proof'], ['Beneficii', '#benefits'], ['Dovezi', '#proof'], ['Testimoniale', '#testimonials']]
+  const navLinks = [['Cum funcționează', '#cum-functioneaza'], ['Beneficii', '#benefits'], ['Dovezi', '#proof'], ['Testimoniale', '#testimonials']]
 
   const active = scrolled || menuOpen
   const blurVal = isMobile ? 'none' : 'blur(12px)'
@@ -589,7 +589,7 @@ function ProductExplanation() {
   ]
 
   return (
-    <section className="section-pad" style={{ background: '#f6f3f2' }}>
+    <section id="cum-functioneaza" className="section-pad" style={{ background: '#f6f3f2' }}>
       <div style={{ maxWidth: 1280, margin: '0 auto' }}>
         <div className="two-col" style={{ alignItems: 'start' }}>
           <div className="product-text">
@@ -742,7 +742,7 @@ function Benefits() {
               De ce Bond Apatite<br />schimbă augmentarea osoasă
             </h2>
             <p style={{ fontSize: 17, color: '#3f484c', maxWidth: 640, margin: '0 auto', lineHeight: 1.7 }}>
-              Cele mai importante avantaje clinice care fac diferența dintre un protocol încărcat de variabile și unul simplu, predictibil, controlabil.
+              10 avantaje clinice care separă un protocol cu variabile minime de unul cu variabile pe care nu le controlezi niciodată complet.
             </p>
           </div>
         </FadeUp>
@@ -1422,7 +1422,7 @@ function Proof() {
           <div style={{ textAlign: 'center', marginBottom: 80 }}>
             <span style={{ fontSize: 11, fontWeight: 700, color: '#00637c', textTransform: 'uppercase', letterSpacing: '0.2em', display: 'block', marginBottom: 16 }}>Dovezi</span>
             <h2 style={{ fontFamily: 'Newsreader, serif', fontSize: 'clamp(32px, 4.5vw, 56px)', fontWeight: 700, color: '#004a5d', lineHeight: 1.1, margin: '0 0 16px' }}>
-              Ce susține această tehnologie
+              Histologie. Radiologie. Cazuri reale.
             </h2>
             <p style={{ color: '#3f484c', maxWidth: 520, margin: '0 auto', lineHeight: 1.7 }}>
               Bond Apatite merită evaluat nu doar prin manipulare, ci prin trei lucruri care contează clinic:{' '}
@@ -1625,7 +1625,7 @@ function Offer() {
                   Primele dumneavoastră 6 cazuri clinice de succes
                 </h2>
                 <p style={{ color: 'rgba(143,191,202,0.8)', fontSize: 16, lineHeight: 1.7, margin: 0 }}>
-                  Nu primești doar un material — primești un cadru complet de implementare cu tot suportul necesar pentru a reuși în primele cazuri.
+                  Programul este construit ca un cadru de implementare, nu ca o simplă listă de produse. Primiți tot suportul necesar în fiecare etapă — inclusiv review de protocol și analiză CBCT din partea echipei noastre și a Dr. Amos Yahav, DMD, inventatorul sulfatului de calciu bifazic.
                 </p>
 
                 {/* Produse fizice */}
@@ -1823,7 +1823,7 @@ function FinalCTA() {
       <FadeUp>
         <h2 style={{ fontFamily: 'Newsreader, serif', fontSize: 'clamp(28px, 6vw, 80px)', fontWeight: 700, color: '#004a5d', lineHeight: 1.15, letterSpacing: '-0.02em', maxWidth: 900, margin: '0 auto 40px' }}>
           Mai puține variabile. Mai mult control.{' '}
-          <em style={{ color: '#00637c', fontStyle: 'italic' }}>Mai multă încredere în primele cazuri.</em>
+          <em style={{ color: '#00637c', fontStyle: 'italic' }}>Rezultate pe care le puteți reproduce de fiecare dată.</em>
         </h2>
         <motion.a
           href="#form-section"

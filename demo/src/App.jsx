@@ -146,7 +146,7 @@ function Nav() {
     if (scrolled && menuOpen) setMenuOpen(false)
   }, [scrolled])
 
-  const navLinks = [['Știință', '#form-section'], ['Beneficii', '#benefits'], ['Dovezi', '#proof'], ['Testimoniale', '#testimonials']]
+  const navLinks = [['Cum funcționează', '#cum-functioneaza'], ['Beneficii', '#benefits'], ['Dovezi', '#proof'], ['Testimoniale', '#testimonials']]
 
   const active = scrolled || menuOpen
   const blurVal = isMobile ? 'none' : 'blur(12px)'
@@ -588,14 +588,14 @@ function ProductExplanation() {
   ]
 
   return (
-    <section className="section-pad" style={{ background: '#f6f3f2' }}>
+    <section id="cum-functioneaza" className="section-pad" style={{ background: '#f6f3f2' }}>
       <div style={{ maxWidth: 1280, margin: '0 auto' }}>
         <div className="two-col" style={{ alignItems: 'start' }}>
           <div className="product-text">
             <FadeUp>
               <span style={{ fontSize: 11, fontWeight: 700, color: '#00637c', textTransform: 'uppercase', letterSpacing: '0.2em' }}>Ce este</span>
               <h2 style={{ fontFamily: 'Newsreader, serif', fontSize: 'clamp(32px, 4vw, 56px)', fontWeight: 700, color: '#004a5d', lineHeight: 1.1, marginTop: 12, marginBottom: 0 }}>
-                Ce este, concret,{' '}
+                Ce este{' '}
                 <em style={{ color: '#00637c', fontStyle: 'italic' }}>Bond Apatite</em>
               </h2>
             </FadeUp>
@@ -741,7 +741,7 @@ function Benefits() {
               De ce Bond Apatite<br />schimbă augmentarea osoasă
             </h2>
             <p style={{ fontSize: 17, color: '#3f484c', maxWidth: 640, margin: '0 auto', lineHeight: 1.7 }}>
-              Ce citești mai jos nu sunt simple afirmații comerciale - sunt cele mai importante avantaje clinice care fac diferența dintre un protocol încărcat de variabile și unul simplu, predictibil, controlabil.
+              10 avantaje clinice care separă un protocol cu variabile minime de unul cu variabile pe care nu le controlezi niciodată complet.
             </p>
           </div>
         </FadeUp>
@@ -1419,7 +1419,7 @@ function Proof() {
           <div style={{ textAlign: 'center', marginBottom: 80 }}>
             <span style={{ fontSize: 11, fontWeight: 700, color: '#00637c', textTransform: 'uppercase', letterSpacing: '0.2em', display: 'block', marginBottom: 16 }}>Dovezi</span>
             <h2 style={{ fontFamily: 'Newsreader, serif', fontSize: 'clamp(32px, 4.5vw, 56px)', fontWeight: 700, color: '#004a5d', lineHeight: 1.1, margin: '0 0 16px' }}>
-              Ce susține această tehnologie
+              Histologie. Radiologie. Cazuri reale.
             </h2>
             <p style={{ color: '#3f484c', maxWidth: 520, margin: '0 auto', lineHeight: 1.7 }}>
               Bond Apatite merită evaluat nu doar prin manipulare, ci prin trei lucruri care contează clinic:{' '}
@@ -1619,10 +1619,10 @@ function Offer() {
                   Program Implementare
                 </span>
                 <h2 style={{ fontFamily: 'Newsreader, serif', fontSize: 'clamp(36px, 4.5vw, 60px)', fontWeight: 700, lineHeight: 1.05, margin: 0 }}>
-                  Primele tale 6 cazuri clinice de succes
+                  Primele dumneavoastră 6 cazuri clinice de succes
                 </h2>
                 <p style={{ color: 'rgba(143,191,202,0.8)', fontSize: 16, lineHeight: 1.7, margin: 0 }}>
-                  Programul este construit ca un cadru de implementare, nu ca o simplă listă de produse. Primești tot suportul necesar în fiecare etapă.
+                  Programul este construit ca un cadru de implementare, nu ca o simplă listă de produse. Primiți tot suportul necesar în fiecare etapă.
                 </p>
 
                 {/* Produse fizice */}
@@ -1657,7 +1657,7 @@ function Offer() {
                     <svg style={{ width: 18, height: 18, color: '#89d0ed', flexShrink: 0, marginTop: 1 }} fill="none" viewBox="0 0 24 24">
                       <path d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" stroke="currentColor" strokeWidth="1.5"/>
                     </svg>
-                    <span>Garanție: Lucrăm cu tine până finalizezi cu succes toate cele 6 cazuri.</span>
+                    <span>Suport garantat: Fiecare caz din program beneficiază de review de protocol și analiză CBCT din partea echipei noastre și a Dr. Amos Yahav, DMD, inventatorul sulfatului de calciu bifazic.</span>
                   </div>
                   <div style={{ display: 'flex', alignItems: 'flex-start', gap: 12, fontSize: 13, color: '#89d0ed', fontWeight: 600 }}>
                     <svg style={{ width: 18, height: 18, flexShrink: 0, marginTop: 1 }} fill="none" viewBox="0 0 24 24">
@@ -1807,7 +1807,7 @@ function LeadForm() {
                   <input required name="city" type="text" placeholder="Ex: Clinica Dent, Cluj-Napoca" onFocus={() => setFocused('city')} onBlur={() => setFocused(null)} style={inputStyle('city')} />
                 </div>
                 <div>
-                  <label style={labelStyle}>Când ești disponibil?</label>
+                  <label style={labelStyle}>Când sunteți disponibil?</label>
                   <input name="avail" type="text" placeholder="Ex: Luni după-amiază, săptămâna viitoare" onFocus={() => setFocused('avail')} onBlur={() => setFocused(null)} style={inputStyle('avail')} />
                 </div>
                 <div>
@@ -1840,7 +1840,7 @@ function FinalCTA() {
           Mai puține variabile.{' '}
           <em style={{ color: '#00637c', fontStyle: 'italic' }}>Mai mult control.</em>
           <br />
-          Mai multă încredere în primele cazuri.
+          Rezultate pe care le poți reproduce de fiecare dată.
         </h2>
         <motion.a
           href="#form-section"
