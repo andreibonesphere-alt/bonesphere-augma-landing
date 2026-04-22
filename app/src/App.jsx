@@ -1189,27 +1189,16 @@ function ClinicalCases() {
 
   useEffect(() => {
     if (active !== null) {
-      const scrollY = window.scrollY
-      document.body.style.position = 'fixed'
-      document.body.style.top = `-${scrollY}px`
-      document.body.style.width = '100%'
-      document.body.dataset.scrollY = scrollY
+      document.documentElement.style.overflow = 'hidden'
+      document.body.style.overflow = 'hidden'
       if (scrollBodyRef.current) scrollBodyRef.current.scrollTop = 0
     } else {
-      const scrollY = parseInt(document.body.dataset.scrollY || '0', 10)
-      document.body.style.position = ''
-      document.body.style.top = ''
-      document.body.style.width = ''
-      delete document.body.dataset.scrollY
-      window.scrollTo(0, scrollY)
+      document.documentElement.style.overflow = ''
+      document.body.style.overflow = ''
     }
     return () => {
-      const scrollY = parseInt(document.body.dataset.scrollY || '0', 10)
-      document.body.style.position = ''
-      document.body.style.top = ''
-      document.body.style.width = ''
-      delete document.body.dataset.scrollY
-      window.scrollTo(0, scrollY)
+      document.documentElement.style.overflow = ''
+      document.body.style.overflow = ''
     }
   }, [active])
 
@@ -1283,8 +1272,7 @@ function ClinicalCases() {
             transition={{ duration: 0.25 }}
             onClick={closeCase}
             style={{
-              position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, zIndex: 9000,
-              height: '100dvh',
+              position: 'fixed', inset: 0, zIndex: 9000,
               background: 'rgba(0,12,18,0.8)', backdropFilter: 'blur(10px)',
               display: 'flex', alignItems: 'center', justifyContent: 'center',
               padding: '72px 16px 16px',
