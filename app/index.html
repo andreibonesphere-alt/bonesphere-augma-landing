@@ -3,27 +3,36 @@
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/png" href="/favicon.png" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+
+    <!-- Preconnect to font CDN (parallel with HTML parse) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <!-- Critical fonts loaded in parallel (NOT via CSS @import which serializes) -->
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,700;1,6..72,400;1,6..72,700&family=Inter:wght@200;400;500;600;700&display=swap" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,700;1,6..72,400;1,6..72,700&family=Inter:wght@200;400;500;600;700&display=swap" />
 
     <!-- Primary meta -->
-    <title>Demonstrație Gratuită AUGMA Bond Apatite | Bonesphere România</title>
-    <meta name="description" content="Vedeți Bond Apatite în acțiune la cabinetul dvs. 20 de minute, fără obligații. Augmentare osoasă cu Sulfat de Calciu Bifazic — singurul brevetat din lume, premiat cu Thomas Edison Award 2019." />
+    <title>Program Implementare Augma Bond Apatite | Bonesphere România</title>
+    <meta name="description" content="Program de implementare Bond Apatite — 6 cazuri clinice ghidate, suport protocol, analiză CBCT. Augmentare osoasă cu Sulfat de Calciu Bifazic, singurul brevetat din lume." />
     <meta name="robots" content="index, follow" />
-    <link rel="canonical" href="https://start.bonesphere.ro/demonstratie" />
+    <link rel="canonical" href="https://start.bonesphere.ro" />
 
     <!-- Open Graph -->
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://start.bonesphere.ro/demonstratie" />
-    <meta property="og:title" content="Demonstrație Gratuită AUGMA Bond Apatite | Bonesphere" />
-    <meta property="og:description" content="Vedeți Bond Apatite în acțiune la cabinetul dvs. 20 de minute, fără obligații." />
+    <meta property="og:url" content="https://start.bonesphere.ro" />
+    <meta property="og:title" content="Program Implementare Augma Bond Apatite | Bonesphere" />
+    <meta property="og:description" content="Program de implementare Bond Apatite — 6 cazuri clinice ghidate, suport protocol, analiză CBCT. Augmentare osoasă cu Sulfat de Calciu Bifazic, singurul brevetat din lume." />
     <meta property="og:image" content="https://start.bonesphere.ro/logo-teal.png" />
     <meta property="og:locale" content="ro_RO" />
     <meta property="og:site_name" content="Bonesphere" />
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Demonstrație Gratuită AUGMA Bond Apatite | Bonesphere" />
-    <meta name="twitter:description" content="Vedeți Bond Apatite în acțiune la cabinetul dvs. 20 de minute, fără obligații." />
+    <meta name="twitter:title" content="Program Implementare Augma Bond Apatite | Bonesphere" />
+    <meta name="twitter:description" content="Program de implementare Bond Apatite — 6 cazuri clinice ghidate, suport protocol, analiză CBCT. Augmentare osoasă cu Sulfat de Calciu Bifazic, singurul brevetat din lume." />
     <meta name="twitter:image" content="https://start.bonesphere.ro/logo-teal.png" />
 
     <!-- Organization Schema -->
@@ -80,9 +89,25 @@
     }
     </script>
 
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
+    <!-- Facebook Pixel -->
+    <script>
+      !function(f,b,e,v,n,t,s)
+      {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+      n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+      if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+      n.queue=[];t=b.createElement(e);t.async=!0;
+      t.src=v;s=b.getElementsByTagName(e)[0];
+      s.parentNode.insertBefore(t,s)}(window, document,'script',
+      'https://connect.facebook.net/en_US/fbevents.js');
+      fbq('init', '706109200845109');
+      fbq('track', 'PageView');
+    </script>
+    <noscript>
+      <img height="1" width="1" style="display:none"
+        src="https://www.facebook.com/tr?id=706109200845109&ev=PageView&noscript=1"/>
+    </noscript>
+    <!-- End Facebook Pixel -->
+
   </head>
   <body>
     <div id="root"></div>

@@ -30,56 +30,56 @@ function useIsMobile() {
   }, [])
   return isMobile
 }
-import preOpImg from './assets/pre-op.png'
-import postOpImg from './assets/post-op.png'
-import histology12Img from './assets/histology-12-weeks.png'
-import histology8Img from './assets/histology-8-months.jpg'
-import radiologyPreOpImg from './assets/radiology-pre-op.jpg'
-import radiologyPostOpImg from './assets/radiology-post-op.jpg'
+import preOpImg from './assets/pre-op.webp'
+import postOpImg from './assets/post-op.webp'
+import histology12Img from './assets/histology-12-weeks.webp'
+import histology8Img from './assets/histology-8-months.webp'
+import radiologyPreOpImg from './assets/radiology-pre-op.webp'
+import radiologyPostOpImg from './assets/radiology-post-op.webp'
 import radiology1MonthImg from './assets/radiology-1-month.jpg'
 import radiology3MonthsImg from './assets/radiology-3-months.jpg'
 import radiologyCbctImg from './assets/radiology-cbct-triptych.jpg'
-import socketCoverImg from './assets/socket-cover.png'
-import caz1_01 from './assets/caz1-01-descriere.png'
-import caz1_02 from './assets/caz1-02-augmentare.png'
-import caz1_03 from './assets/caz1-03-extractie.png'
-import caz1_04 from './assets/caz1-04-bond-apatite.png'
-import caz1_05 from './assets/caz1-05-sutura.png'
-import caz1_06 from './assets/caz1-06-3luni.png'
-import caz1_07 from './assets/caz1-07-6luni.png'
-import caz1_08 from './assets/caz1-08-4ani-a.png'
-import caz1_09 from './assets/caz1-09-4ani-b.png'
-import caz1_10 from './assets/caz1-10-4ani-c.png'
-import caz2_01 from './assets/caz2-01.png'
+import socketCoverImg from './assets/socket-cover.webp'
+import caz1_01 from './assets/caz1-01-descriere.webp'
+import caz1_02 from './assets/caz1-02-augmentare.webp'
+import caz1_03 from './assets/caz1-03-extractie.webp'
+import caz1_04 from './assets/caz1-04-bond-apatite.webp'
+import caz1_05 from './assets/caz1-05-sutura.webp'
+import caz1_06 from './assets/caz1-06-3luni.webp'
+import caz1_07 from './assets/caz1-07-6luni.webp'
+import caz1_08 from './assets/caz1-08-4ani-a.webp'
+import caz1_09 from './assets/caz1-09-4ani-b.webp'
+import caz1_10 from './assets/caz1-10-4ani-c.webp'
+import caz2_01 from './assets/caz2-01.webp'
 import caz2_02 from './assets/caz2-02.jpeg'
-import caz2_03 from './assets/caz2-03.png'
-import caz2_04 from './assets/caz2-04.png'
-import caz2_05 from './assets/caz2-05.png'
-import caz2_06 from './assets/caz2-06.png'
-import caz2_07 from './assets/caz2-07.png'
-import caz2_08 from './assets/caz2-08.png'
-import caz2_09 from './assets/caz2-09.png'
-import caz2_10 from './assets/caz2-10.png'
-import caz2_11 from './assets/caz2-11.png'
-import caz2_12 from './assets/caz2-12.png'
-import caz2_13 from './assets/caz2-13.png'
-import caz2_14 from './assets/caz2-14.png'
-import caz2_15 from './assets/caz2-15.png'
-import caz3_01 from './assets/caz3-01.png'
-import caz3_02 from './assets/caz3-02.png'
-import caz3_03 from './assets/caz3-03.png'
-import caz3_04 from './assets/caz3-04.png'
-import caz3_05 from './assets/caz3-05.png'
-import caz3_06 from './assets/caz3-06.png'
-import caz3_07 from './assets/caz3-07.png'
-import caz3_08 from './assets/caz3-08.png'
-import caz3_09 from './assets/caz3-09.png'
-import caz3_10 from './assets/caz3-10.png'
-import caz3_11 from './assets/caz3-11.png'
-import caz3_12 from './assets/caz3-12.png'
-import testimonialBartos from './assets/testimonial-bartos.png'
-import testimonialParaschivescu from './assets/testimonial-paraschivescu.png'
-import testimonialCaruntu from './assets/testimonial-caruntu.png'
+import caz2_03 from './assets/caz2-03.webp'
+import caz2_04 from './assets/caz2-04.webp'
+import caz2_05 from './assets/caz2-05.webp'
+import caz2_06 from './assets/caz2-06.webp'
+import caz2_07 from './assets/caz2-07.webp'
+import caz2_08 from './assets/caz2-08.webp'
+import caz2_09 from './assets/caz2-09.webp'
+import caz2_10 from './assets/caz2-10.webp'
+import caz2_11 from './assets/caz2-11.webp'
+import caz2_12 from './assets/caz2-12.webp'
+import caz2_13 from './assets/caz2-13.webp'
+import caz2_14 from './assets/caz2-14.webp'
+import caz2_15 from './assets/caz2-15.webp'
+import caz3_01 from './assets/caz3-01.webp'
+import caz3_02 from './assets/caz3-02.webp'
+import caz3_03 from './assets/caz3-03.webp'
+import caz3_04 from './assets/caz3-04.webp'
+import caz3_05 from './assets/caz3-05.webp'
+import caz3_06 from './assets/caz3-06.webp'
+import caz3_07 from './assets/caz3-07.webp'
+import caz3_08 from './assets/caz3-08.webp'
+import caz3_09 from './assets/caz3-09.webp'
+import caz3_10 from './assets/caz3-10.webp'
+import caz3_11 from './assets/caz3-11.webp'
+import caz3_12 from './assets/caz3-12.webp'
+import testimonialBartos from './assets/testimonial-bartos.webp'
+import testimonialParaschivescu from './assets/testimonial-paraschivescu.webp'
+import testimonialCaruntu from './assets/testimonial-caruntu.webp'
 import socketIcon from './assets/solutions/socketAugma_icon_.svg'
 import lateralIcon from './assets/solutions/lateralAugma_icon_.svg'
 import sinusIcon from './assets/solutions/sinusAugma_icon_.svg'
@@ -706,7 +706,7 @@ function ProductExplanation() {
 
               {/* Syringe image — full height, transparent bg via multiply blend */}
               <motion.img
-                src="/seringa-verticala-2.png"
+                src="/seringa-verticala-2.webp"
                 alt="Seringa Bond Apatite"
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -1696,8 +1696,10 @@ function Offer() {
 
                 {/* Product image */}
                 <img
-                  src="/starter-kit.png"
+                  src="/starter-kit.webp"
                   alt="AUGMA Starter Kit — 6 seringi Bond Apatite + Augma Shield"
+                  fetchpriority="high"
+                  decoding="async"
                   style={{ width: '100%', maxWidth: 520, display: 'block', position: 'relative', filter: 'drop-shadow(0 40px 56px rgba(0,0,0,0.5)) drop-shadow(0 0 40px rgba(137,208,237,0.15))' }}
                 />
 

@@ -3,7 +3,10 @@ import { motion, useScroll, useTransform, useInView, AnimatePresence } from 'fra
 
 const scrollToForm = (e) => {
   if (e) e.preventDefault()
-  document.getElementById('form-section')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+  const el = document.getElementById('form-section')
+  if (!el) return
+  const top = el.getBoundingClientRect().top + window.pageYOffset
+  window.scrollTo({ top, behavior: 'smooth' })
 }
 
 /* ─── Mobile detection hook ─── */
@@ -17,56 +20,56 @@ function useIsMobile() {
   }, [])
   return isMobile
 }
-import preOpImg from './assets/pre-op.png'
-import postOpImg from './assets/post-op.png'
-import histology12Img from './assets/histology-12-weeks.png'
-import histology8Img from './assets/histology-8-months.jpg'
-import radiologyPreOpImg from './assets/radiology-pre-op.jpg'
-import radiologyPostOpImg from './assets/radiology-post-op.jpg'
+import preOpImg from './assets/pre-op.webp'
+import postOpImg from './assets/post-op.webp'
+import histology12Img from './assets/histology-12-weeks.webp'
+import histology8Img from './assets/histology-8-months.webp'
+import radiologyPreOpImg from './assets/radiology-pre-op.webp'
+import radiologyPostOpImg from './assets/radiology-post-op.webp'
 import radiology1MonthImg from './assets/radiology-1-month.jpg'
 import radiology3MonthsImg from './assets/radiology-3-months.jpg'
 import radiologyCbctImg from './assets/radiology-cbct-triptych.jpg'
-import socketCoverImg from './assets/socket-cover.png'
-import caz1_01 from './assets/caz1-01-descriere.png'
-import caz1_02 from './assets/caz1-02-augmentare.png'
-import caz1_03 from './assets/caz1-03-extractie.png'
-import caz1_04 from './assets/caz1-04-bond-apatite.png'
-import caz1_05 from './assets/caz1-05-sutura.png'
-import caz1_06 from './assets/caz1-06-3luni.png'
-import caz1_07 from './assets/caz1-07-6luni.png'
-import caz1_08 from './assets/caz1-08-4ani-a.png'
-import caz1_09 from './assets/caz1-09-4ani-b.png'
-import caz1_10 from './assets/caz1-10-4ani-c.png'
-import caz2_01 from './assets/caz2-01.png'
+import socketCoverImg from './assets/socket-cover.webp'
+import caz1_01 from './assets/caz1-01-descriere.webp'
+import caz1_02 from './assets/caz1-02-augmentare.webp'
+import caz1_03 from './assets/caz1-03-extractie.webp'
+import caz1_04 from './assets/caz1-04-bond-apatite.webp'
+import caz1_05 from './assets/caz1-05-sutura.webp'
+import caz1_06 from './assets/caz1-06-3luni.webp'
+import caz1_07 from './assets/caz1-07-6luni.webp'
+import caz1_08 from './assets/caz1-08-4ani-a.webp'
+import caz1_09 from './assets/caz1-09-4ani-b.webp'
+import caz1_10 from './assets/caz1-10-4ani-c.webp'
+import caz2_01 from './assets/caz2-01.webp'
 import caz2_02 from './assets/caz2-02.jpeg'
-import caz2_03 from './assets/caz2-03.png'
-import caz2_04 from './assets/caz2-04.png'
-import caz2_05 from './assets/caz2-05.png'
-import caz2_06 from './assets/caz2-06.png'
-import caz2_07 from './assets/caz2-07.png'
-import caz2_08 from './assets/caz2-08.png'
-import caz2_09 from './assets/caz2-09.png'
-import caz2_10 from './assets/caz2-10.png'
-import caz2_11 from './assets/caz2-11.png'
-import caz2_12 from './assets/caz2-12.png'
-import caz2_13 from './assets/caz2-13.png'
-import caz2_14 from './assets/caz2-14.png'
-import caz2_15 from './assets/caz2-15.png'
-import caz3_01 from './assets/caz3-01.png'
-import caz3_02 from './assets/caz3-02.png'
-import caz3_03 from './assets/caz3-03.png'
-import caz3_04 from './assets/caz3-04.png'
-import caz3_05 from './assets/caz3-05.png'
-import caz3_06 from './assets/caz3-06.png'
-import caz3_07 from './assets/caz3-07.png'
-import caz3_08 from './assets/caz3-08.png'
-import caz3_09 from './assets/caz3-09.png'
-import caz3_10 from './assets/caz3-10.png'
-import caz3_11 from './assets/caz3-11.png'
-import caz3_12 from './assets/caz3-12.png'
-import testimonialBartos from './assets/testimonial-bartos.png'
-import testimonialParaschivescu from './assets/testimonial-paraschivescu.png'
-import testimonialCaruntu from './assets/testimonial-caruntu.png'
+import caz2_03 from './assets/caz2-03.webp'
+import caz2_04 from './assets/caz2-04.webp'
+import caz2_05 from './assets/caz2-05.webp'
+import caz2_06 from './assets/caz2-06.webp'
+import caz2_07 from './assets/caz2-07.webp'
+import caz2_08 from './assets/caz2-08.webp'
+import caz2_09 from './assets/caz2-09.webp'
+import caz2_10 from './assets/caz2-10.webp'
+import caz2_11 from './assets/caz2-11.webp'
+import caz2_12 from './assets/caz2-12.webp'
+import caz2_13 from './assets/caz2-13.webp'
+import caz2_14 from './assets/caz2-14.webp'
+import caz2_15 from './assets/caz2-15.webp'
+import caz3_01 from './assets/caz3-01.webp'
+import caz3_02 from './assets/caz3-02.webp'
+import caz3_03 from './assets/caz3-03.webp'
+import caz3_04 from './assets/caz3-04.webp'
+import caz3_05 from './assets/caz3-05.webp'
+import caz3_06 from './assets/caz3-06.webp'
+import caz3_07 from './assets/caz3-07.webp'
+import caz3_08 from './assets/caz3-08.webp'
+import caz3_09 from './assets/caz3-09.webp'
+import caz3_10 from './assets/caz3-10.webp'
+import caz3_11 from './assets/caz3-11.webp'
+import caz3_12 from './assets/caz3-12.webp'
+import testimonialBartos from './assets/testimonial-bartos.webp'
+import testimonialParaschivescu from './assets/testimonial-paraschivescu.webp'
+import testimonialCaruntu from './assets/testimonial-caruntu.webp'
 import socketIcon from './assets/solutions/socketAugma_icon_.svg'
 import lateralIcon from './assets/solutions/lateralAugma_icon_.svg'
 import sinusIcon from './assets/solutions/sinusAugma_icon_.svg'
@@ -146,7 +149,7 @@ function Nav() {
     if (scrolled && menuOpen) setMenuOpen(false)
   }, [scrolled])
 
-  const navLinks = [['Știință', '#form-section'], ['Beneficii', '#benefits'], ['Dovezi', '#proof'], ['Testimoniale', '#testimonials']]
+  const navLinks = [['Cum funcționează', '#cum-functioneaza'], ['Beneficii', '#benefits'], ['Dovezi', '#proof'], ['Testimoniale', '#testimonials']]
 
   const active = scrolled || menuOpen
   const blurVal = isMobile ? 'none' : 'blur(12px)'
@@ -274,7 +277,7 @@ function Nav() {
         ))}
         <a
           href="#form-section"
-          onClick={(e) => { setMenuOpen(false); scrollToForm(e) }}
+          onClick={(e) => { e.preventDefault(); setMenuOpen(false); setTimeout(scrollToForm, 350) }}
           style={{ marginTop: 16, display: 'block', background: '#004a5d', color: 'white', padding: '16px 24px', fontSize: 15, fontWeight: 600, borderRadius: 2, textDecoration: 'none', textAlign: 'center' }}
         >
           Aplică acum
@@ -456,10 +459,10 @@ function Hero() {
                 whileTap={{ scale: 0.97 }}
                 style={{ display: 'block', width: '100%', background: '#ffffff', color: '#004a5d', padding: '18px 32px', fontSize: 15, fontWeight: 700, borderRadius: 2, boxShadow: '0 8px 32px rgba(0,0,0,0.3)', textDecoration: 'none', textAlign: 'center' }}
               >
-                Vreau să văd dacă acest protocol mi se potrivește
+                Aplică pentru programul de implementare
               </motion.a>
               <p style={{ fontSize: 12, color: 'rgba(255,255,255,0.4)', fontWeight: 500, margin: 0 }}>
-                Completezi formularul, iar noi revenim pentru a evalua dacă are sens pentru cazurile tale.
+                Completezi formularul, te contactăm în 24h.
               </p>
             </motion.div>
 
@@ -492,7 +495,7 @@ function ChemistrySection() {
   ]
 
   return (
-    <section className="chem-section-mobile" style={{ background: 'linear-gradient(160deg, #010c12 0%, #031a26 55%, #010e18 100%)', padding: '48px 20px 56px', position: 'relative', overflow: 'hidden' }}>
+    <section id="cum-functioneaza" className="chem-section-mobile" style={{ background: 'linear-gradient(160deg, #010c12 0%, #031a26 55%, #010e18 100%)', padding: '48px 20px 56px', position: 'relative', overflow: 'hidden' }}>
       {/* Dot grid */}
       <svg style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', pointerEvents: 'none' }}>
         <defs>
@@ -693,7 +696,7 @@ function ProductExplanation() {
 
               {/* Syringe image — full height, transparent bg via multiply blend */}
               <motion.img
-                src="/seringa-verticala-2.png"
+                src="/seringa-verticala-2.webp"
                 alt="Seringa Bond Apatite"
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -1602,10 +1605,10 @@ function Offer() {
                   Program Implementare
                 </span>
                 <h2 style={{ fontFamily: 'Newsreader, serif', fontSize: 'clamp(36px, 4.5vw, 60px)', fontWeight: 700, lineHeight: 1.05, margin: 0 }}>
-                  Primele tale 6 cazuri clinice de succes
+                  Primele dumneavoastră 6 cazuri clinice de succes
                 </h2>
                 <p style={{ color: 'rgba(143,191,202,0.8)', fontSize: 16, lineHeight: 1.7, margin: 0 }}>
-                  Programul este construit ca un cadru de implementare, nu ca o simplă listă de produse. Primești tot suportul necesar în fiecare etapă.
+                  Programul este construit ca un cadru de implementare, nu ca o simplă listă de produse. Primiți tot suportul necesar în fiecare etapă — inclusiv review de protocol și analiză CBCT din partea echipei noastre și a Dr. Amos Yahav, DMD, inventatorul sulfatului de calciu bifazic.
                 </p>
 
                 {/* Produse fizice */}
@@ -1662,7 +1665,7 @@ function Offer() {
 
                 {/* Product image */}
                 <img
-                  src="/starter-kit.png"
+                  src="/starter-kit.webp"
                   alt="AUGMA Starter Kit — 6 seringi Bond Apatite + Augma Shield"
                   style={{ width: '100%', maxWidth: 520, display: 'block', position: 'relative', filter: 'drop-shadow(0 40px 56px rgba(0,0,0,0.5)) drop-shadow(0 0 40px rgba(137,208,237,0.15))' }}
                 />
@@ -1719,6 +1722,7 @@ function LeadForm() {
       body: JSON.stringify({ name, email, phone, aug, cases }),
     }).catch(() => {})
 
+    if (window.fbq) window.fbq('track', 'Lead')
     setSubmitted(true)
   }
 
@@ -1751,10 +1755,10 @@ function LeadForm() {
           <div style={{ textAlign: 'center', marginBottom: 56 }}>
             <span style={{ fontSize: 11, fontWeight: 700, color: '#00637c', textTransform: 'uppercase', letterSpacing: '0.2em', display: 'block', marginBottom: 16 }}>Formular de aplicare</span>
             <h2 style={{ fontFamily: 'Newsreader, serif', fontSize: 'clamp(28px, 4vw, 52px)', fontWeight: 700, color: '#004a5d', lineHeight: 1.1, marginBottom: 16 }}>
-              Dacă vrei să vedem dacă Bond Apatite are sens pentru cazurile tale
+              Aplică pentru programul de implementare
             </h2>
             <p style={{ color: '#3f484c', maxWidth: 440, margin: '0 auto', lineHeight: 1.7 }}>
-              Completarea formularului nu înseamnă comandă. Este primul pas — după care analizăm împreună dacă protocolul se potrivește cu ce faci tu în cabinet.
+              Completează formularul și te contactăm în 24h pentru a discuta cazurile cu care vrei să începi.
             </p>
           </div>
         </FadeUp>
@@ -1769,7 +1773,7 @@ function LeadForm() {
                   </svg>
                 </div>
                 <h3 style={{ fontFamily: 'Newsreader, serif', fontSize: 28, fontWeight: 700, color: '#004a5d' }}>Mulțumim!</h3>
-                <p style={{ color: '#3f484c', lineHeight: 1.7 }}>Vom reveni cu o analiză personalizată pentru cazurile tale în cel mai scurt timp.</p>
+                <p style={{ color: '#3f484c', lineHeight: 1.7 }}>Am primit. Revenim în cel mult 24 de ore ca să discutăm concret dacă protocolul Bond Apatite are sens pentru practica dumneavoastră, ce ar presupune implementarea și care sunt costurile programului.</p>
               </motion.div>
             ) : (
               <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: 28 }}>
@@ -1778,27 +1782,16 @@ function LeadForm() {
                   <input required name="name" type="text" placeholder="Ex: Dr. Andrei Popescu" onFocus={() => setFocused('name')} onBlur={() => setFocused(null)} style={inputStyle('name')} />
                 </div>
                 <div>
-                  <label style={labelStyle}>Email <span style={{ color: '#004a5d' }}>*</span></label>
-                  <input required name="email" type="email" placeholder="doctor@clinica.ro" onFocus={() => setFocused('email')} onBlur={() => setFocused(null)} style={inputStyle('email')} />
-                </div>
-                <div>
                   <label style={labelStyle}>Telefon <span style={{ color: '#004a5d' }}>*</span></label>
                   <input required name="phone" type="tel" placeholder="07xx xxx xxx" onFocus={() => setFocused('phone')} onBlur={() => setFocused(null)} style={inputStyle('phone')} />
                 </div>
                 <div>
-                  <label style={labelStyle}>Ce tip de augmentări faci deja?</label>
-                  <input name="aug" type="text" placeholder="Ex: Sinus lift, GBR clasic, alveolă post-extracție" onFocus={() => setFocused('aug')} onBlur={() => setFocused(null)} style={inputStyle('aug')} />
+                  <label style={labelStyle}>Email <span style={{ color: '#004a5d' }}>*</span></label>
+                  <input required name="email" type="email" placeholder="doctor@clinica.ro" onFocus={() => setFocused('email')} onBlur={() => setFocused(null)} style={inputStyle('email')} />
                 </div>
                 <div>
-                  <label style={labelStyle}>Ce cazuri ai vrea să tratezi mai predictibil?</label>
-                  <textarea
-                    name="cases"
-                    rows={3}
-                    placeholder="Ex: Defecte orizontale mari, cazuri cu os cortical subțire, pacienți cu cicatrizare lentă..."
-                    onFocus={() => setFocused('cases')}
-                    onBlur={() => setFocused(null)}
-                    style={{ ...inputStyle('cases'), resize: 'none', lineHeight: 1.6, paddingTop: 10 }}
-                  />
+                  <label style={labelStyle}>Ce tipuri de augmentări faceți în mod obișnuit?</label>
+                  <input name="aug" type="text" placeholder="Ex: Sinus lift, GBR clasic, alveolă post-extracție" onFocus={() => setFocused('aug')} onBlur={() => setFocused(null)} style={inputStyle('aug')} />
                 </div>
                 <motion.button
                   type="submit"
@@ -1806,7 +1799,7 @@ function LeadForm() {
                   whileTap={{ scale: 0.98 }}
                   style={{ background: '#004a5d', color: 'white', padding: '18px 0', borderRadius: 2, fontWeight: 600, fontSize: 16, border: 'none', cursor: 'pointer', transition: 'all 0.3s', fontFamily: 'Inter, sans-serif', width: '100%' }}
                 >
-                  Trimite detaliile pentru analiză
+                  Aplic pentru programul de implementare
                 </motion.button>
               </form>
             )}
