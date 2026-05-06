@@ -1,10 +1,22 @@
 import { useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { motion, useScroll, useTransform, useInView, AnimatePresence } from 'framer-motion'
+import posthog from './posthog.js'
 
-const scrollToForm = (e) => {
+const scrollToForm = (e, location = 'unknown') => {
   if (e) e.preventDefault()
-  document.getElementById('form-section')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+  posthog.capture('cta_clicked', { location })
+  const el = document.getElementById('form-section')
+  if (!el) return
+  const top = el.getBoundingClientRect().top + window.pageYOffset
+  const distance = Math.abs(window.pageYOffset - top)
+  const focusFirstInput = () => {
+    const firstInput = el.querySelector('input[name="name"]')
+    if (firstInput) firstInput.focus({ preventScroll: true })
+  }
+  if (distance < 80) { focusFirstInput(); return }
+  window.scrollTo({ top, behavior: 'smooth' })
+  setTimeout(focusFirstInput, 700)
 }
 
 /* ─── Mobile detection hook ─── */
@@ -197,7 +209,7 @@ function Nav() {
           {!isNavMobile && (
             <motion.a
               href="#form-section"
-              onClick={scrollToForm}
+              onClick={(e) => scrollToForm(e, 'nav_desktop')}
               whileHover={{ y: -2 }}
               whileTap={{ scale: 0.97 }}
               style={{
@@ -275,10 +287,10 @@ function Nav() {
         ))}
         <a
           href="#form-section"
-          onClick={(e) => { setMenuOpen(false); scrollToForm(e) }}
+          onClick={(e) => { e.preventDefault(); setMenuOpen(false); setTimeout(() => scrollToForm(null, 'nav_mobile'), 350) }}
           style={{ marginTop: 16, display: 'block', background: '#004a5d', color: 'white', padding: '16px 24px', fontSize: 15, fontWeight: 600, borderRadius: 2, textDecoration: 'none', textAlign: 'center' }}
         >
-          Demonstrație
+          Demonstrație clinică
         </a>
       </div>
       )}
@@ -452,7 +464,7 @@ function Hero() {
             <motion.div initial={{ opacity: 0, y: isMobile ? 0 : 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: isMobile ? 0.3 : 0.7, delay: isMobile ? 0.2 : 0.8 }} style={{ display: 'flex', flexDirection: 'column', gap: 12, maxWidth: 420 }}>
               <motion.a
                 href="#form-section"
-                onClick={scrollToForm}
+                onTap={(e) => scrollToForm(e, 'hero_cta')}
                 whileHover={{ y: -3, boxShadow: '0 20px 40px rgba(0,0,0,0.4)' }}
                 whileTap={{ scale: 0.97 }}
                 style={{ display: 'block', width: '100%', background: '#ffffff', color: '#004a5d', padding: '18px 32px', fontSize: 15, fontWeight: 700, borderRadius: 2, boxShadow: '0 8px 32px rgba(0,0,0,0.3)', textDecoration: 'none', textAlign: 'center' }}
@@ -829,7 +841,14 @@ function SolutionsCarousel() {
 
         {/* Carousel row */}
         <div style={{ position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-          <button onClick={prev} style={{ ...arrowStyle, left: 12 }}>‹</button>
+          <motion.button
+            onClick={prev}
+            aria-label="Indicația anterioară"
+            whileHover={{ scale: 1.08 }}
+            whileTap={{ scale: 0.85, backgroundColor: '#e6f2f5' }}
+            transition={{ duration: 0.12 }}
+            style={{ ...arrowStyle, left: 12 }}
+          >‹</motion.button>
 
           {/* 3D track */}
           <div style={{
@@ -956,7 +975,14 @@ function SolutionsCarousel() {
             })}
           </div>
 
-          <button onClick={next} style={{ ...arrowStyle, right: 12 }}>›</button>
+          <motion.button
+            onClick={next}
+            aria-label="Indicația următoare"
+            whileHover={{ scale: 1.08 }}
+            whileTap={{ scale: 0.85, backgroundColor: '#e6f2f5' }}
+            transition={{ duration: 0.12 }}
+            style={{ ...arrowStyle, right: 12 }}
+          >›</motion.button>
         </div>
 
         {/* Dot navigation */}
@@ -1559,7 +1585,7 @@ function Testimonials() {
             <motion.div
               key={i}
               initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: '-40px' }} transition={{ duration: 0.7, delay: i * 0.12 }}
-              style={{ background: 'white', borderRadius: 20, padding: 32, boxShadow: '0 8px 24px rgba(0,74,93,0.06)', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', gap: 24 }}
+              style={{ background: 'white', borderRadius: 20, padding: 32, boxShadow: '0 8px 24px rgba(0,74,93,0.06)', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', gap: 24, cursor: 'default', userSelect: 'text' }}
             >
               {t.stars && (
                 <div style={{ color: '#e8a838', fontSize: 14, letterSpacing: 2 }}>★★★★★</div>
@@ -1643,7 +1669,7 @@ function Offer() {
                 {/* CTA */}
                 <motion.a
                   href="#form-section"
-                  onClick={scrollToForm}
+                  onTap={(e) => scrollToForm(e, 'offer_cta')}
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                   style={{ display: 'inline-flex', alignItems: 'center', gap: 10, background: 'white', color: '#004a5d', padding: '14px 28px', borderRadius: 999, fontSize: 14, fontWeight: 700, textDecoration: 'none', width: 'fit-content', boxShadow: '0 8px 24px rgba(0,0,0,0.2)' }}
@@ -1711,9 +1737,15 @@ function Offer() {
 function LeadForm() {
   const [focused, setFocused] = useState(null)
   const [submitted, setSubmitted] = useState(false)
+  const [submitting, setSubmitting] = useState(false)
+  const submittingRef = useRef(false)
 
   const handleSubmit = async (e) => {
     e.preventDefault()
+    if (submittingRef.current) return
+    submittingRef.current = true
+    setSubmitting(true)
+
     const fd = new FormData(e.target)
     const name   = fd.get('name')
     const phone  = fd.get('phone')
@@ -1725,6 +1757,8 @@ function LeadForm() {
       body: JSON.stringify({ name, phone, clinic }),
     }).catch(() => {})
 
+    posthog.capture('demo_form_submitted', { has_clinic: clinic !== '—' })
+    if (window.fbq) window.fbq('track', 'Lead')
     setSubmitted(true)
   }
 
@@ -1754,7 +1788,7 @@ function LeadForm() {
     <section id="form-section" className="section-pad" style={{ background: '#fcf9f8' }}>
       <div style={{ maxWidth: 720, margin: '0 auto' }}>
         <FadeUp>
-          <div style={{ textAlign: 'center', marginBottom: 56 }}>
+          <div style={{ textAlign: 'center', marginBottom: 32 }}>
             <span style={{ fontSize: 11, fontWeight: 700, color: '#00637c', textTransform: 'uppercase', letterSpacing: '0.2em', display: 'block', marginBottom: 16 }}>LA CABINETUL DUMNEAVOASTRĂ · 20 DE MINUTE</span>
             <h2 style={{ fontFamily: 'Newsreader, serif', fontSize: 'clamp(28px, 4vw, 52px)', fontWeight: 700, color: '#004a5d', lineHeight: 1.1, marginBottom: 16 }}>
               Demonstrație gratuită la cabinetul dumneavoastră.
@@ -1762,6 +1796,21 @@ function LeadForm() {
             <p style={{ color: '#3f484c', maxWidth: 480, margin: '0 auto', lineHeight: 1.7 }}>
               Un specialist Bonesphere vine la cabinetul dumneavoastră pregătit pentru o sesiune <em>hands-on</em> de 20 de minute.
             </p>
+          </div>
+        </FadeUp>
+
+        <FadeUp delay={0.08}>
+          <div style={{ display: 'flex', justifyContent: 'center', marginBottom: 28 }}>
+            <div style={{ display: 'inline-flex', alignItems: 'center', gap: 10, background: 'rgba(0,74,93,0.06)', border: '1px solid rgba(0,74,93,0.12)', borderRadius: 999, padding: '8px 16px' }}>
+              <motion.span
+                animate={{ opacity: [1, 0.35, 1], scale: [1, 0.85, 1] }}
+                transition={{ duration: 1.6, repeat: Infinity, ease: 'easeInOut' }}
+                style={{ width: 8, height: 8, borderRadius: '50%', background: '#00a86b', boxShadow: '0 0 0 3px rgba(0,168,107,0.18)', flexShrink: 0 }}
+              />
+              <span style={{ fontSize: 13, fontWeight: 600, color: '#004a5d', letterSpacing: '0.01em' }}>
+                Acceptăm <strong style={{ color: '#00637c' }}>maxim 10 demonstrații</strong> pe săptămână
+              </span>
+            </div>
           </div>
         </FadeUp>
 
@@ -1800,11 +1849,21 @@ function LeadForm() {
                 </div>
                 <motion.button
                   type="submit"
-                  whileHover={{ y: -2, boxShadow: '0 20px 40px rgba(0,74,93,0.25)' }}
-                  whileTap={{ scale: 0.98 }}
-                  style={{ background: '#004a5d', color: 'white', padding: '18px 0', borderRadius: 2, fontWeight: 600, fontSize: 16, border: 'none', cursor: 'pointer', transition: 'all 0.3s', fontFamily: 'Inter, sans-serif', width: '100%' }}
+                  disabled={submitting}
+                  whileHover={submitting ? {} : { y: -2, boxShadow: '0 20px 40px rgba(0,74,93,0.25)' }}
+                  whileTap={submitting ? {} : { scale: 0.98 }}
+                  style={{ background: '#004a5d', color: 'white', padding: '18px 0', borderRadius: 2, fontWeight: 600, fontSize: 16, border: 'none', cursor: submitting ? 'wait' : 'pointer', transition: 'all 0.3s', fontFamily: 'Inter, sans-serif', width: '100%', opacity: submitting ? 0.7 : 1, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: 10 }}
                 >
-                  Cereți demonstrația clinică
+                  {submitting ? (
+                    <>
+                      <motion.span
+                        animate={{ rotate: 360 }}
+                        transition={{ duration: 0.8, repeat: Infinity, ease: 'linear' }}
+                        style={{ width: 16, height: 16, border: '2px solid rgba(255,255,255,0.3)', borderTopColor: 'white', borderRadius: '50%', display: 'inline-block' }}
+                      />
+                      Se trimite…
+                    </>
+                  ) : 'Cereți demonstrația clinică'}
                 </motion.button>
               </form>
             )}
@@ -1827,7 +1886,7 @@ function FinalCTA() {
         </h2>
         <motion.a
           href="#form-section"
-          onClick={scrollToForm}
+          onTap={(e) => scrollToForm(e, 'final_cta')}
           whileHover={{ y: -4, boxShadow: '0 24px 48px rgba(0,74,93,0.3)' }}
           whileTap={{ scale: 0.97 }}
           style={{ display: 'inline-block', background: '#004a5d', color: 'white', padding: '20px 40px', borderRadius: 2, fontSize: 16, fontWeight: 600, boxShadow: '0 12px 32px rgba(0,74,93,0.2)', textDecoration: 'none', transition: 'all 0.3s' }}
@@ -2095,6 +2154,21 @@ function CookieBanner() {
 }
 
 export default function App() {
+  useEffect(() => {
+    document.title = 'Demonstrație Gratuită AUGMA Bond Apatite | Bonesphere România'
+    const setMeta = (sel, val, attr = 'content') => {
+      const el = document.querySelector(sel)
+      if (el) el.setAttribute(attr, val)
+    }
+    setMeta('meta[name="description"]', 'Vedeți Bond Apatite în acțiune la cabinetul dvs. 20 de minute, fără obligații. Augmentare osoasă cu Sulfat de Calciu Bifazic — singurul brevetat din lume, premiat cu Thomas Edison Award 2019.')
+    setMeta('link[rel="canonical"]', 'https://start.bonesphere.ro/demonstratie', 'href')
+    setMeta('meta[property="og:url"]', 'https://start.bonesphere.ro/demonstratie')
+    setMeta('meta[property="og:title"]', 'Demonstrație Gratuită AUGMA Bond Apatite | Bonesphere')
+    setMeta('meta[property="og:description"]', 'Vedeți Bond Apatite în acțiune la cabinetul dvs. 20 de minute, fără obligații.')
+    setMeta('meta[name="twitter:title"]', 'Demonstrație Gratuită AUGMA Bond Apatite | Bonesphere')
+    setMeta('meta[name="twitter:description"]', 'Vedeți Bond Apatite în acțiune la cabinetul dvs. 20 de minute, fără obligații.')
+  }, [])
+
   return (
     <>
       <Nav />
