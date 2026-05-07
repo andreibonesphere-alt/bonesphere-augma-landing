@@ -65,11 +65,8 @@ nav {
   transform: translateZ(0);
 }
 
-/* Defer rendering of off-screen sections */
-section:not(:first-of-type) {
-  content-visibility: auto;
-  contain-intrinsic-size: auto 600px;
-}
+/* content-visibility removed — was breaking scroll-to-anchor calculations
+   (sections collapsed to 600px placeholders, expand mid-scroll, target moves) */
 
 /* Smooth image rendering */
 img {

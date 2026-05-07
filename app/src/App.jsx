@@ -8,15 +8,13 @@ const scrollToForm = (e, location = 'unknown') => {
   posthog.capture('cta_clicked', { location })
   const el = document.getElementById('form-section')
   if (!el) return
-  const top = el.getBoundingClientRect().top + window.pageYOffset
-  const distance = Math.abs(window.pageYOffset - top)
   const focusFirstInput = () => {
     const firstInput = el.querySelector('input[name="name"]')
     if (firstInput) firstInput.focus({ preventScroll: true })
   }
-  if (distance < 80) { focusFirstInput(); return }
-  window.scrollTo({ top, behavior: 'smooth' })
-  setTimeout(focusFirstInput, 700)
+  if (Math.abs(el.getBoundingClientRect().top) < 80) { focusFirstInput(); return }
+  el.scrollIntoView({ behavior: 'smooth', block: 'start' })
+  setTimeout(focusFirstInput, 800)
 }
 
 /* ─── Mobile detection hook ─── */
@@ -649,24 +647,33 @@ function ProductExplanation() {
               <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(ellipse 60% 70% at 50% 50%, rgba(0,99,124,0.09) 0%, transparent 70%)', pointerEvents: 'none' }} />
               {/* Glow ring 1 */}
               <div style={{ position: 'absolute', width: 480, height: 480, borderRadius: '50%', background: 'radial-gradient(ellipse, rgba(0,99,124,0.11) 0%, transparent 65%)', pointerEvents: 'none' }} />
-              {/* Glow ring 2 */}
-              <motion.div
-                animate={{ scale: [1, 1.06, 1], opacity: [0.5, 0.9, 0.5] }}
-                transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
-                style={{ position: 'absolute', width: 390, height: 390, borderRadius: '50%', border: '1px solid rgba(0,99,124,0.2)', pointerEvents: 'none' }}
-              />
-              {/* Glow ring 3 */}
-              <motion.div
-                animate={{ scale: [1, 1.1, 1], opacity: [0.3, 0.6, 0.3] }}
-                transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut', delay: 0.6 }}
-                style={{ position: 'absolute', width: 540, height: 540, borderRadius: '50%', border: '1px solid rgba(0,99,124,0.09)', pointerEvents: 'none' }}
-              />
-              {/* Glow ring 4 — extra outer pulse */}
-              <motion.div
-                animate={{ scale: [1, 1.07, 1], opacity: [0.15, 0.35, 0.15] }}
-                transition={{ duration: 5.5, repeat: Infinity, ease: 'easeInOut', delay: 1.2 }}
-                style={{ position: 'absolute', width: 650, height: 650, borderRadius: '50%', border: '1px dashed rgba(0,99,124,0.12)', pointerEvents: 'none' }}
-              />
+              {/* Glow rings 2-4 — animated only on desktop (continuous repaint causes flicker on mobile) */}
+              {!isMobile && (
+                <>
+                  <motion.div
+                    animate={{ scale: [1, 1.06, 1], opacity: [0.5, 0.9, 0.5] }}
+                    transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
+                    style={{ position: 'absolute', width: 390, height: 390, borderRadius: '50%', border: '1px solid rgba(0,99,124,0.2)', pointerEvents: 'none' }}
+                  />
+                  <motion.div
+                    animate={{ scale: [1, 1.1, 1], opacity: [0.3, 0.6, 0.3] }}
+                    transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut', delay: 0.6 }}
+                    style={{ position: 'absolute', width: 540, height: 540, borderRadius: '50%', border: '1px solid rgba(0,99,124,0.09)', pointerEvents: 'none' }}
+                  />
+                  <motion.div
+                    animate={{ scale: [1, 1.07, 1], opacity: [0.15, 0.35, 0.15] }}
+                    transition={{ duration: 5.5, repeat: Infinity, ease: 'easeInOut', delay: 1.2 }}
+                    style={{ position: 'absolute', width: 650, height: 650, borderRadius: '50%', border: '1px dashed rgba(0,99,124,0.12)', pointerEvents: 'none' }}
+                  />
+                </>
+              )}
+              {/* Static rings on mobile — same visual without continuous repaint */}
+              {isMobile && (
+                <>
+                  <div style={{ position: 'absolute', width: 390, height: 390, borderRadius: '50%', border: '1px solid rgba(0,99,124,0.2)', pointerEvents: 'none', opacity: 0.7 }} />
+                  <div style={{ position: 'absolute', width: 540, height: 540, borderRadius: '50%', border: '1px solid rgba(0,99,124,0.09)', pointerEvents: 'none', opacity: 0.45 }} />
+                </>
+              )}
 
               {/* Floating spec chips — hidden on mobile */}
               <motion.div
@@ -708,17 +715,21 @@ function ProductExplanation() {
               <motion.img
                 src="/seringa-verticala-2.webp"
                 alt="Seringa Bond Apatite"
-                initial={{ opacity: 0, y: 20 }}
+                initial={isMobile ? { opacity: 0 } : { opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+                viewport={{ once: true, margin: '-20px' }}
+                transition={{ duration: isMobile ? 0.3 : 0.8, ease: [0.22, 1, 0.36, 1] }}
                 style={{
                   position: 'relative',
                   height: 'clamp(420px, 54vh, 640px)',
                   width: 'auto',
                   mixBlendMode: 'multiply',
-                  filter: 'drop-shadow(0 0 40px rgba(0,99,124,0.22)) drop-shadow(0 32px 56px rgba(0,74,93,0.28))',
+                  filter: isMobile
+                    ? 'drop-shadow(0 16px 24px rgba(0,74,93,0.22))'
+                    : 'drop-shadow(0 0 40px rgba(0,99,124,0.22)) drop-shadow(0 32px 56px rgba(0,74,93,0.28))',
                   zIndex: 1,
+                  willChange: 'transform, opacity',
+                  transform: 'translateZ(0)',
                 }}
               />
             </div>
@@ -744,6 +755,7 @@ const BENEFITS = [
 ]
 
 function Benefits() {
+  const isMobile = useIsMobile()
   return (
     <section id="benefits" className="section-pad">
       <div style={{ maxWidth: 1536, margin: '0 auto' }}>
@@ -763,12 +775,12 @@ function Benefits() {
           {BENEFITS.map((b, i) => (
             <motion.div
               key={b.n}
-              initial={{ opacity: 0, y: 30 }}
+              initial={isMobile ? { opacity: 0 } : { opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-40px' }}
-              transition={{ duration: 0.6, delay: (i % 5) * 0.08 }}
-              whileHover={{ y: -5, borderColor: '#004a5d' }}
-              style={{ padding: '24px 20px', borderLeft: '2px solid rgba(191,200,205,0.25)', cursor: 'default', transition: 'all 0.3s' }}
+              transition={{ duration: isMobile ? 0.35 : 0.6, delay: isMobile ? 0 : (i % 5) * 0.08 }}
+              whileHover={isMobile ? undefined : { y: -5, borderColor: '#004a5d' }}
+              style={{ padding: '24px 20px', borderLeft: '2px solid rgba(191,200,205,0.25)', cursor: 'default', transition: 'border-color 0.3s, transform 0.3s', willChange: isMobile ? 'opacity' : 'transform, opacity' }}
             >
               <div className="benefit-number" style={{ fontFamily: 'Newsreader, serif', fontSize: 52, fontWeight: 700, color: 'rgba(0,74,93,0.08)', marginBottom: 16, lineHeight: 1 }}>{b.n}</div>
               <h4 style={{ fontWeight: 600, color: '#004a5d', fontSize: 14, marginBottom: 8, lineHeight: 1.4 }}>{b.title}</h4>
