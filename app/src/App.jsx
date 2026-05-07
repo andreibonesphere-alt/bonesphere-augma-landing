@@ -1740,28 +1740,81 @@ function LeadForm() {
   const [focused, setFocused] = useState(null)
   const [submitted, setSubmitted] = useState(false)
   const [submitting, setSubmitting] = useState(false)
+  const [error, setError] = useState(null)
   const submittingRef = useRef(false)
+  const lastPayloadRef = useRef(null)
+
+  const sendLead = async (payload) => {
+    let status = 0
+    let errMsg = ''
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      })
+      status = res.status
+      if (!res.ok) {
+        const body = await res.text().catch(() => '')
+        errMsg = body.slice(0, 200) || `HTTP ${status}`
+        return { ok: false, status, errMsg }
+      }
+      return { ok: true, status: 200 }
+    } catch (e) {
+      errMsg = e?.message || 'network error'
+      return { ok: false, status: 0, errMsg }
+    }
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault()
     if (submittingRef.current) return
     submittingRef.current = true
     setSubmitting(true)
+    setError(null)
 
     const fd = new FormData(e.target)
-    const name   = fd.get('name')
-    const phone  = fd.get('phone')
-    const clinic = fd.get('clinic') || '—'
+    const payload = {
+      name:   fd.get('name'),
+      phone:  fd.get('phone'),
+      clinic: fd.get('clinic') || '—',
+    }
+    lastPayloadRef.current = payload
 
-    await fetch('/api/contact', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ name, phone, clinic }),
-    }).catch(() => {})
+    const result = await sendLead(payload)
 
-    posthog.capture('demo_form_submitted', { has_clinic: clinic !== '—' })
-    if (window.fbq) window.fbq('track', 'Lead')
-    setSubmitted(true)
+    if (result.ok) {
+      posthog.capture('demo_form_submitted', { has_clinic: payload.clinic !== '—' })
+      if (window.fbq) window.fbq('track', 'Lead')
+      setSubmitted(true)
+    } else {
+      posthog.capture('demo_form_failed', {
+        status: result.status,
+        error: result.errMsg,
+        url: '/api/contact',
+      })
+      setError({ status: result.status, message: result.errMsg })
+      submittingRef.current = false
+      setSubmitting(false)
+    }
+  }
+
+  const handleRetry = async () => {
+    if (submittingRef.current || !lastPayloadRef.current) return
+    submittingRef.current = true
+    setSubmitting(true)
+    setError(null)
+    const result = await sendLead(lastPayloadRef.current)
+    if (result.ok) {
+      posthog.capture('demo_form_submitted', { has_clinic: lastPayloadRef.current.clinic !== '—', retried: true })
+      if (window.fbq) window.fbq('track', 'Lead')
+      setSubmitted(true)
+    } else {
+      posthog.capture('demo_form_failed', { status: result.status, error: result.errMsg, url: '/api/contact', retried: true })
+      setError({ status: result.status, message: result.errMsg })
+      submittingRef.current = false
+      setSubmitting(false)
+    }
   }
 
   const inputStyle = (id) => ({
@@ -1849,6 +1902,29 @@ function LeadForm() {
                     <a href="/confidentialitate" target="_blank" style={{ color: '#004a5d', textDecoration: 'underline' }}>Politicii de Confidențialitate</a>.
                   </label>
                 </div>
+                {error && (
+                  <motion.div
+                    initial={{ opacity: 0, y: -8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    style={{ background: '#fff4f4', border: '1px solid #f5c2c2', borderRadius: 10, padding: '14px 16px', display: 'flex', flexDirection: 'column', gap: 10 }}
+                  >
+                    <div style={{ display: 'flex', alignItems: 'flex-start', gap: 10 }}>
+                      <span style={{ flexShrink: 0, marginTop: 2, color: '#c0392b', fontSize: 18, lineHeight: 1 }}>⚠</span>
+                      <div style={{ fontSize: 13, color: '#7a2222', lineHeight: 1.5 }}>
+                        <strong style={{ display: 'block', marginBottom: 2 }}>Trimiterea a eșuat.</strong>
+                        Apăsați "Reîncercați" mai jos. Dacă persistă, sunați la <a href="tel:+40737178774" style={{ color: '#7a2222', fontWeight: 600 }}>+40 737 178 774</a> sau scrieți la <a href="mailto:office@bonesphere.ro" style={{ color: '#7a2222', fontWeight: 600 }}>office@bonesphere.ro</a>.
+                      </div>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={handleRetry}
+                      disabled={submitting}
+                      style={{ alignSelf: 'flex-start', background: '#c0392b', color: 'white', border: 'none', padding: '8px 16px', fontSize: 13, fontWeight: 600, borderRadius: 6, cursor: submitting ? 'wait' : 'pointer', opacity: submitting ? 0.7 : 1 }}
+                    >
+                      {submitting ? 'Se reîncearcă…' : 'Reîncercați'}
+                    </button>
+                  </motion.div>
+                )}
                 <motion.button
                   type="submit"
                   disabled={submitting}
