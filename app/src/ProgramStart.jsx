@@ -1,12 +1,20 @@
 import { useEffect, useRef, useState } from 'react'
+import { createPortal } from 'react-dom'
 import { motion, useScroll, useTransform, useInView, AnimatePresence } from 'framer-motion'
+import posthog from './posthog.js'
 
-const scrollToForm = (e) => {
+const scrollToForm = (e, location = 'unknown') => {
   if (e) e.preventDefault()
+  posthog.capture('cta_clicked', { location })
   const el = document.getElementById('form-section')
   if (!el) return
-  const top = el.getBoundingClientRect().top + window.pageYOffset
-  window.scrollTo({ top, behavior: 'smooth' })
+  const focusFirstInput = () => {
+    const firstInput = el.querySelector('input[name="name"]')
+    if (firstInput) firstInput.focus({ preventScroll: true })
+  }
+  if (Math.abs(el.getBoundingClientRect().top) < 80) { focusFirstInput(); return }
+  el.scrollIntoView({ behavior: 'smooth', block: 'start' })
+  setTimeout(focusFirstInput, 800)
 }
 
 /* ─── Mobile detection hook ─── */
@@ -199,7 +207,7 @@ function Nav() {
           {!isNavMobile && (
             <motion.a
               href="#form-section"
-              onClick={scrollToForm}
+              onClick={(e) => scrollToForm(e, 'nav_desktop')}
               whileHover={{ y: -2 }}
               whileTap={{ scale: 0.97 }}
               style={{
@@ -277,7 +285,7 @@ function Nav() {
         ))}
         <a
           href="#form-section"
-          onClick={(e) => { e.preventDefault(); setMenuOpen(false); setTimeout(scrollToForm, 350) }}
+          onClick={(e) => { e.preventDefault(); setMenuOpen(false); setTimeout(() => scrollToForm(null, 'nav_mobile'), 350) }}
           style={{ marginTop: 16, display: 'block', background: '#004a5d', color: 'white', padding: '16px 24px', fontSize: 15, fontWeight: 600, borderRadius: 2, textDecoration: 'none', textAlign: 'center' }}
         >
           Aplică acum
@@ -454,7 +462,7 @@ function Hero() {
             <motion.div initial={{ opacity: 0, y: isMobile ? 0 : 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: isMobile ? 0.3 : 0.7, delay: isMobile ? 0.2 : 0.8 }} style={{ display: 'flex', flexDirection: 'column', gap: 12, maxWidth: 420 }}>
               <motion.a
                 href="#form-section"
-                onClick={scrollToForm}
+                onClick={(e) => scrollToForm(e, 'hero_cta')}
                 whileHover={{ y: -3, boxShadow: '0 20px 40px rgba(0,0,0,0.4)' }}
                 whileTap={{ scale: 0.97 }}
                 style={{ display: 'block', width: '100%', background: '#ffffff', color: '#004a5d', padding: '18px 32px', fontSize: 15, fontWeight: 700, borderRadius: 2, boxShadow: '0 8px 32px rgba(0,0,0,0.3)', textDecoration: 'none', textAlign: 'center' }}
@@ -1188,14 +1196,22 @@ const clinicalCasesData = [
 function ClinicalCases() {
   const [active, setActive] = useState(null)
   const [activePhoto, setActivePhoto] = useState(0)
+  const scrollBodyRef = useRef(null)
+  const isMobile = useIsMobile()
 
   useEffect(() => {
     if (active !== null) {
+      document.documentElement.style.overflow = 'hidden'
       document.body.style.overflow = 'hidden'
+      if (scrollBodyRef.current) scrollBodyRef.current.scrollTop = 0
     } else {
+      document.documentElement.style.overflow = ''
       document.body.style.overflow = ''
     }
-    return () => { document.body.style.overflow = '' }
+    return () => {
+      document.documentElement.style.overflow = ''
+      document.body.style.overflow = ''
+    }
   }, [active])
 
   const openCase = (c) => { setActive(c); setActivePhoto(0) }
@@ -1258,7 +1274,8 @@ function ClinicalCases() {
         </div>
       </div>
 
-      {/* Modal lightbox */}
+      {/* Modal lightbox — rendered via portal to escape any content-visibility containment on sections */}
+      {createPortal(
       <AnimatePresence>
         {active && (
           <motion.div
@@ -1267,11 +1284,13 @@ function ClinicalCases() {
             exit={{ opacity: 0 }}
             transition={{ duration: 0.25 }}
             onClick={closeCase}
+            data-modal-overlay
             style={{
-              position: 'fixed', inset: 0, zIndex: 300,
+              position: 'fixed', inset: 0, zIndex: 9000,
               background: 'rgba(0,12,18,0.8)', backdropFilter: 'blur(10px)',
-              display: 'flex', alignItems: 'center', justifyContent: 'center',
-              padding: '16px',
+              display: 'flex', alignItems: isMobile ? 'flex-start' : 'center', justifyContent: 'center',
+              padding: isMobile ? '0' : '72px 16px 16px',
+              touchAction: 'none',
             }}
           >
             <motion.div
@@ -1281,9 +1300,12 @@ function ClinicalCases() {
               transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
               onClick={e => e.stopPropagation()}
               style={{
-                background: '#fff', borderRadius: 24,
+                background: '#fff',
+                borderRadius: isMobile ? 0 : 24,
                 width: '100%', maxWidth: 960,
-                maxHeight: '92vh', overflow: 'hidden',
+                maxHeight: isMobile ? '100dvh' : 'calc(100dvh - 88px)',
+                height: isMobile ? '100dvh' : 'auto',
+                overflow: 'hidden',
                 display: 'flex', flexDirection: 'column',
               }}
             >
@@ -1308,7 +1330,7 @@ function ClinicalCases() {
               </div>
 
               {/* Scrollable body */}
-              <div style={{ overflowY: 'auto', flex: 1 }}>
+              <div ref={scrollBodyRef} style={{ overflowY: 'auto', flex: 1 }}>
                 {/* Photo viewer */}
                 <div style={{ background: '#0b1d24', position: 'relative' }}>
                   {/* Main photo */}
@@ -1392,6 +1414,7 @@ function ClinicalCases() {
           </motion.div>
         )}
       </AnimatePresence>
+      , document.body)}
     </>
   )
 }
@@ -1626,7 +1649,7 @@ function Offer() {
                 {/* CTA */}
                 <motion.a
                   href="#form-section"
-                  onClick={scrollToForm}
+                  onClick={(e) => scrollToForm(e, 'offer_cta')}
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                   style={{ display: 'inline-flex', alignItems: 'center', gap: 10, background: 'white', color: '#004a5d', padding: '14px 28px', borderRadius: 999, fontSize: 14, fontWeight: 700, textDecoration: 'none', width: 'fit-content', boxShadow: '0 8px 24px rgba(0,0,0,0.2)' }}
@@ -1667,6 +1690,8 @@ function Offer() {
                 <img
                   src="/starter-kit.webp"
                   alt="AUGMA Starter Kit — 6 seringi Bond Apatite + Augma Shield"
+                  fetchpriority="high"
+                  decoding="async"
                   style={{ width: '100%', maxWidth: 520, display: 'block', position: 'relative', filter: 'drop-shadow(0 40px 56px rgba(0,0,0,0.5)) drop-shadow(0 0 40px rgba(137,208,237,0.15))' }}
                 />
 
@@ -1706,24 +1731,85 @@ function Offer() {
 function LeadForm() {
   const [focused, setFocused] = useState(null)
   const [submitted, setSubmitted] = useState(false)
+  const [submitting, setSubmitting] = useState(false)
+  const [error, setError] = useState(null)
+  const submittingRef = useRef(false)
+  const lastPayloadRef = useRef(null)
+
+  const sendLead = async (payload) => {
+    let status = 0
+    let errMsg = ''
+    try {
+      const res = await fetch('/api/apply', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      })
+      status = res.status
+      if (!res.ok) {
+        const body = await res.text().catch(() => '')
+        errMsg = body.slice(0, 200) || `HTTP ${status}`
+        return { ok: false, status, errMsg }
+      }
+      return { ok: true, status: 200 }
+    } catch (e) {
+      errMsg = e?.message || 'network error'
+      return { ok: false, status: 0, errMsg }
+    }
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault()
+    if (submittingRef.current) return
+    submittingRef.current = true
+    setSubmitting(true)
+    setError(null)
+
     const fd = new FormData(e.target)
-    const name  = fd.get('name')
-    const email = fd.get('email')
-    const phone = fd.get('phone')
-    const aug   = fd.get('aug') || '—'
-    const cases = fd.get('cases') || '—'
+    const payload = {
+      name:  fd.get('name'),
+      email: fd.get('email'),
+      phone: fd.get('phone'),
+      aug:   fd.get('aug') || '—',
+      cases: fd.get('cases') || '—',
+    }
+    lastPayloadRef.current = payload
 
-    await fetch('/api/apply', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ name, email, phone, aug, cases }),
-    }).catch(() => {})
+    const result = await sendLead(payload)
 
-    if (window.fbq) window.fbq('track', 'Lead')
-    setSubmitted(true)
+    if (result.ok) {
+      posthog.capture('apply_form_submitted', { has_aug: payload.aug !== '—' })
+      if (window.fbq) window.fbq('track', 'Lead')
+      setSubmitted(true)
+    } else {
+      posthog.capture('apply_form_failed', {
+        status: result.status,
+        error: result.errMsg,
+        url: '/api/apply',
+      })
+      setError({ status: result.status, message: result.errMsg })
+      submittingRef.current = false
+      setSubmitting(false)
+    }
+  }
+
+  const handleRetry = async () => {
+    if (submittingRef.current || !lastPayloadRef.current) return
+    submittingRef.current = true
+    setSubmitting(true)
+    setError(null)
+    const result = await sendLead(lastPayloadRef.current)
+
+    if (result.ok) {
+      posthog.capture('apply_form_submitted', { has_aug: lastPayloadRef.current.aug !== '—', retried: true })
+      if (window.fbq) window.fbq('track', 'Lead')
+      setSubmitted(true)
+    } else {
+      posthog.capture('apply_form_failed', { status: result.status, error: result.errMsg, url: '/api/apply', retried: true })
+      setError({ status: result.status, message: result.errMsg })
+      submittingRef.current = false
+      setSubmitting(false)
+    }
   }
 
   const inputStyle = (id) => ({
@@ -1793,13 +1879,46 @@ function LeadForm() {
                   <label style={labelStyle}>Ce tipuri de augmentări faceți în mod obișnuit?</label>
                   <input name="aug" type="text" placeholder="Ex: Sinus lift, GBR clasic, alveolă post-extracție" onFocus={() => setFocused('aug')} onBlur={() => setFocused(null)} style={inputStyle('aug')} />
                 </div>
+                {error && (
+                  <motion.div
+                    initial={{ opacity: 0, y: -8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    style={{ background: '#fff4f4', border: '1px solid #f5c2c2', borderRadius: 10, padding: '14px 16px', display: 'flex', flexDirection: 'column', gap: 10 }}
+                  >
+                    <div style={{ display: 'flex', alignItems: 'flex-start', gap: 10 }}>
+                      <span style={{ flexShrink: 0, marginTop: 2, color: '#c0392b', fontSize: 18, lineHeight: 1 }}>⚠</span>
+                      <div style={{ fontSize: 13, color: '#7a2222', lineHeight: 1.5 }}>
+                        <strong style={{ display: 'block', marginBottom: 2 }}>Trimiterea a eșuat.</strong>
+                        Apăsați "Reîncercați" mai jos. Dacă persistă, sunați la <a href="tel:+40737178774" style={{ color: '#7a2222', fontWeight: 600 }}>+40 737 178 774</a> sau scrieți la <a href="mailto:office@bonesphere.ro" style={{ color: '#7a2222', fontWeight: 600 }}>office@bonesphere.ro</a>.
+                      </div>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={handleRetry}
+                      disabled={submitting}
+                      style={{ alignSelf: 'flex-start', background: '#c0392b', color: 'white', border: 'none', padding: '8px 16px', fontSize: 13, fontWeight: 600, borderRadius: 6, cursor: submitting ? 'wait' : 'pointer', opacity: submitting ? 0.7 : 1 }}
+                    >
+                      {submitting ? 'Se reîncearcă…' : 'Reîncercați'}
+                    </button>
+                  </motion.div>
+                )}
                 <motion.button
                   type="submit"
-                  whileHover={{ y: -2, boxShadow: '0 20px 40px rgba(0,74,93,0.25)' }}
-                  whileTap={{ scale: 0.98 }}
-                  style={{ background: '#004a5d', color: 'white', padding: '18px 0', borderRadius: 2, fontWeight: 600, fontSize: 16, border: 'none', cursor: 'pointer', transition: 'all 0.3s', fontFamily: 'Inter, sans-serif', width: '100%' }}
+                  disabled={submitting}
+                  whileHover={submitting ? {} : { y: -2, boxShadow: '0 20px 40px rgba(0,74,93,0.25)' }}
+                  whileTap={submitting ? {} : { scale: 0.98 }}
+                  style={{ background: '#004a5d', color: 'white', padding: '18px 0', borderRadius: 2, fontWeight: 600, fontSize: 16, border: 'none', cursor: submitting ? 'wait' : 'pointer', transition: 'all 0.3s', fontFamily: 'Inter, sans-serif', width: '100%', opacity: submitting ? 0.7 : 1, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: 10 }}
                 >
-                  Aplic pentru programul de implementare
+                  {submitting ? (
+                    <>
+                      <motion.span
+                        animate={{ rotate: 360 }}
+                        transition={{ duration: 0.8, repeat: Infinity, ease: 'linear' }}
+                        style={{ width: 16, height: 16, border: '2px solid rgba(255,255,255,0.3)', borderTopColor: 'white', borderRadius: '50%', display: 'inline-block' }}
+                      />
+                      Se trimite…
+                    </>
+                  ) : 'Aplic pentru programul de implementare'}
                 </motion.button>
               </form>
             )}
@@ -1824,7 +1943,7 @@ function FinalCTA() {
         </h2>
         <motion.a
           href="#form-section"
-          onClick={scrollToForm}
+          onClick={(e) => scrollToForm(e, 'final_cta')}
           whileHover={{ y: -4, boxShadow: '0 24px 48px rgba(0,74,93,0.3)' }}
           whileTap={{ scale: 0.97 }}
           style={{ display: 'inline-block', background: '#004a5d', color: 'white', padding: '20px 40px', borderRadius: 2, fontSize: 16, fontWeight: 600, boxShadow: '0 12px 32px rgba(0,74,93,0.2)', textDecoration: 'none', transition: 'all 0.3s' }}
@@ -2074,6 +2193,21 @@ document.head.appendChild(style)
 
 /* ─── App root ─── */
 export default function ProgramStart() {
+  useEffect(() => {
+    document.title = 'Program Implementare Augma Bond Apatite | Bonesphere România'
+    const setMeta = (sel, val, attr = 'content') => {
+      const el = document.querySelector(sel)
+      if (el) el.setAttribute(attr, val)
+    }
+    setMeta('meta[name="description"]', 'Program de implementare Bond Apatite — 6 cazuri clinice ghidate, suport protocol, analiză CBCT. Augmentare osoasă cu Sulfat de Calciu Bifazic, singurul brevetat din lume.')
+    setMeta('link[rel="canonical"]', 'https://start.bonesphere.ro/', 'href')
+    setMeta('meta[property="og:url"]', 'https://start.bonesphere.ro/')
+    setMeta('meta[property="og:title"]', 'Program Implementare Augma Bond Apatite | Bonesphere')
+    setMeta('meta[property="og:description"]', 'Program de implementare Bond Apatite — 6 cazuri clinice ghidate, suport protocol, analiză CBCT.')
+    setMeta('meta[name="twitter:title"]', 'Program Implementare Augma Bond Apatite | Bonesphere')
+    setMeta('meta[name="twitter:description"]', 'Program de implementare Bond Apatite — 6 cazuri clinice ghidate, suport protocol, analiză CBCT.')
+  }, [])
+
   return (
     <>
       <Nav />
