@@ -470,7 +470,7 @@ function Hero() {
                 Aplică pentru programul de implementare
               </motion.a>
               <p style={{ fontSize: 12, color: 'rgba(255,255,255,0.4)', fontWeight: 500, margin: 0 }}>
-                Completezi formularul, te contactăm în 24h.
+                Completezi formularul, te contactăm în maxim 24h (luni–vineri).
               </p>
             </motion.div>
 
@@ -604,9 +604,9 @@ function ProductExplanation() {
         <div className="two-col" style={{ alignItems: 'start' }}>
           <div className="product-text">
             <FadeUp>
-              <span style={{ fontSize: 11, fontWeight: 700, color: '#00637c', textTransform: 'uppercase', letterSpacing: '0.2em' }}>Ce este</span>
+              <span style={{ fontSize: 11, fontWeight: 700, color: '#00637c', textTransform: 'uppercase', letterSpacing: '0.2em' }}>Tehnologia din spate</span>
               <h2 style={{ fontFamily: 'Newsreader, serif', fontSize: 'clamp(32px, 4vw, 56px)', fontWeight: 700, color: '#004a5d', lineHeight: 1.1, marginTop: 12, marginBottom: 0 }}>
-                Ce este, concret,{' '}
+                Ce este{' '}
                 <em style={{ color: '#00637c', fontStyle: 'italic' }}>Bond Apatite</em>
               </h2>
             </FadeUp>
@@ -752,7 +752,7 @@ function Benefits() {
               De ce Bond Apatite<br />schimbă augmentarea osoasă
             </h2>
             <p style={{ fontSize: 17, color: '#3f484c', maxWidth: 640, margin: '0 auto', lineHeight: 1.7 }}>
-              Ce citești mai jos nu sunt simple afirmații comerciale - sunt cele mai importante avantaje clinice care fac diferența dintre un protocol încărcat de variabile și unul simplu, predictibil, controlabil.
+              10 avantaje clinice care separă un protocol cu variabile minime de unul cu variabile pe care nu le controlezi niciodată complet.
             </p>
           </div>
         </FadeUp>
@@ -781,14 +781,14 @@ function Benefits() {
 
 /* ─── Solutions Carousel ─── */
 const SOLUTIONS = [
-  { id: 'socket', title: 'Grefă alveolară', icon: socketIcon, description: 'Alveole intacte — fără elevare de lambou. Placă vestibulară lipsă — lambou minim tip plic, închidere sub tensiune fără incizii de eliberare periostală. Protocol simplificat în ambele variante.' },
-  { id: 'lateral', title: 'Augmentare laterală', icon: lateralIcon, description: 'Fără membrană, fără incizii de eliberare periostală. Lambou limitat la maxim 3 mm dincolo de joncțiunea mucogingivală, compactare directă, închidere sub tensiune. Grefă expusă este acoperită cu pansamentul intraoral Augma Shield™.' },
-  { id: 'sinus', title: 'Sinus lift', icon: sinusIcon, description: 'Tehnică intra-crestală minim invazivă, indiferent de înălțimea crestei. Creastă ≥ 4 mm — augmentare și implant în aceeași ședință. Creastă < 4 mm — augmentare în prima etapă.' },
-  { id: 'fullarch', title: 'Reconstrucție totală de arcadă', icon: fullArchIcon, description: 'Extracții, osteoplastie și implanturi în aceeași intervenție. Bond Apatite® umple spațiile inter-implantare, remodelează arcada și supraconstruiește volumul — un singur material pentru toate necesitățile de grefare.' },
-  { id: 'aesthetic', title: 'Zona estetică', icon: aestheticIcon, description: 'Reconstituie volumul post-extracție sau post-implant fără tracțiunea necesară în GBR clasic. Augma Shield™ acoperă grefa expusă minimum 2 săptămâni. Fără proteze mobile în vindecare.' },
-  { id: 'cyst', title: 'Enucleere de chist', icon: cystIcon, description: 'Chiuretaj complet, decontaminare, condensare Bond Apatite® incremental până la marginea corticală. Cavitatea chistică devine schela pentru regenerare osoasă ghidată.' },
-  { id: 'peri', title: 'Peri-implantită', icon: periIcon, description: 'Exclusiv defecte verticale, fără infecție activă. Lambou minim, aplicare directă, sutură. Fără tehnici complexe de regenerare peri-implantară.' },
-  { id: 'zygoma', title: 'Implant zigomatic', icon: zygomaIcon, description: 'Acoperă porțiunea extra-maxilară direct cu Bond Apatite® condensat — fără avansarea grăsimii bucale. Supraconstruiește volumul pentru a compensa reducerea sub tensiunea lamboului.' },
+  { id: 'socket', title: 'Grefă alveolară', icon: socketIcon, description: 'Fără lambou, fără membrană. Aplicare directă în alveolă, priză în 3 minute, sutură.' },
+  { id: 'lateral', title: 'Augmentare laterală', icon: lateralIcon, description: 'Fără membrană. Fără incizii de eliberare periostală. Protocol direct, o singură ședință.' },
+  { id: 'sinus', title: 'Sinus lift', icon: sinusIcon, description: 'Tehnică intra-crestală minim invazivă. Augmentare și implant în aceeași ședință când creasta ≥ 4 mm.' },
+  { id: 'fullarch', title: 'Reconstrucție totală de arcadă', icon: fullArchIcon, description: 'Un singur material pentru toate necesitățile de grefare. Extracții, osteoplastie și implanturi în aceeași intervenție.' },
+  { id: 'aesthetic', title: 'Zona estetică', icon: aestheticIcon, description: 'Volum reconstruit fără tracțiunea GBR clasic. Fără proteze mobile în vindecare.' },
+  { id: 'cyst', title: 'Enucleere de chist', icon: cystIcon, description: 'Cavitatea chistică devine schela pentru regenerare osoasă ghidată. Condensare directă, fără tehnici suplimentare.' },
+  { id: 'peri', title: 'Peri-implantită', icon: periIcon, description: 'Lambou minim, aplicare directă, sutură. Fără tehnici complexe de regenerare peri-implantară.' },
+  { id: 'zygoma', title: 'Implant zigomatic', icon: zygomaIcon, description: 'Acoperă porțiunea extra-maxilară direct, fără avansarea grăsimii bucale. Volum reconstruit într-o singură etapă.' },
 ]
 
 function SolutionsCarousel() {
@@ -804,18 +804,22 @@ function SolutionsCarousel() {
   const next = () => goTo(active + 1)
 
   const arrowStyle = {
-    background: 'rgba(255,255,255,0.22)',
-    border: '1.5px solid rgba(255,255,255,0.55)',
-    color: 'white',
-    width: 48, height: 48,
+    position: 'absolute',
+    top: '50%',
+    transform: 'translateY(-50%)',
+    background: '#ffffff',
+    border: 'none',
+    color: '#004a5d',
+    width: 44, height: 44,
     borderRadius: '50%',
-    fontSize: 26,
+    fontSize: 24,
     cursor: 'pointer',
     display: 'flex', alignItems: 'center', justifyContent: 'center',
-    flexShrink: 0,
+    zIndex: 10,
     lineHeight: 1,
     padding: 0,
-    boxShadow: '0 2px 12px rgba(0,0,0,0.25)',
+    boxShadow: '0 4px 16px rgba(0,0,0,0.45)',
+    fontWeight: 700,
   }
 
   return (
@@ -834,8 +838,15 @@ function SolutionsCarousel() {
         </FadeUp>
 
         {/* Carousel row */}
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 16 }}>
-          <button onClick={prev} style={arrowStyle}>‹</button>
+        <div style={{ position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+          <motion.button
+            onClick={prev}
+            aria-label="Indicația anterioară"
+            whileHover={{ scale: 1.08 }}
+            whileTap={{ scale: 0.85, backgroundColor: '#e6f2f5' }}
+            transition={{ duration: 0.12 }}
+            style={{ ...arrowStyle, left: 12 }}
+          >‹</motion.button>
 
           {/* 3D track */}
           <div style={{
@@ -962,7 +973,14 @@ function SolutionsCarousel() {
             })}
           </div>
 
-          <button onClick={next} style={arrowStyle}>›</button>
+          <motion.button
+            onClick={next}
+            aria-label="Indicația următoare"
+            whileHover={{ scale: 1.08 }}
+            whileTap={{ scale: 0.85, backgroundColor: '#e6f2f5' }}
+            transition={{ duration: 0.12 }}
+            style={{ ...arrowStyle, right: 12 }}
+          >›</motion.button>
         </div>
 
         {/* Dot navigation */}
@@ -1428,7 +1446,7 @@ function Proof() {
           <div style={{ textAlign: 'center', marginBottom: 80 }}>
             <span style={{ fontSize: 11, fontWeight: 700, color: '#00637c', textTransform: 'uppercase', letterSpacing: '0.2em', display: 'block', marginBottom: 16 }}>Dovezi</span>
             <h2 style={{ fontFamily: 'Newsreader, serif', fontSize: 'clamp(32px, 4.5vw, 56px)', fontWeight: 700, color: '#004a5d', lineHeight: 1.1, margin: '0 0 16px' }}>
-              Ce susține această tehnologie
+              Histologie. Radiologie. Cazuri reale.
             </h2>
             <p style={{ color: '#3f484c', maxWidth: 520, margin: '0 auto', lineHeight: 1.7 }}>
               Bond Apatite merită evaluat nu doar prin manipulare, ci prin trei lucruri care contează clinic:{' '}
@@ -1654,7 +1672,7 @@ function Offer() {
                   whileTap={{ scale: 0.98 }}
                   style={{ display: 'inline-flex', alignItems: 'center', gap: 10, background: 'white', color: '#004a5d', padding: '14px 28px', borderRadius: 999, fontSize: 14, fontWeight: 700, textDecoration: 'none', width: 'fit-content', boxShadow: '0 8px 24px rgba(0,0,0,0.2)' }}
                 >
-                  Aplică pentru Program
+                  Aplică pentru programul de implementare
                   <svg style={{ width: 16, height: 16 }} fill="none" viewBox="0 0 24 24">
                     <path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                   </svg>
@@ -1767,18 +1785,16 @@ function LeadForm() {
 
     const fd = new FormData(e.target)
     const payload = {
-      name:  fd.get('name'),
-      email: fd.get('email'),
-      phone: fd.get('phone'),
-      aug:   fd.get('aug') || '—',
-      cases: fd.get('cases') || '—',
+      name:   fd.get('name'),
+      phone:  fd.get('phone'),
+      clinic: fd.get('clinic'),
     }
     lastPayloadRef.current = payload
 
     const result = await sendLead(payload)
 
     if (result.ok) {
-      posthog.capture('apply_form_submitted', { has_aug: payload.aug !== '—' })
+      posthog.capture('apply_form_submitted')
       if (window.fbq) window.fbq('track', 'Lead')
       setSubmitted(true)
     } else {
@@ -1801,7 +1817,7 @@ function LeadForm() {
     const result = await sendLead(lastPayloadRef.current)
 
     if (result.ok) {
-      posthog.capture('apply_form_submitted', { has_aug: lastPayloadRef.current.aug !== '—', retried: true })
+      posthog.capture('apply_form_submitted', { retried: true })
       if (window.fbq) window.fbq('track', 'Lead')
       setSubmitted(true)
     } else {
@@ -1838,14 +1854,29 @@ function LeadForm() {
     <section id="form-section" className="section-pad" style={{ background: '#fcf9f8' }}>
       <div style={{ maxWidth: 720, margin: '0 auto' }}>
         <FadeUp>
-          <div style={{ textAlign: 'center', marginBottom: 56 }}>
+          <div style={{ textAlign: 'center', marginBottom: 32 }}>
             <span style={{ fontSize: 11, fontWeight: 700, color: '#00637c', textTransform: 'uppercase', letterSpacing: '0.2em', display: 'block', marginBottom: 16 }}>Formular de aplicare</span>
             <h2 style={{ fontFamily: 'Newsreader, serif', fontSize: 'clamp(28px, 4vw, 52px)', fontWeight: 700, color: '#004a5d', lineHeight: 1.1, marginBottom: 16 }}>
               Aplică pentru programul de implementare
             </h2>
             <p style={{ color: '#3f484c', maxWidth: 440, margin: '0 auto', lineHeight: 1.7 }}>
-              Completează formularul și te contactăm în 24h pentru a discuta cazurile cu care vrei să începi.
+              Completează formularul și te contactăm în maxim 24h (luni–vineri).
             </p>
+          </div>
+        </FadeUp>
+
+        <FadeUp delay={0.08}>
+          <div style={{ display: 'flex', justifyContent: 'center', marginBottom: 28 }}>
+            <div style={{ display: 'inline-flex', alignItems: 'center', gap: 10, background: 'rgba(0,74,93,0.06)', border: '1px solid rgba(0,74,93,0.12)', borderRadius: 999, padding: '8px 16px' }}>
+              <motion.span
+                animate={{ opacity: [1, 0.35, 1], scale: [1, 0.85, 1] }}
+                transition={{ duration: 1.6, repeat: Infinity, ease: 'easeInOut' }}
+                style={{ width: 8, height: 8, borderRadius: '50%', background: '#00a86b', boxShadow: '0 0 0 3px rgba(0,168,107,0.18)', flexShrink: 0 }}
+              />
+              <span style={{ fontSize: 13, fontWeight: 600, color: '#004a5d', letterSpacing: '0.01em' }}>
+                Acceptăm <strong style={{ color: '#00637c' }}>maxim 10–12 medici</strong> pe lună
+              </span>
+            </div>
           </div>
         </FadeUp>
 
@@ -1859,7 +1890,7 @@ function LeadForm() {
                   </svg>
                 </div>
                 <h3 style={{ fontFamily: 'Newsreader, serif', fontSize: 28, fontWeight: 700, color: '#004a5d' }}>Mulțumim!</h3>
-                <p style={{ color: '#3f484c', lineHeight: 1.7 }}>Am primit. Revenim în cel mult 24 de ore ca să discutăm concret dacă protocolul Bond Apatite are sens pentru practica dumneavoastră, ce ar presupune implementarea și care sunt costurile programului.</p>
+                <p style={{ color: '#3f484c', lineHeight: 1.7 }}>Am primit. Revenim în maxim 24h (luni–vineri) ca să discutăm concret dacă protocolul Bond Apatite are sens pentru practica dumneavoastră, ce ar presupune implementarea și care sunt costurile programului.</p>
               </motion.div>
             ) : (
               <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: 28 }}>
@@ -1872,12 +1903,15 @@ function LeadForm() {
                   <input required name="phone" type="tel" placeholder="07xx xxx xxx" onFocus={() => setFocused('phone')} onBlur={() => setFocused(null)} style={inputStyle('phone')} />
                 </div>
                 <div>
-                  <label style={labelStyle}>Email <span style={{ color: '#004a5d' }}>*</span></label>
-                  <input required name="email" type="email" placeholder="doctor@clinica.ro" onFocus={() => setFocused('email')} onBlur={() => setFocused(null)} style={inputStyle('email')} />
+                  <label style={labelStyle}>Clinică / Oraș <span style={{ color: '#004a5d' }}>*</span></label>
+                  <input required name="clinic" type="text" placeholder="Ex: Clinica Dent, Cluj-Napoca" onFocus={() => setFocused('clinic')} onBlur={() => setFocused(null)} style={inputStyle('clinic')} />
                 </div>
-                <div>
-                  <label style={labelStyle}>Ce tipuri de augmentări faceți în mod obișnuit?</label>
-                  <input name="aug" type="text" placeholder="Ex: Sinus lift, GBR clasic, alveolă post-extracție" onFocus={() => setFocused('aug')} onBlur={() => setFocused(null)} style={inputStyle('aug')} />
+                <div style={{ display: 'flex', alignItems: 'flex-start', gap: 10 }}>
+                  <input required type="checkbox" id="gdpr" name="gdpr" style={{ marginTop: 3, flexShrink: 0, accentColor: '#004a5d', width: 16, height: 16, cursor: 'pointer' }} />
+                  <label htmlFor="gdpr" style={{ fontSize: 12, color: '#3f484c', lineHeight: 1.6, cursor: 'pointer' }}>
+                    Sunt de acord cu prelucrarea datelor personale conform{' '}
+                    <a href="/confidentialitate" target="_blank" style={{ color: '#004a5d', textDecoration: 'underline' }}>Politicii de Confidențialitate</a>.
+                  </label>
                 </div>
                 {error && (
                   <motion.div
@@ -1918,7 +1952,7 @@ function LeadForm() {
                       />
                       Se trimite…
                     </>
-                  ) : 'Aplic pentru programul de implementare'}
+                  ) : 'Aplică pentru programul de implementare'}
                 </motion.button>
               </form>
             )}
@@ -1936,10 +1970,8 @@ function FinalCTA() {
       <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(ellipse at center, rgba(0,99,124,0.07) 0%, transparent 70%)', pointerEvents: 'none' }} />
       <FadeUp>
         <h2 style={{ fontFamily: 'Newsreader, serif', fontSize: 'clamp(28px, 6vw, 80px)', fontWeight: 700, color: '#004a5d', lineHeight: 1.15, letterSpacing: '-0.02em', maxWidth: 900, margin: '0 auto 40px' }}>
-          Mai puține variabile.{' '}
-          <em style={{ color: '#00637c', fontStyle: 'italic' }}>Mai mult control.</em>
-          <br />
-          Mai multă încredere în primele cazuri.
+          Mai puține variabile. Mai mult control.{' '}
+          <em style={{ color: '#00637c', fontStyle: 'italic' }}>Rezultate pe care le puteți reproduce de fiecare dată.</em>
         </h2>
         <motion.a
           href="#form-section"
@@ -1949,7 +1981,7 @@ function FinalCTA() {
           style={{ display: 'inline-block', background: '#004a5d', color: 'white', padding: '20px 40px', borderRadius: 2, fontSize: 16, fontWeight: 600, boxShadow: '0 12px 32px rgba(0,74,93,0.2)', textDecoration: 'none', transition: 'all 0.3s' }}
           className="cta-btn"
         >
-          Vreau să văd dacă acest protocol mi se potrivește
+          Aplică pentru programul de implementare
         </motion.a>
       </FadeUp>
     </section>
