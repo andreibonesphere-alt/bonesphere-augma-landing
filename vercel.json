@@ -20,7 +20,7 @@
       ]
     },
     {
-      "source": "/index.html",
+      "source": "/(|demonstratie|confidentialitate|termeni-si-conditii|politica-cookies|index\\.html)",
       "headers": [
         { "key": "Cache-Control", "value": "public, max-age=0, s-maxage=60, stale-while-revalidate=3600" }
       ]
