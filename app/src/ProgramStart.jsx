@@ -4,10 +4,10 @@ import { motion, useScroll, useTransform, useInView, AnimatePresence } from 'fra
 import posthog from './posthog.js'
 
 const scrollToForm = (e, location = 'unknown') => {
+  const el = document.getElementById('form-section')
+  if (!el) return  // fallback: anchor href="#form-section" gestioneaza nativ
   if (e) e.preventDefault()
   posthog.capture('cta_clicked', { location })
-  const el = document.getElementById('form-section')
-  if (!el) return
   const focusFirstInput = () => {
     const firstInput = el.querySelector('input[name="name"]')
     if (firstInput) firstInput.focus({ preventScroll: true })
@@ -1890,7 +1890,7 @@ function LeadForm() {
                   </svg>
                 </div>
                 <h3 style={{ fontFamily: 'Newsreader, serif', fontSize: 28, fontWeight: 700, color: '#004a5d' }}>Mulțumim!</h3>
-                <p style={{ color: '#3f484c', lineHeight: 1.7 }}>Am primit. Revenim în maxim 24h (luni–vineri) ca să discutăm concret dacă protocolul Bond Apatite are sens pentru practica dumneavoastră, ce ar presupune implementarea și care sunt costurile programului.</p>
+                <p style={{ color: '#3f484c', lineHeight: 1.7 }}>Revenim în maxim 24h (luni–vineri).</p>
               </motion.div>
             ) : (
               <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: 28 }}>
@@ -2074,6 +2074,12 @@ function CookieBanner() {
 const style = document.createElement('style')
 style.textContent = `
   *, *::before, *::after { box-sizing: border-box; }
+
+  /* ── Perf: skip rendering off-screen sections pe mobile (huge Main Thread win) ── */
+  main > section { content-visibility: auto; contain-intrinsic-size: 1px 800px; }
+
+  /* ── Perf: elimina 300ms tap delay pe iOS Safari pe orice link/buton interactiv ── */
+  a, button, [role="button"] { touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
 
   /* ── Base: mobile (320px+) ── */
   .nav-inner {

@@ -4,10 +4,10 @@ import { motion, useScroll, useTransform, useInView, AnimatePresence } from 'fra
 import posthog from './posthog.js'
 
 const scrollToForm = (e, location = 'unknown') => {
+  const el = document.getElementById('form-section')
+  if (!el) return  // fallback: anchor href="#form-section" gestioneaza nativ
   if (e) e.preventDefault()
   posthog.capture('cta_clicked', { location })
-  const el = document.getElementById('form-section')
-  if (!el) return
   const focusFirstInput = () => {
     const firstInput = el.querySelector('input[name="name"]')
     if (firstInput) firstInput.focus({ preventScroll: true })

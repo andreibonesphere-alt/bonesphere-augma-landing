@@ -1,0 +1,28 @@
+{
+  "name": "Bonesphere — Program Implementare Bond Apatite",
+  "short_name": "Bonesphere",
+  "description": "Program de implementare Bond Apatite — 6 cazuri clinice ghidate, suport protocol, analiză CBCT.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#fcf9f8",
+  "theme_color": "#004a5d",
+  "icons": [
+    {
+      "src": "/favicon.png",
+      "sizes": "any",
+      "type": "image/png"
+    },
+    {
+      "src": "/apple-touch-icon.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/apple-touch-icon.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

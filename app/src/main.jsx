@@ -1,14 +1,15 @@
 import './posthog.js'
-import { StrictMode } from 'react'
+import { StrictMode, Suspense, lazy } from 'react'
 import { createRoot } from 'react-dom/client'
 import './index.css'
-import App from './App.jsx'
-import ProgramStart from './ProgramStart.jsx'
-import Confidentialitate from './Confidentialitate.jsx'
-import TermeniConditii from './TermeniConditii.jsx'
-import PoliticaCookies from './PoliticaCookies.jsx'
 
 const page = window.location.pathname
+
+const ProgramStart       = lazy(() => import('./ProgramStart.jsx'))
+const App                = lazy(() => import('./App.jsx'))
+const Confidentialitate  = lazy(() => import('./Confidentialitate.jsx'))
+const TermeniConditii    = lazy(() => import('./TermeniConditii.jsx'))
+const PoliticaCookies    = lazy(() => import('./PoliticaCookies.jsx'))
 
 function Router() {
   if (page === '/confidentialitate') return <Confidentialitate />
@@ -20,6 +21,8 @@ function Router() {
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <Router />
+    <Suspense fallback={null}>
+      <Router />
+    </Suspense>
   </StrictMode>,
 )

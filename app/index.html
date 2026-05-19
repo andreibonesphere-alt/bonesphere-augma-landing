@@ -2,17 +2,23 @@
 <html lang="ro">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/png" href="/favicon.png" />
-    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png" />
+    <link rel="icon" type="image/png" sizes="192x192" href="/apple-touch-icon.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <meta name="apple-mobile-web-app-title" content="Bonesphere" />
+    <meta name="application-name" content="Bonesphere" />
+    <meta name="theme-color" content="#004a5d" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
 
     <!-- Preconnect to font CDN (parallel with HTML parse) -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 
-    <!-- Critical fonts loaded in parallel (NOT via CSS @import which serializes) -->
-    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,700;1,6..72,400;1,6..72,700&family=Inter:wght@200;400;500;600;700&display=swap" />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,700;1,6..72,400;1,6..72,700&family=Inter:wght@200;400;500;600;700&display=swap" />
+    <!-- Async fonts: preload as style, then swap to stylesheet onload (NU blocheaza render) -->
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,700;1,6..72,400;1,6..72,700&family=Inter:wght@200;400;500;600;700&display=swap" onload="this.onload=null;this.rel='stylesheet'" />
+    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,700;1,6..72,400;1,6..72,700&family=Inter:wght@200;400;500;600;700&display=swap" /></noscript>
 
     <!-- Primary meta -->
     <title>Program Implementare Augma Bond Apatite | Bonesphere România</title>
@@ -89,18 +95,20 @@
     }
     </script>
 
-    <!-- Facebook Pixel -->
+    <!-- Facebook Pixel — deferat dupa load + idle ca sa nu blocheze parse/render -->
     <script>
-      !function(f,b,e,v,n,t,s)
-      {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-      n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-      if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-      n.queue=[];t=b.createElement(e);t.async=!0;
-      t.src=v;s=b.getElementsByTagName(e)[0];
-      s.parentNode.insertBefore(t,s)}(window, document,'script',
-      'https://connect.facebook.net/en_US/fbevents.js');
-      fbq('init', '706109200845109');
-      fbq('track', 'PageView');
+      window.fbq=window.fbq||function(){(window.fbq.q=window.fbq.q||[]).push(arguments)};
+      window.fbq.loaded=!0;window.fbq.version='2.0';window.fbq.queue=window.fbq.q||[];
+      fbq('init','706109200845109');
+      fbq('track','PageView');
+      function __loadFbPixel(){
+        if(window.__fbpLoaded) return; window.__fbpLoaded=true;
+        var t=document.createElement('script');t.async=!0;
+        t.src='https://connect.facebook.net/en_US/fbevents.js';
+        document.head.appendChild(t);
+      }
+      if('requestIdleCallback' in window){requestIdleCallback(__loadFbPixel,{timeout:2500})}
+      else{setTimeout(__loadFbPixel,1500)}
     </script>
     <noscript>
       <img height="1" width="1" style="display:none"
