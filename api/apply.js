@@ -3,7 +3,7 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: 'Method not allowed' })
   }
 
-  const { name, email, phone, aug, cases } = req.body
+  const { name, phone, clinic } = req.body
 
   if (!name || !phone) {
     return res.status(400).json({ error: 'Câmpuri obligatorii lipsă' })
@@ -12,7 +12,7 @@ export default async function handler(req, res) {
   const token = process.env.TG_TOKEN
   const chatId = process.env.TG_CHAT
 
-  const text = `🦷 *Aplicare Program — Bonesphere*\n\n👤 *Nume:* ${name}\n📧 *Email:* ${email || '—'}\n📞 *Telefon:* ${phone}\n\n🔧 *Augmentări actuale:*\n${aug || '—'}\n\n📋 *Cazuri de tratat:*\n${cases || '—'}`
+  const text = `🦷 *Aplicare Program — Bonesphere*\n\n👤 *Nume:* ${name}\n📞 *Telefon:* ${phone}\n🏥 *Clinică / Oraș:* ${clinic || '—'}`
 
   const tgRes = await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
     method: 'POST',
