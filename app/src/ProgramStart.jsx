@@ -4,17 +4,24 @@ import { motion, useScroll, useTransform, useInView, AnimatePresence } from 'fra
 import posthog from './posthog.js'
 
 const scrollToForm = (e, location = 'unknown') => {
-  const el = document.getElementById('form-section')
-  if (!el) return  // fallback: anchor href="#form-section" gestioneaza nativ
   if (e) e.preventDefault()
-  posthog.capture('cta_clicked', { location })
+  try { posthog.capture('cta_clicked', { location }) } catch (_) { /* never block scroll on tracking */ }
+
+  const el = document.getElementById('form-section')
+  if (!el) return
+
   const focusFirstInput = () => {
     const firstInput = el.querySelector('input[name="name"]')
     if (firstInput) firstInput.focus({ preventScroll: true })
   }
+
+  // Already at form — just focus.
   if (Math.abs(el.getBoundingClientRect().top) < 80) { focusFirstInput(); return }
+
+  // Single smooth scroll — content-visibility e dezactivat pe mobile, deci poziția
+  // calculată acum e cea reală. O singură mișcare = senzație premium.
   el.scrollIntoView({ behavior: 'smooth', block: 'start' })
-  setTimeout(focusFirstInput, 800)
+  setTimeout(focusFirstInput, 700)
 }
 
 /* ─── Mobile detection hook ─── */
@@ -460,15 +467,14 @@ function Hero() {
             </motion.p>
 
             <motion.div initial={{ opacity: 0, y: isMobile ? 0 : 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: isMobile ? 0.3 : 0.7, delay: isMobile ? 0.2 : 0.8 }} style={{ display: 'flex', flexDirection: 'column', gap: 12, maxWidth: 420 }}>
-              <motion.a
+              <a
                 href="#form-section"
                 onClick={(e) => scrollToForm(e, 'hero_cta')}
-                whileHover={{ y: -3, boxShadow: '0 20px 40px rgba(0,0,0,0.4)' }}
-                whileTap={{ scale: 0.97 }}
+                className="cta-primary"
                 style={{ display: 'block', width: '100%', background: '#ffffff', color: '#004a5d', padding: '18px 32px', fontSize: 15, fontWeight: 700, borderRadius: 2, boxShadow: '0 8px 32px rgba(0,0,0,0.3)', textDecoration: 'none', textAlign: 'center' }}
               >
                 Aplică pentru programul de implementare
-              </motion.a>
+              </a>
               <p style={{ fontSize: 12, color: 'rgba(255,255,255,0.4)', fontWeight: 500, margin: 0 }}>
                 Completezi formularul, te contactăm în maxim 24h (luni–vineri).
               </p>
@@ -2044,10 +2050,10 @@ function CookieBanner() {
   if (!visible) return null
   return (
     <motion.div
-      initial={{ y: 100, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
-      exit={{ y: 100, opacity: 0 }}
-      transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.18, ease: 'easeOut' }}
       style={{ position: 'fixed', bottom: 0, left: 0, right: 0, zIndex: 9999, background: '#004a5d', color: 'white', padding: '20px 24px', boxShadow: '0 -8px 32px rgba(0,0,0,0.2)' }}
     >
       <div style={{ maxWidth: 1280, margin: '0 auto', display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between', gap: 16 }}>
@@ -2075,11 +2081,25 @@ const style = document.createElement('style')
 style.textContent = `
   *, *::before, *::after { box-sizing: border-box; }
 
-  /* ── Perf: skip rendering off-screen sections pe mobile (huge Main Thread win) ── */
-  main > section { content-visibility: auto; contain-intrinsic-size: 1px 800px; }
+  /* ── Perf: content-visibility doar pe desktop. Pe mobile cauza scroll target miscalculation
+       + aterizări greșite din FB/Insta in-app browsers. Câștigul perf de ~30-50ms nu compensa
+       pierderea în smoothness. Desktop păstrează optimizarea — acolo CPU-ul e suficient. ── */
+  @media (min-width: 1024px) {
+    main > section { content-visibility: auto; contain-intrinsic-size: auto 800px; }
+  }
+
+  /* ── Fix complementar: oprește scroll-anchoring automat (siguranță în plus). ── */
+  html, body, main { overflow-anchor: none; }
 
   /* ── Perf: elimina 300ms tap delay pe iOS Safari pe orice link/buton interactiv ── */
   a, button, [role="button"] { touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
+
+  /* ── CTA primary (înlocuiește framer-motion whileTap/whileHover care fura primul tap pe iOS) ── */
+  .cta-primary { transition: transform .18s ease, box-shadow .18s ease; }
+  .cta-primary:active { transform: scale(0.97); }
+  @media (hover: hover) {
+    .cta-primary:hover { transform: translateY(-3px); box-shadow: 0 20px 40px rgba(0,0,0,0.4); }
+  }
 
   /* ── Base: mobile (320px+) ── */
   .nav-inner {
@@ -2232,6 +2252,19 @@ document.head.appendChild(style)
 /* ─── App root ─── */
 export default function ProgramStart() {
   useEffect(() => {
+    // Fix: FB/Insta in-app browser + content-visibility cauzau aterizare la mijloc de pagină.
+    // Dacă URL-ul nu are hash explicit, forțăm pornirea de la top, dezactivăm scroll
+    // restoration automat și scoatem scroll-anchoring (care se declanșa când secțiunile
+    // cu content-visibility își umflau înălțimea în timpul render-ului inițial).
+    if ('scrollRestoration' in window.history) {
+      window.history.scrollRestoration = 'manual'
+    }
+    if (!window.location.hash) {
+      window.scrollTo(0, 0)
+      // și încă o dată după ce browserul a procesat content-visibility, ca să fim siguri
+      requestAnimationFrame(() => { if (!window.location.hash) window.scrollTo(0, 0) })
+    }
+
     document.title = 'Program Implementare Augma Bond Apatite | Bonesphere România'
     const setMeta = (sel, val, attr = 'content') => {
       const el = document.querySelector(sel)
